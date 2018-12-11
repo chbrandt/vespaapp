@@ -1,0 +1,14 @@
+FROM ubuntu:xenial 
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y curl && \
+    apt-get clean
+
+RUN useradd -s /bin/bash -d /home/user -m user
+
+USER user
+
+RUN curl https://install.meteor.com/ | sh  && \
+    export PATH="${HOME}/.meteor:$PATH"
+
