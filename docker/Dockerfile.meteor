@@ -1,0 +1,16 @@
+FROM ubuntu:xenial
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y curl && \
+    apt-get clean
+
+ARG UID
+
+RUN useradd -u $UID -s /bin/bash -d /home/user -m user
+
+RUN curl https://install.meteor.com/ | sh
+
+# WORKDIR /app
+ADD init.sh /init.sh
+ENTRYPOINT /bin/bash --rcfile /init.sh

@@ -2,29 +2,30 @@ version: "3"
 
 services:
 
-  meteor:
+  app:
     build:
       context: ./dockerfile
       dockerfile: Dockerfile-meteor
+      args:
+        - UID
     image: meteor:latest
-    container_name: meteor
-    command: meteor #--allow-superuser
+    # container_name: meteor
     environment:
       LC_ALL: "C.UTF-8"
       MONGO_URL: "mongodb://db:27017/"
     links:
-      - mongodb
+      - db
     ports:
       - "3000:3000"
     volumes:
       - ./vespaapp:/work/app
-      - logvolume:/var/log
+      # - logvolume:/var/log
     working_dir: /work/app
 
-  mongodb:
+  db:
     image: mongo:4.0
     expose:
       - "27017"
 
-volumes:
-  logvolume: {}
+# volumes:
+#   logvolume: {}
