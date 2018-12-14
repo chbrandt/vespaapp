@@ -25,7 +25,7 @@ class List extends React.Component {
 
   render() {
     return (
-      <div id="list">
+      <div id="list" className="container">
         <ul>
           {this.renderItems()}
         </ul>

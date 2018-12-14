@@ -8,12 +8,14 @@ function App() {
   return (
       <div id="app_layout">
         <header>
-          Vespa::App
+          VESPA:app
         </header>
-        <Map />
-        <List />
+        <main>
+          <Map />
+          <List />
+        </main>
         <footer>
-          Vespa::App
+          <i>footnotes</i>
         </footer>
       </div>
   );

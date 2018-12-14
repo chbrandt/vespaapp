@@ -5,7 +5,7 @@ require('leaflet/dist/leaflet.css');
 
 class Map extends React.Component {
   render() {
-    return <div id="map"></div>;
+    return <div id="map" className="container"></div>;
   }
 
   componentDidMount() {
