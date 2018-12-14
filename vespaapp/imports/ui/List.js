@@ -15,11 +15,8 @@ class List extends React.Component {
 
     return DataItems.map((item) => {
       return (
-        <li key={item._key}>
-          <p>{item.text}</p>
-          // <DataItem key={item.i} data={item.text}/>
-        </li>
-      );
+        <DataItem key={item._key} text={item.text}/>
+      )
     });
   }
 
