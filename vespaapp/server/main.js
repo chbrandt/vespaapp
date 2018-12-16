@@ -1,6 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { onPageLoad } from "meteor/server-render";
 
+import '../imports/api/data.js';
+
 Meteor.startup(() => {
   // Code to run on server startup.
   console.log(`Greetings from ${module.id}!`);

@@ -2,9 +2,13 @@ import React from 'react';
 import Map from './Map.js';
 import List from './List.js';
 
+import { withTracker } from 'meteor/react-meteor-data';
+
+import { Mars } from '../api/data.js';
+
 import './App.css';
 
-function App() {
+function App({ dataLoading, points }) {
   return (
       <div id="app_layout">
         <header>
@@ -12,7 +16,7 @@ function App() {
         </header>
         <main>
           <Map />
-          <List />
+          <List dataPoints={points}/>
         </main>
         <footer>
           <i>footnotes</i>
@@ -20,4 +24,12 @@ function App() {
       </div>
   );
 }
-export default App;
+// export default App;
+
+export default withTracker(() => {
+  const handle = Meteor.subscribe('mars');
+  return {
+    dataLoading: !handle.ready(),
+    points: Mars.find({}).fetch(),
+  };
+})(App);
