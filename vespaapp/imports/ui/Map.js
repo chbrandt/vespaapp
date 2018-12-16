@@ -1,10 +1,18 @@
 import React from 'react';
 import { Session } from 'meteor/session';
 
+// import {points} from '../data/mars.js';
+
 import L from 'leaflet';
 require('leaflet/dist/leaflet.css');
 
+var mapGlobal = {};
+
 class Map extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return <div id="map" className="container"></div>;
   }
@@ -41,6 +49,12 @@ class Map extends React.Component {
                                             );
     basemapOPMVector.addTo(this.map);
 
+    // points.slice(0,3).forEach((point,i) => {
+    //   var lonlat = point.location;
+    //   var marker = L.marker([lonlat[1],lonlat[0]], {color:'red'}).addTo(this.map);
+    //   alert('Marker:' + marker);
+    // })
+
     // Events
     this.map.on('moveend', (event) => {
       let bounds = this.map.getBounds();
@@ -50,7 +64,15 @@ class Map extends React.Component {
       ];
       Session.set('mapBounds', bbox);
     });
-  }
 
+    mapGlobal.map = this.map;
+  }
 }
 export default Map;
+
+// This is not being used now, but I want to keep it here because my memory
+export function mapCallback() {
+  if(mapGlobal.map) {
+    alert("Check Map obj: " + mapGlobal.map.getBounds().toBBoxString());
+  }
+}

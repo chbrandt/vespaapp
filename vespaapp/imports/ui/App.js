@@ -1,5 +1,9 @@
 import React from 'react';
+
 import Map from './Map.js';
+// 'mapCallback' is not being use right now, it's just a placeholder for my memory
+import { mapCallback } from './Map.js';
+
 import List from './List.js';
 
 import { Session } from 'meteor/session';
@@ -29,7 +33,10 @@ function App({ dataLoading, points }) {
 // export default App;
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('mars', { mapBounds: Session.get('mapBounds') });
+  const handle = Meteor.subscribe('mars', {
+    mapBounds: Session.get('mapBounds'),
+    onReady: mapCallback()
+  });
   return {
     dataLoading: !handle.ready(),
     points: Mars.find({}).fetch(),
