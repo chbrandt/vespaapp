@@ -1,4 +1,5 @@
 import React from 'react';
+import { Session } from 'meteor/session';
 
 import L from 'leaflet';
 require('leaflet/dist/leaflet.css');
@@ -39,6 +40,17 @@ class Map extends React.Component {
                                               attribution: basemap_Mars_attribution}
                                             );
     basemapOPMVector.addTo(this.map);
+
+    // Events
+    this.map.on('moveend', (event) => {
+      let bounds = this.map.getBounds();
+      let bbox = [
+        [bounds.getWest(), bounds.getSouth()],
+        [bounds.getEast(), bounds.getNorth()]
+      ];
+      Session.set('mapBounds', bbox);
+    });
   }
+
 }
 export default Map;

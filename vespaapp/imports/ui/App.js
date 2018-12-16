@@ -2,6 +2,8 @@ import React from 'react';
 import Map from './Map.js';
 import List from './List.js';
 
+import { Session } from 'meteor/session';
+
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Mars } from '../api/data.js';
@@ -27,7 +29,7 @@ function App({ dataLoading, points }) {
 // export default App;
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe('mars');
+  const handle = Meteor.subscribe('mars', { mapBounds: Session.get('mapBounds') });
   return {
     dataLoading: !handle.ready(),
     points: Mars.find({}).fetch(),

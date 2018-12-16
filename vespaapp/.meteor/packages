@@ -15,5 +15,5 @@ webapp@1.7.1                  # Serves a Meteor app over HTTP
 server-render@0.3.1           # Support for server-side rendering
 react-meteor-data
 mongo
-autopublish
 insecure
+session
