@@ -1,10 +1,12 @@
 import React from 'react';
 import { Session } from 'meteor/session';
 
-// import {points} from '../data/mars.js';
+import {points} from '../data/mars.js';
 
 import L from 'leaflet';
-require('leaflet/dist/leaflet.css');
+// require('leaflet/dist/leaflet.css');
+// With `ecmascript` package the following import should work
+// import 'leaflet/dist/leaflet.css';
 
 var mapGlobal = {};
 
@@ -29,8 +31,8 @@ class Map extends React.Component {
 
     // create map
     this.map = L.map('map', {
-                              center: [0, 180],
-                              maxBounds:[[-90,0],[90,360]],
+                              center: [0, 0],
+                              maxBounds:[[-90,-180],[90,180]],
                               zoom: 3,
                               minZoom: 1
                             });
@@ -49,11 +51,11 @@ class Map extends React.Component {
                                             );
     basemapOPMVector.addTo(this.map);
 
-    // points.slice(0,3).forEach((point,i) => {
-    //   var lonlat = point.location;
-    //   var marker = L.marker([lonlat[1],lonlat[0]], {color:'red'}).addTo(this.map);
-    //   alert('Marker:' + marker);
-    // })
+    points.forEach((point,i) => {
+      var lonlat = point.location;
+      var marker = L.marker([lonlat[1],lonlat[0]]);
+      marker.addTo(this.map);
+    })
 
     // Events
     this.map.on('moveend', (event) => {
@@ -73,6 +75,5 @@ export default Map;
 // This is not being used now, but I want to keep it here because my memory
 export function mapCallback() {
   if(mapGlobal.map) {
-    alert("Check Map obj: " + mapGlobal.map.getBounds().toBBoxString());
   }
 }
