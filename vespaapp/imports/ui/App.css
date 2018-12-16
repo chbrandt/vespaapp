@@ -17,6 +17,16 @@ main {
   box-sizing: border-box;
 }
 
+.leaflet-container {
+    height: 100%;
+    width: 75%;
+    float: left;
+    border: solid black 1px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
 #map {
     height: 100%;
     width: 75%;
@@ -31,4 +41,7 @@ main {
     float: right;
     border: solid black 1px;
     overflow-y: scroll;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }

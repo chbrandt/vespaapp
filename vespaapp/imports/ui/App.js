@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Map from './Map.js';
-// 'mapCallback' is not being use right now, it's just a placeholder for my memory
-import { mapCallback } from './Map.js';
+import Mapp from './Map.js';
 
 import List from './List.js';
 
@@ -21,7 +19,7 @@ function App({ dataLoading, points }) {
           VESPA:app
         </header>
         <main>
-          <Map />
+          <Mapp />
           <List dataPoints={points}/>
         </main>
         <footer>
@@ -35,7 +33,7 @@ function App({ dataLoading, points }) {
 export default withTracker(() => {
   const handle = Meteor.subscribe('mars', {
     mapBounds: Session.get('mapBounds'),
-    onReady: mapCallback()
+    // onReady: mapCallback()
   });
   return {
     dataLoading: !handle.ready(),
