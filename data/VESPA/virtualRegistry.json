@@ -1,6 +1,5 @@
 {
 "services":[
-
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
     "description": "Solar active regions extracted from Heliophysics Feature Catalog.",
@@ -51,7 +50,6 @@
     "shortname": "planets",
     "schema": "planets",
     "identifier": "ivo://vopdc.obspm/lesia/planets/epn"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
@@ -69,7 +67,6 @@
     "shortname": "pds_speclib",
     "schema": "pds_speclib",
     "identifier": "ivo://vopdc.obspm/lesia/pds_speclib/epn"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
@@ -87,7 +84,6 @@
     "shortname": "spectro_planets",
     "schema": "spectro_planets",
     "identifier": "ivo://vopdc.obspm/lesia/spectro_planets/epn"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - IMCCE",
@@ -105,7 +101,6 @@
     "shortname": "M4AST",
     "schema": "m4ast",
     "identifier": "ivo://vopdc.obspm/imcce/m4ast"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
@@ -123,14 +118,12 @@
     "shortname": "HFC1T3",
     "schema": "hfc1t3",
     "identifier": "ivo://vopdc.obspm/lesia/hfc1t3/epn"
-
 },
-
 {
  "publisher": "Paris Astronomical Data Centre - LESIA",
   "description": "Measurements of comet Halley in the spectral channel of IKS on board the Vega-1 spacecraft. Data are retrieved from the PDS Small Bodies Node archive (2011 reformatted version) and completed with extra information from the original team. The dataset consists in 101 tables providing the calibrated radiance spectra of comet Halley as distance decreases, plus two composite spectra in different spectral ranges. For details and further references, see: Combes M. et al., 1988, The 2.3-12 micron Spectrum of Comet Halley from the IKS-VEGA Experiment, Icarus, 76, 404-436.",
     "contributors": [
-        "Stéphane Erard", 
+        "Stéphane Erard",
         "IKI", "PDS", "PADC"
     ],
     "creator": [
@@ -143,7 +136,6 @@
     "shortname": "IKS",
     "schema":"iks",
     "identifier": "ivo://vopdc.obspm/lesia/iks/epn"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
@@ -181,8 +173,8 @@
     "publisher": "Station de Radioastronomie de Nançay (SRN)",
     "description": "Dynamic Spectra of the Routine observation of Jupiter with the Nancay Decameter Array. This dataset contains two series of dynamic spectra recorded on each of the Nançay decameter sub-arrays (i.e. on Left Hand and Right Hand Polarization). The receiver is sampling from 10 MHz to 40 MHz with 75 kHz steps on the spectral axis. It records one spectrum every second on each polarization. The list of observation frequencies is provided.",
     "contributors": [
-        "Andrée Coffre", 
-        "Emmanuel Thétas", 
+        "Andrée Coffre",
+        "Emmanuel Thétas",
         "PADC"
     ],
     "creator": [
@@ -228,7 +220,7 @@
     "publisher": "Paris Astronomical Data Centre - LESIA",
     "description": "Since 1973, the 18-cm lines of the OH radical have been systematically observed in a number of comets with the Nançay radio telescope. This allowed an evaluation of the cometary water… production rates and their evolution with time, as well as a study of several physical processes: the excitation mechanisms of the OH radio lines, the expansion of the cometary atmospheres, their anisotropy in relation with non-gravitational forces, the Zeeman effect in relation with the cometary magnetic field. The Nançay observations of 53 cometary apparitions between 1982 and 2009 are now organized in this database.",
     "contributors": [
-        "Mathieu Hirtzig", 
+        "Mathieu Hirtzig",
         "PADC"
     ],
     "creator": [
@@ -240,14 +232,12 @@
     "shortname": "BASECOM",
     "schema": "basecom",
     "identifier": "ivo://vopdc.obspm/lesia/basecom/epn"
-
 },
 {
-
     "publisher": "Paris Astronomical Data Centre - LESIA",
     "description": "The Auroral Planetary Imaging and Spectroscopy (APIS) service provides an open and interactive access to processed auroral observations of the outer planets and their satellites. Such observations are of interest for a wide community at the interface between planetology and magnetospheric and heliospheric physics. APIS consists of (i) a high level database, built from planetary auroral observations acquired by the Hubble Space Telescope (HST) since 1997 with its mostly used Far-UltraViolet spectro-imagers, (ii) a dedicated search interface aimed at browsing efficiently this database through relevant conditional search criteria and (iii) the ability to interactively work with the data online through plotting tools developed by the Virtual Observatory (VO) community, such as Aladin and Specview. This service is VO compliant and can therefore also been queried by external search portals of the VO community. The diversity of available data and the capability to sort them out by relevant physical criteria shall in particular facilitate statistical studies, on long-term scales and/or multi-instrumental multi-spectral combined analysis.",
     "contributors": [
-        "Florence Henry", 
+        "Florence Henry",
         "PADC"
     ],
     "creator": [
@@ -276,7 +266,6 @@
     "shortname": "IitateHF",
     "schema": "iitatehf",
     "identifier": "ivo://tohoku.univ.jp/iitate/q/epn_core"
-
 },
 {
     "publisher": "Tohoku University",
@@ -293,7 +282,6 @@
     "shortname": "IPRT",
     "schema": "iprt",
     "identifier": "ivo://tohoku.univ.jp/pparc_r/q/epn_core"
-
 },
 {
     "publisher": "Tohoku University",
@@ -312,9 +300,7 @@
     "shortname": "hisaki",
     "schema": "hisaki",
     "identifier": "ivo://tohoku.univ.jp/hisaki/q/epn_core"
-
 },
-
 {
     "publisher": "IWF",
     "description": "IMPEx simulation runs provided by FMI, LATMOS and SINP",
@@ -409,13 +395,12 @@
     "schema": "m3",
     "identifier": "ivo://jacobsuni/m3/q/epn_core"
 },
-
 {
     "publisher": "LMD",
     "description": "MCD is a database of atmospheric statistics compiled from Global Climate Model (GCM) numerical simulation of Martian atmosphere (http://www-mars.lmd.jussieu.fr). The GCM computes in 3D the atmospheric circulation and climate taking into account radiative transfer through the gaseous atmospheres and the dust and ice aerosols, includes a representation of the CO2 ice condensation and sublimation on the ground and in the atmosphere, simulates the water cycle (with modelling of cloud microphysics), the dust multisize particle transport, the atmospheric composition controlled by the photochemistry and the local non-condensible gas enrichment and depletion induced by CO2 condensation and sublimation, and has been extended into the thermosphere and to model ionospheric processes (due to chemistry). The database extends up to exobase (the top of the thermosphere, roughly at 300km in altitude); in addition to statistics on temperature, wind, pressure, radiative fluxes, it provides data such as atmospheric composition (including dust water vapor and ice content) and make use of 'dust and Extreme Ultra Violet (EUV) scenarios' to represent the variation of dust in the atmosphere and solar EUV conditions.",
     "contributors": [
-        "Ehouarn Millour", 
-        "Stéphane Erard", 
+        "Ehouarn Millour",
+        "Stéphane Erard",
         "PADC"
     ],
     "creator": [
@@ -433,7 +418,7 @@
     "publisher": "LESIA",
     "description": "RadioJOVE Data Archive",
     "contributors": [
-        "Renaud Savalle", 
+        "Renaud Savalle",
         "PADC"
     ],
     "creator": [
@@ -450,7 +435,7 @@
     "publisher": "LESIA",
     "description": "VIRTIS/Venus Express demonstrator service: imaging spectroscopy of Venus in the visible and the near infrared. This lists all the calibrated files from the nominal mission for the three channels M-vis, M-IR and H. Files are described according to the extended index in the PSA archive, with links to the PSA: ftp://psa.esac.esa.int/pub/mirror/VENUS-EXPRESS/VIRTIS/VEX-V-VIRTIS-2-3-V3.0/. See Piccioni et al, 2007, VIRTIS: The Visible and Infrared Thermal Imaging Spectrometer, ESA SP 1295.",
     "contributors": [
-        "Florence Henry", 
+        "Florence Henry",
         "PADC"
     ],
     "creator": [
@@ -578,7 +563,8 @@
     "shortname": "PSWS Transplanet",
     "schema": "transplanet",
     "identifier": "ivo://cdpp/transplanet"
-},{
+},
+{
     "publisher": "Paris Astronomical Data Centre - IMCCE",
     "description": "This service provides orbital elements, of Near-Earth objects. The database provides for each asteroid, orbital elements and their uncertainty, the state-vector, information about the observations, MOID, and the covariance matrix of the system, as well as magnitude information. The database is updated daily.",
     "contributors": [
@@ -635,7 +621,7 @@
     "shortname": "mpc",
     "schema": "mpc",
     "identifier": "ivo://org.gavo.dc/mpc/q/epn_core"
-}, 
+},
 {
     "publisher": "University College London",
     "description": "UCL Magnetodisc Model for Jupiter and Saturn. The data consists of the magnetic field in JMAG spherical coordinates. For details and further references, see: Achilleos N. A., Guio, P. and Arridge, C. S., 2010, A model of force balance in Saturn's magnetodisc, MNRAS, 401, 2349-2371 [2010MNRAS.401.2349A]",
@@ -651,7 +637,6 @@
     "shortname": "MDISC",
     "schema": "mdisc",
     "identifier": "ivo://astro.ucl.ac.uk/mdisc/q/collection"
-
 },
 {
     "publisher": "Paris Astronomical Data Centre - LESIA",
@@ -752,7 +737,6 @@
     "shortname": "hst_planeto",
     "schema": "hst_planeto",
     "identifier": "ivo://vopdc.obspm/lesia/hst_planeto/epn"
-
 }
 ]
 }

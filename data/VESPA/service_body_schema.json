@@ -1,0 +1,27 @@
+{
+  "mars": [
+    "pds_speclib",
+    "crism",
+    "mars_craters",
+    "mcd",
+    "spicam"
+  ],
+  "jupiter": [
+    "nda",
+    "lofar_jupiter"
+  ],
+  "venus": [
+    "vexmag_epn20",
+    "vvex",
+    "soir"
+  ],
+  "planets": [
+    "spectro_planets",
+    "usgs_wms",
+    "psa",
+    "hst_planeto"
+  ],
+  "moon": [
+    "m3"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "crism": {
+    "id": ["granule_uid", "granule_gid", "obs_id"],
+    "name": "target_name",
+    "bbox": ["c1min","c2min","c1max","c2max"],
+    "geometry": "s_region",
+    "thumbnail": "thumbnail_url",
+    "reference": "bib_reference"
+  }
+}
