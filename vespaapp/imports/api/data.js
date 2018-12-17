@@ -3,15 +3,17 @@ import { Mongo } from 'meteor/mongo';
 export const Mars = new Mongo.Collection('mars');
 
 if (Meteor.isServer) {
-  // This code only runs on the server
-  // Only publish tasks that are public or belong to the current user
   Meteor.publish('mars', function dataPublication({ mapBounds }) {
+    var cursor;
     if (mapBounds) {
-      console.log('Bounds: ' + mapBounds);
       var west = mapBounds[0][0];
+      west = west <= -180 ? -179.999 : west;
       var south = mapBounds[0][1];
+      south = south <= -90 ? -89.999 : south;
       var east = mapBounds[1][0];
+      east = east >= 180 ? 179.999 : east;
       var north = mapBounds[1][1];
+      north = north >= 90 ? 89.999 : north;
       var boxPolygon = [
         [
           [west,south],
@@ -21,19 +23,28 @@ if (Meteor.isServer) {
           [west,south],
         ]
       ];
-      console.log('Bounds: ' + boxPolygon);
-      return Mars.find({
+      // console.log(boxPolygon);
+      cursor = Mars.find({
         // geometry: { $geoWithin: { $box: mapBounds }}
         geometry: {
+          
           $geoIntersects: {
             $geometry: {
               type: "Polygon",
-              coordinates: boxPolygon
+              coordinates: boxPolygon,
+
+              // This MongoDB's "Big-Polygon" query feature
+              crs: {
+                type: "name",
+                properties: { name: "urn:x-mongodb:crs:strictwinding:EPSG:4326" }
+              }
             }
           }
         }
       });
+    } else {
+      cursor = Mars.find({});
     }
-    return Mars.find({});
+    return cursor;
   });
 }

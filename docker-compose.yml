@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  mdb:
+    image: mongo:4.0
+    container_name: mdb
+    expose:
+      - "27017"
+    volumes:
+      - ./data:/work/data
+    working_dir: /work/data
+
+  app:
+    image: "meteor:latest"
+    container_name: vespa-app
+    command: meteor
+    environment:
+      LC_ALL: "C.UTF-8"
+      MONGO_URL: "mongodb://mdb:27017/"
+    links:
+      - mdb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./vespaapp:/work/app
+      # - logvolume:/var/log
+    working_dir: /work/app
+
+# volumes:
+#   logvolume: {}

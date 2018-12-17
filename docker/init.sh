@@ -5,11 +5,13 @@
 echo "=========================================================="
 echo "- There is a user named 'user', you may want to use"
 echo "- Meteor is installed in 'user' environment"
+echo '$ su - user'
 echo
 echo "-- As 'user', do:"
 echo '$ export PATH=$HOME/.meteor:$PATH'
 echo
 echo "- The App should be available at '/app'"
+echo '$ cd /app'
 echo
 echo "- First install Node' packages and then run the App:"
 echo '$ meteor npm install'

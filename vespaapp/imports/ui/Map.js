@@ -32,11 +32,11 @@ class Map extends React.Component {
     */
 
     // create map
-    this.map = L.map('map', {
+    var map = L.map('map', {
                               center: [0, 0],
                               maxBounds:[[-90,-180],[90,180]],
-                              zoom: 3,
-                              minZoom: 1
+                              zoom: 2,
+                              minZoom: 1,
                             });
 
     // OpenPlanetary citation
@@ -51,37 +51,37 @@ class Map extends React.Component {
                                               autoZIndex: true,
                                               attribution: basemap_Mars_attribution}
                                             );
-    basemapOPMVector.addTo(this.map);
+    basemapOPMVector.addTo(map);
 
     points.forEach((point,i) => {
       var lonlat = point.location;
       var marker = L.marker([lonlat[1],lonlat[0]], {
         title: point.name,
       });
-      marker.addTo(this.map);
+      marker.addTo(map);
     });
 
     lines.forEach((line,i) => {
       var lonlat = line.location;
       var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
       var marker = L.polyline(latlon);
-      marker.addTo(this.map);
+      marker.addTo(map);
     });
 
     polygons.forEach((polygon,i) => {
       var lonlat = polygon.location;
-      // Leaflet-Polygon doesn't like the first-and-last points repeated standard!
+      // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
       var latlon = lonlat.map((coordArray) => {
         return coordArray.slice(0,-1).map((coord) => {
             return [coord[1],coord[0]] });
       });
       var marker = L.polygon(latlon);
-      marker.addTo(this.map);
+      marker.addTo(map);
     });
 
     // Events
-    this.map.on('moveend', (event) => {
-      let bounds = this.map.getBounds();
+    map.on('moveend', (event) => {
+      let bounds = map.getBounds();
       let bbox = [
         [bounds.getWest(), bounds.getSouth()],
         [bounds.getEast(), bounds.getNorth()]
@@ -89,7 +89,7 @@ class Map extends React.Component {
       Session.set('mapBounds', bbox);
     });
 
-    mapGlobal.map = this.map;
+    mapGlobal.map = map;
   }
 }
 export default Map;
