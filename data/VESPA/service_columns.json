@@ -1,7 +1,12 @@
 {
-  "crism": {
+  "tap": {
     "id": ["granule_uid", "granule_gid", "obs_id"],
+    "datatype": "dataproduct_type",
     "name": "target_name",
+    "class": "target_class",
+    "frametype": "spatial_frame_type",
+    "epoch": ["time_min","time_max"],
+    "wavelength": ["spectral_range_min","spectral_range_max"],
     "bbox": ["c1min","c2min","c1max","c2max"],
     "geometry": "s_region",
     "thumbnail": "thumbnail_url",
