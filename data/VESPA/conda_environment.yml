@@ -1,0 +1,47 @@
+name: vo
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - appnope=0.1.0=py37_1000
+  - backcall=0.1.0=py_0
+  - ca-certificates=2018.11.29=ha4d7672_0
+  - certifi=2018.11.29=py37_1000
+  - decorator=4.3.0=py_0
+  - ipython=7.2.0=py37h24bf2e0_1000
+  - ipython_genutils=0.2.0=py_1
+  - jedi=0.13.1=py37_1000
+  - libffi=3.2.1=hfc679d8_5
+  - ncurses=6.1=hfc679d8_1
+  - openssl=1.0.2p=h470a237_1
+  - parso=0.3.1=py_0
+  - pexpect=4.6.0=py37_1000
+  - pickleshare=0.7.5=py37_1000
+  - pip=18.1=py37_1000
+  - prompt_toolkit=2.0.7=py_0
+  - ptyprocess=0.6.0=py37_1000
+  - pygments=2.3.0=py_0
+  - python=3.7.1=h46c1a51_0
+  - readline=7.0=haf1bffa_1
+  - setuptools=40.6.2=py37_0
+  - six=1.11.0=py37_1001
+  - sqlite=3.25.3=hb1c47c0_0
+  - tk=8.6.9=ha92aebf_0
+  - traitlets=4.3.2=py37_1000
+  - wcwidth=0.1.7=py_1
+  - wheel=0.32.3=py37_0
+  - xz=5.2.4=h470a237_1
+  - zlib=1.2.11=h470a237_3
+  - pip:
+    - astropy==3.0.5
+    - chardet==3.0.4
+    - idna==2.7
+    - numpy==1.15.4
+    - pandas==0.23.4
+    - python-dateutil==2.7.5
+    - pytz==2018.7
+    - pyvo==0.9.2
+    - requests==2.20.1
+    - urllib3==1.24.1
+prefix: /anaconda/envs/vo
+
