@@ -43,19 +43,23 @@ def run(option_schema, limit_table_size=None,
             break
 
     assert sanity_check_schema is True, \
-            "Schema '{}' not found in '{}'".format(option_schema, services_list_filename)
+        "Schema '{}' not found in '{}'".format(option_schema, services_list_filename)
 
     log.debug("Schema: {}".format(option_schema))
 
     # (Pre)set the columns we want to download.
     # So far, we have only "tap" defined since all services publish the same columns
     #
-    services_columns_filename='service_columns.json'
+    services_columns_filename = 'service_columns.json'
     with open(services_columns_filename, 'r') as fp:
         services_columns = json.load(fp)
 
+    columns_schema = 'tap'  # this is the default columns-schema
+    if option_schema in services_columns:
+        columns_schema = option_schema
+
     option_columns = []
-    for k,v in services_columns['tap'].items():
+    for k,v in services_columns[columns_schema].items():
         if isinstance(v, list):
             option_columns.extend(v)
         else:
@@ -63,7 +67,7 @@ def run(option_schema, limit_table_size=None,
             option_columns.append(v)
 
     assert len(option_columns), \
-            "No columns selected! Check '{}'".format(services_columns_filename)
+        "No columns selected! Check '{}'".format(services_columns_filename)
 
     log.debug("Columns: {}".format(','.join(option_columns)))
 
