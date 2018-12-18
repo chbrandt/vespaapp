@@ -23,7 +23,7 @@ function App({ dataLoading, points }) {
           </h1>
         </header>
         <main>
-          <Map />
+          <Map dataPoints={points}/>
           <List dataPoints={points}/>
         </main>
         <footer>
