@@ -1,12 +1,19 @@
 html, body {
   height: 100%;
   width: 100%;
+  /* background-color: #004680; */
+  background-color: #0B62A4;
+  color: #B5D4EC;
 }
 
 header, footer {
-    height: 10vh;
-    width: 100%;
-    max-width: 100%;
+  height: 10vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+h1 {
+  padding-left: 1%;
 }
 
 main {
@@ -27,7 +34,7 @@ main {
 #list {
     height: 100%;
     width: 25%;
-    background: white;
+    background: #508DBB;
     float: right;
     border: solid black 1px;
     overflow-y: scroll;

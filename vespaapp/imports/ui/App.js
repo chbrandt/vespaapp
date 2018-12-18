@@ -18,7 +18,9 @@ function App({ dataLoading, points }) {
   return (
       <div id="app_layout">
         <header>
-          VESPA:app
+          <h1>
+            VESPA.<i>app</i>
+          </h1>
         </header>
         <main>
           <Map />
