@@ -9,6 +9,14 @@ Main goals are:
 * Catch (engage) new non-traditional science users to use both app & analysis tools
 * Make data more familiar to student/outreach users
 
+## Usability
+
+As of version `0.1-alpha` the app has the main components in place, but a good
+amount of mechanics has yet to be implemented.
+The technical user is referred to check the [wiki] pages for a detailed
+description of the App's structure, development status and data/work flow.
+
 /.\
 
 [vespa]: http://voparis-europlanet-dev.obspm.fr
+[wiki]: https://github.com/chbrandt/vespaapp/wiki
