@@ -6,30 +6,27 @@ import DataItem from './DataItem.js';
 import { Mars } from '../api/data.js';
 
 class List extends React.Component {
-  handleSubmit(event) {
-    event.preventDefault();
-
-    // Find the text field via the React ref
-    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
-    Mars.insert({
-      name: text,
-    });
-
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '',
+      items: []
+    }
   }
 
   render() {
     return (
       <div id="list" className="container">
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input style={{"width":"100%"}}
+
+        <form>
+          <input
+            placeholder="Type to filter entries"
+            style={{"width":"100%"}}
             type="text"
-            ref="textInput"
-            placeholder="Type to add new entries"
+            onChange={this.filterList.bind(this)}
           />
         </form>
+
         <ul>
           {this.renderItems()}
         </ul>
@@ -38,12 +35,30 @@ class List extends React.Component {
   }
 
   renderItems() {
-    let DataItems = this.props.dataPoints;
+    // hack to work around empty list at the very beginning
+    var DataItems = !(this.state.query || this.state.items.length)
+                    ? this.props.dataPoints
+                    : this.state.items;
     return DataItems.map((item) => {
       return (
         <DataItem key={item._id} text={item.name}/>
       )
     });
+  }
+
+  filterList(event) {
+    this.setState({ query: event.target.value });
+    var filteredList;
+    if (this.state.query) {
+      filteredList = this.state.items;
+      filteredList = filteredList.filter((item) => {
+        return item.name.toLowerCase().search(
+          event.target.value.toLowerCase()) !== -1;
+      });
+    } else {
+      filteredList = this.props.dataPoints;
+    }
+    this.setState({items: filteredList});
   }
 }
 export default List;

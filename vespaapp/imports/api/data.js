@@ -1,8 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 
 export const Mars = new Mongo.Collection('mars');
+// export const Items = new Mongo.Collection('items');
 
 if (Meteor.isServer) {
+  // Meteor.publish('items', function dataPublication({ body, mapBounds }) {
   Meteor.publish('mars', function dataPublication({ mapBounds }) {
     var cursor;
     if (mapBounds) {
@@ -27,7 +29,7 @@ if (Meteor.isServer) {
       cursor = Mars.find({
         // geometry: { $geoWithin: { $box: mapBounds }}
         geometry: {
-          
+
           $geoIntersects: {
             $geometry: {
               type: "Polygon",

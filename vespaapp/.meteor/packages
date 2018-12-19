@@ -17,3 +17,5 @@ react-meteor-data
 mongo
 insecure
 session
+accounts-ui
+accounts-password
