@@ -1,9 +1,9 @@
 import React from 'react';
 import { Session } from 'meteor/session';
 
-import {points} from '../data/mars_points.js';
-import {lines} from '../data/mars_linestrings.js';
-import {polygons} from '../data/mars_polygons.js';
+// import {points} from '../data/mars_points.js';
+// import {lines} from '../data/mars_linestrings.js';
+// import {polygons} from '../data/mars_polygons.js';
 
 import L from 'leaflet';
 // require('leaflet/dist/leaflet.css');
@@ -53,31 +53,31 @@ class Map extends React.Component {
                                             );
     basemapOPMVector.addTo(map);
 
-    points.forEach((point,i) => {
-      var lonlat = point.location;
-      var marker = L.marker([lonlat[1],lonlat[0]], {
-        title: point.name,
-      });
-      marker.addTo(map);
-    });
-
-    lines.forEach((line,i) => {
-      var lonlat = line.location;
-      var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
-      var marker = L.polyline(latlon);
-      marker.addTo(map);
-    });
-
-    polygons.forEach((polygon,i) => {
-      var lonlat = polygon.location;
-      // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
-      var latlon = lonlat.map((coordArray) => {
-        return coordArray.slice(0,-1).map((coord) => {
-            return [coord[1],coord[0]] });
-      });
-      var marker = L.polygon(latlon);
-      marker.addTo(map);
-    });
+    // points.forEach((point,i) => {
+    //   var lonlat = point.location;
+    //   var marker = L.marker([lonlat[1],lonlat[0]], {
+    //     title: point.name,
+    //   });
+    //   marker.addTo(map);
+    // });
+    //
+    // lines.forEach((line,i) => {
+    //   var lonlat = line.location;
+    //   var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
+    //   var marker = L.polyline(latlon);
+    //   marker.addTo(map);
+    // });
+    //
+    // polygons.forEach((polygon,i) => {
+    //   var lonlat = polygon.location;
+    //   // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
+    //   var latlon = lonlat.map((coordArray) => {
+    //     return coordArray.slice(0,-1).map((coord) => {
+    //         return [coord[1],coord[0]] });
+    //   });
+    //   var marker = L.polygon(latlon);
+    //   marker.addTo(map);
+    // });
 
     // Events
     map.on('moveend', (event) => {
