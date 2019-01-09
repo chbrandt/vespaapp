@@ -1,23 +1,13 @@
 import React from 'react';
 import { Session } from 'meteor/session';
 
-// import {points} from '../data/mars_points.js';
-// import {lines} from '../data/mars_linestrings.js';
-// import {polygons} from '../data/mars_polygons.js';
-
 import L from 'leaflet';
-// require('leaflet/dist/leaflet.css');
-// With `ecmascript` package the following import should work
-// import 'leaflet/dist/leaflet.css';
 
 var mapGlobal = {};
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      features: props.dataPoints
-    }
   }
 
   render() {
@@ -25,15 +15,6 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
-    /* NOTE
-      From 'https://reactjs.org/docs/react-component.html#componentdidmount':
-        You may call setState() immediately in componentDidMount().
-        It will trigger an extra rendering, but it will happen before the
-        browser updates the screen. (...) It can, however, be necessary for
-        cases like modals and tooltips when you need to measure a DOM node
-        before rendering something that depends on its size or position.
-    */
-
     // create map
     var map = L.map('map', {
                               center: [0, 0],
@@ -92,19 +73,37 @@ class Map extends React.Component {
       Session.set('mapBounds', bbox);
     });
 
-    // mapGlobal.map = map;
     this.map = map;
   }
 
   componentDidUpdate(props) {
     var map = this.map;
-    this.props.dataPoints.forEach((line,i) => {
+
+    this.props.features.points.forEach((point,i) => {
+      var lonlat = point.geometry.coordinates;
+      var marker = L.marker([lonlat[1],lonlat[0]], {
+        title: point.name,
+      });
+      marker.addTo(map);
+    });
+
+    this.props.features.lineStrings.forEach((line,i) => {
       var lonlat = line.geometry.coordinates;
       var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
       var marker = L.polyline(latlon);
       marker.addTo(map);
     });
 
+    this.props.features.polygons.forEach((polygon,i) => {
+      var lonlat = polygon.geometry.coordinates;
+      // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
+      var latlon = lonlat.map((coordArray) => {
+        return coordArray.slice(0,-1).map((coord) => {
+            return [coord[1],coord[0]] });
+      });
+      var marker = L.polygon(latlon);
+      marker.addTo(map);
+    });
   }
 }
 export default Map;

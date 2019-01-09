@@ -36,10 +36,10 @@ class List extends React.Component {
 
   renderItems() {
     // hack to work around empty list at the very beginning
-    var DataItems = !(this.state.query || this.state.items.length)
-                    ? this.props.dataPoints
+    var dataItems = !(this.state.query || this.state.items.length)
+                    ? this.props.items
                     : this.state.items;
-    return DataItems.map((item) => {
+    return dataItems.map((item) => {
       return (
         <DataItem key={item._id} text={item.name}/>
       )
@@ -56,7 +56,7 @@ class List extends React.Component {
           event.target.value.toLowerCase()) !== -1;
       });
     } else {
-      filteredList = this.props.dataPoints;
+      filteredList = this.props.items;
     }
     this.setState({items: filteredList});
   }

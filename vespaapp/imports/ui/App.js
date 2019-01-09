@@ -13,15 +13,17 @@ import Map from './Map.js';
 import List from './List.js';
 import Footer from './Footer.js';
 
-function App({ features }) {
+function App(features) {
   return (
       <div id="app">
 
         <Header />
 
         <main>
-          <Map dataPoints={features}/>
-          <List dataPoints={features}/>
+          <Map features={features}/>
+          <List items={features.points.concat(features.lineStrings,
+                                              features.polygons)}
+          />
         </main>
 
         <Footer />
@@ -38,6 +40,8 @@ export default withTracker( ( {body} ) => {
     })
   ];
   return {
-    features: Mars.find({"geometry.type":"LineString"}, { sort : { "name" : 1 }}).fetch(),
+    points: Mars.find({"geometry.type":"Point"}, { sort : { "name" : 1 }}).fetch(),
+    lineStrings: Mars.find({"geometry.type":"LineString"}, { sort : { "name" : 1 }}).fetch(),
+    polygons: Mars.find({"geometry.type":"Polygon"}, { sort : { "name" : 1 }}).fetch(),
   };
 })(App);
