@@ -38,6 +38,6 @@ export default withTracker( ( {body} ) => {
     })
   ];
   return {
-    features: Mars.find({}).fetch(),
+    features: Mars.find({}, { sort : { "name" : 1 }}).fetch(),
   };
 })(App);
