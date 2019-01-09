@@ -92,7 +92,19 @@ class Map extends React.Component {
       Session.set('mapBounds', bbox);
     });
 
-    mapGlobal.map = map;
+    // mapGlobal.map = map;
+    this.map = map;
+  }
+
+  componentDidUpdate(props) {
+    var map = this.map;
+    this.props.dataPoints.forEach((line,i) => {
+      var lonlat = line.geometry.coordinates;
+      var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
+      var marker = L.polyline(latlon);
+      marker.addTo(map);
+    });
+
   }
 }
 export default Map;

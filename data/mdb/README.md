@@ -19,6 +19,15 @@ will create a "`2dsphere`" (MongoDB) index after ingestion.
 The fields `name` and `id` will be used by our app, `properties` is just a
 placeholder so far, its contents is not being used.
 
+The `type` specifier must be one of [GeoJSON types](https://docs.mongodb.com/manual/reference/geojson/):
+* Point
+* LineString
+* Polygon
+* MultiPoint
+* MultiLineString
+* MultiPolygon
+
+
 ```bash
 $ mongoimport -d meteor -c mars --jsonArray mars_points.json
 $ mongoimport -d meteor -c mars --jsonArray mars_linestrings.json
