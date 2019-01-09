@@ -13,15 +13,15 @@ import Map from './Map.js';
 import List from './List.js';
 import Footer from './Footer.js';
 
-function App({ points }) {
+function App({ features }) {
   return (
       <div id="app">
 
         <Header />
 
         <main>
-          <Map dataPoints={points}/>
-          <List dataPoints={points}/>
+          <Map dataPoints={features}/>
+          <List dataPoints={features}/>
         </main>
 
         <Footer />
@@ -38,6 +38,6 @@ export default withTracker( ( {body} ) => {
     })
   ];
   return {
-    points: Mars.find({}).fetch(),
+    features: Mars.find({}).fetch(),
   };
 })(App);
