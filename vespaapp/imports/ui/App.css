@@ -31,6 +31,14 @@ main {
   box-sizing: border-box;
 }
 
+.item-name {
+  display: inline-block;
+}
+
+.item-save {
+  float: right;
+}
+
 #signin {
   padding-left: 100px;
 }

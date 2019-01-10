@@ -3,8 +3,6 @@ import { Session } from 'meteor/session';
 
 import L from 'leaflet';
 
-var mapGlobal = {};
-
 class Map extends React.Component {
   constructor(props) {
     super(props);
@@ -107,9 +105,3 @@ class Map extends React.Component {
   }
 }
 export default Map;
-
-// This is not being used now, but I want to keep it here because my memory
-export function mapCallback() {
-  if(mapGlobal.map) {
-  }
-}

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import DataItem from './DataItem.js';
 
+import { Notes } from '../api/notes.js';
 import { Mars } from '../api/data.js';
 
 class List extends React.Component {
@@ -41,7 +42,7 @@ class List extends React.Component {
                     : this.state.items;
     return dataItems.map((item) => {
       return (
-        <DataItem key={item._id} text={item.name}/>
+        <DataItem key={item.id} data={item} user={this.props.currentUser}/>
       )
     });
   }

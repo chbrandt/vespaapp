@@ -1,13 +1,8 @@
 # The App
 
-The App structure is shown in the following figures.
-The first figure presents the agents, big figures of the app environment, and
-there relation in data exchange.
-Second figure scratch the technical details: language, frameworks or libraries
-used make the data flow.
+The App basic structure is shown in the following figure, it presents the software agents and there relation in data flow.
 
-![App agents](assets/diagram_app_components/diagram_app_components.001.jpg)
-![App software](assets/diagram_app_components/diagram_app_components.002.jpg)
+![App agents](assets/diagram_app_components/diagram_app_components.001.jpeg)
 
 ## Overview
 
@@ -28,3 +23,8 @@ To better structure the components and make them reactive to data changes,
 Data persistence is managed by [MongoDB](https://www.mongodb.com/).
 The interactive map is provided by [Leaflet](https://leafletjs.com/).
 And the App is responsive with the help of [Bootstrap](https://getbootstrap.com/).
+
+The figure below scratch the technical details: language, frameworks or libraries
+used.
+
+![App software](assets/diagram_app_components/diagram_app_components.002.jpeg)

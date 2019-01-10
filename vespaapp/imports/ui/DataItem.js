@@ -1,10 +1,15 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+
+import { Notes } from '../api/notes.js';
 
 class DataItem extends React.Component {
   constructor(props) {
     super(props);
     /*
     Props are expected to be:
+    - key
+      -
     - id
       - granule_uid
       - granule_gid
@@ -23,20 +28,47 @@ class DataItem extends React.Component {
     - reference
       - bib_reference
     */
+    this.state = {
+      saved: false
+    }
   }
 
   render() {
     return (
-      <li key={this.key}>
-        <p>{this.props.text}</p>
+      <li>
+        <span>
+          <h6 className="item-name">{this.props.data.name}</h6>
+          { this.props.user ?
+            <input className="item-save"
+              type="checkbox"
+              readOnly
+              checked={this.state.saved}
+              onClick={this.toggleSaved.bind(this)}
+            /> : ''
+          }
+        </span>
       </li>
     );
-    // return (
-    //   <li key={this.props.id}>
-    //     <div className="thumbnail" />
-    //     <div className="reference" />
-    //   </li>
-    // );
+  }
+
+  toggleSaved() {
+    if (!this.state.saved) {
+      Notes.insert({
+        collection: 'mars',
+        _id: 'mars_' + this.props.data.id,
+        item: this.props.data.name,
+        savedAt: new Date(),
+        owner: Meteor.userId(),
+        username: Meteor.user().username
+      });
+    } else {
+      Notes.delete({
+        _id: 'mars_' + this.props.data.id
+      });
+    }
+    this.setState({
+      saved: !this.state.saved
+    })
   }
 }
 export default DataItem;
