@@ -62,7 +62,7 @@ class DataItem extends React.Component {
         username: Meteor.user().username
       });
     } else {
-      Notes.delete({
+      Notes.remove({
         _id: 'mars_' + this.props.data.id
       });
     }
