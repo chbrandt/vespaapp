@@ -6,6 +6,18 @@ import L from 'leaflet';
 class Map extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      featuresCount: {
+        points: 0,
+        lineStrings: 0,
+        polygons: 0
+      },
+      featureIDs: {
+        points: [],
+        lineStrings: [],
+        polygons: []
+      }
+    }
   }
 
   render() {
@@ -35,32 +47,6 @@ class Map extends React.Component {
                                             );
     basemapOPMVector.addTo(map);
 
-    // points.forEach((point,i) => {
-    //   var lonlat = point.location;
-    //   var marker = L.marker([lonlat[1],lonlat[0]], {
-    //     title: point.name,
-    //   });
-    //   marker.addTo(map);
-    // });
-    //
-    // lines.forEach((line,i) => {
-    //   var lonlat = line.location;
-    //   var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
-    //   var marker = L.polyline(latlon);
-    //   marker.addTo(map);
-    // });
-    //
-    // polygons.forEach((polygon,i) => {
-    //   var lonlat = polygon.location;
-    //   // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
-    //   var latlon = lonlat.map((coordArray) => {
-    //     return coordArray.slice(0,-1).map((coord) => {
-    //         return [coord[1],coord[0]] });
-    //   });
-    //   var marker = L.polygon(latlon);
-    //   marker.addTo(map);
-    // });
-
     // Events
     map.on('moveend', (event) => {
       let bounds = map.getBounds();
@@ -74,34 +60,79 @@ class Map extends React.Component {
     this.map = map;
   }
 
+  shouldComponentUpdate(newProps, newState) {
+    var needUpdate = !(
+      newProps.features.points.length === this.state.featuresCount.points &&
+      newProps.features.lineStrings.length === this.state.featuresCount.lineStrings &&
+      newProps.features.polygons.length === this.state.featuresCount.polygons
+    )
+    return needUpdate;
+  }
+
   componentDidUpdate(props) {
     var map = this.map;
 
+    var cntPoints = 0;
+    var pointsIn = this.state.featureIDs.points;
     this.props.features.points.forEach((point,i) => {
-      var lonlat = point.geometry.coordinates;
-      var marker = L.marker([lonlat[1],lonlat[0]], {
-        title: point.name,
-      });
-      marker.addTo(map);
+      if (pointsIn.indexOf(point.id) === -1) {
+        var lonlat = point.geometry.coordinates;
+        var marker = L.marker([lonlat[1],lonlat[0]], {
+          title: point.name,
+        });
+        marker.addTo(map);
+        pointsIn.push(point.id);
+      }
     });
+    cntPoints = this.props.features.points.length;
 
+    var cntLineStrings = 0;
+    var linesIn = this.state.featureIDs.lineStrings;
     this.props.features.lineStrings.forEach((line,i) => {
-      var lonlat = line.geometry.coordinates;
-      var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
-      var marker = L.polyline(latlon);
-      marker.addTo(map);
+      if (linesIn.indexOf(line.id) === -1) {
+        var lonlat = line.geometry.coordinates;
+        var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
+        var marker = L.polyline(latlon);
+        marker.addTo(map);
+        linesIn.push(line.id);
+      }
     });
+    cntLineStrings = this.props.features.lineStrings.length;
 
+    var cntPolygons = 0;
+    var polygonsIn = this.state.featureIDs.polygons;
     this.props.features.polygons.forEach((polygon,i) => {
-      var lonlat = polygon.geometry.coordinates;
-      // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
-      var latlon = lonlat.map((coordArray) => {
-        return coordArray.slice(0,-1).map((coord) => {
-            return [coord[1],coord[0]] });
-      });
-      var marker = L.polygon(latlon);
-      marker.addTo(map);
+      if (polygonsIn.indexOf(polygon.id) === -1) {
+        var lonlat = polygon.geometry.coordinates;
+        // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
+        var latlon = lonlat.map((coordArray) => {
+          return coordArray.slice(0,-1).map((coord) => {
+              return [coord[1],coord[0]] });
+        });
+        var marker = L.polygon(latlon);
+        marker.addTo(map);
+        polygonsIn.push(polygon.id);
+      }
     });
+    cntPolygons = this.props.features.polygons.length;
+
+    this.setState({
+      featuresCount: {
+        points: cntPoints,
+        lineStrings: cntLineStrings,
+        polygons: cntPolygons
+      },
+      featuresIDs: {
+        points: pointsIn,
+        lineStrings: linesIn,
+        polygons: polygonsIn
+      }
+    });
+    // alert("Number of features: " + cntPoints + "," + cntLineStrings + "," + cntPolygons);
+    alert("Number of features: " + this.state.featuresCount.points
+                                 + "," + this.state.featuresCount.lineStrings
+                                 + "," + this.state.featuresCount.polygons);
+
   }
 }
 export default Map;
