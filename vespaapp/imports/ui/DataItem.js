@@ -29,7 +29,7 @@ class DataItem extends React.Component {
       - bib_reference
     */
     this.state = {
-      saved: false
+      saved: props.isSaved
     }
   }
 
@@ -55,6 +55,7 @@ class DataItem extends React.Component {
     if (!this.state.saved) {
       Notes.insert({
         collection: 'mars',
+        id: this.props.data.id,
         _id: 'mars_' + this.props.data.id,
         item: this.props.data.name,
         savedAt: new Date(),

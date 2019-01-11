@@ -24,6 +24,7 @@ function App({notes, features, currentUser}) {
           <List items={features.points.concat(features.lineStrings,
                                               features.polygons)}
                 currentUser={currentUser}
+                notes={notes}
           />
         </main>
 
@@ -35,11 +36,18 @@ function App({notes, features, currentUser}) {
 
 export default withTracker( ( {body} ) => {
   const handle = [
-    Meteor.subscribe('notes'),
-    Meteor.subscribe(body, { mapBounds: Session.get('mapBounds') })
+    Meteor.subscribe('notes', {}, function() {
+      console.log("Number of notes: " + Notes.find({}).fetch().length)
+    }),
+    Meteor.subscribe(body, { mapBounds: Session.get('mapBounds') }, function() {
+      console.log("Number of items: " + Mars.find({}).fetch().length)
+    })
   ];
+  var notes = Notes.find({}).fetch();
+
+
   return {
-    notes: Notes.find({}).fetch(),
+    notes: notes,
     features: {
       points: Mars.find({"geometry.type":"Point"}, { sort : { "name" : 1 }}).fetch(),
       lineStrings: Mars.find({"geometry.type":"LineString"}, { sort : { "name" : 1 }}).fetch(),

@@ -41,8 +41,12 @@ class List extends React.Component {
                     ? this.props.items
                     : this.state.items;
     return dataItems.map((item) => {
+      var saved = this.props.notes.find((note) => {
+        // return string(note.id)===string(item.id);
+        return note.id === item.id;
+      }) ? true : false;
       return (
-        <DataItem key={item.id} data={item} user={this.props.currentUser}/>
+        <DataItem key={item.id} data={item} user={this.props.currentUser} isSaved={saved}/>
       )
     });
   }
