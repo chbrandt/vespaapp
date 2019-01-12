@@ -17,7 +17,7 @@ class List extends React.Component {
 
   render() {
     return (
-      <div id="list" className="container">
+      <div id="list" className="col-3">
 
         <form>
           <input
@@ -28,7 +28,7 @@ class List extends React.Component {
           />
         </form>
 
-        <ul>
+        <ul className="list-group">
           {this.renderItems()}
         </ul>
       </div>

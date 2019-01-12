@@ -4,7 +4,7 @@ import AccountsUIWrapper from './AccountsUIWrapper.js';
 
 export default function Header() {
   return (
-    <header>
+    <header className="container-fluid">
       <h1>
         VESPA.<i>app</i>
       </h1>

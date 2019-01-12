@@ -8,8 +8,8 @@ html, body {
 header, footer {
   height: 10vh;
   min-height: fit-content;
-  width: 100%;
-  max-width: 100%;
+  /* width: 100%;
+  max-width: 100%; */
 }
 
 h1 {
@@ -27,9 +27,9 @@ main {
   padding-right: 1%;
 }
 
-.container {
+/* .container {
   box-sizing: border-box;
-}
+} */
 
 .item-name {
   display: inline-block;

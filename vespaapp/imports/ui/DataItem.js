@@ -35,9 +35,11 @@ class DataItem extends React.Component {
 
   render() {
     return (
-      <li>
-        <span>
+      <button type="button" className="list-group-item list-group-item-action"
+        onClick={this.itemClicked.bind(this)}
+        >
           <h6 className="item-name">{this.props.data.name}</h6>
+          <span>
           { this.props.user ?
             <input className="item-save"
               type="checkbox"
@@ -47,10 +49,14 @@ class DataItem extends React.Component {
             /> : ''
           }
         </span>
-      </li>
+      </button>
     );
   }
 
+  itemClicked() {
+    alert(String(this.props.data.name) + ": I was clicked!");
+  }
+  
   toggleSaved() {
     if (!this.state.saved) {
       Notes.insert({

@@ -21,7 +21,7 @@ class Map extends React.Component {
   }
 
   render() {
-    return <div id="map" className="container"></div>;
+    return <div id="map" className="col-9"></div>;
   }
 
   componentDidMount() {
@@ -80,6 +80,7 @@ class Map extends React.Component {
         var marker = L.marker([lonlat[1],lonlat[0]], {
           title: point.name,
         });
+        marker.bindPopup(point.name);
         marker.addTo(map);
         pointsIn.push(point.id);
       }
@@ -93,6 +94,7 @@ class Map extends React.Component {
         var lonlat = line.geometry.coordinates;
         var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
         var marker = L.polyline(latlon);
+        marker.bindPopup(line.name);
         marker.addTo(map);
         linesIn.push(line.id);
       }
@@ -110,6 +112,7 @@ class Map extends React.Component {
               return [coord[1],coord[0]] });
         });
         var marker = L.polygon(latlon);
+        marker.bindPopup(polygon.name);
         marker.addTo(map);
         polygonsIn.push(polygon.id);
       }
@@ -129,7 +132,7 @@ class Map extends React.Component {
       }
     });
     // alert("Number of features: " + cntPoints + "," + cntLineStrings + "," + cntPolygons);
-    alert("Number of features: " + this.state.featuresCount.points
+    console.log("Number of features: " + this.state.featuresCount.points
                                  + "," + this.state.featuresCount.lineStrings
                                  + "," + this.state.featuresCount.polygons);
 

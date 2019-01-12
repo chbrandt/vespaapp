@@ -15,22 +15,13 @@ import Footer from './Footer.js';
 
 function App({notes, features, currentUser}) {
   return (
-      <div id="app">
+    <div id="app">
 
-        <Header />
+      <Header />
+      <Main notes={notes} features={features} currentUser={currentUser}/>
+      <Footer />
 
-        <main>
-          <Map features={features}/>
-          <List items={features.points.concat(features.lineStrings,
-                                              features.polygons)}
-                currentUser={currentUser}
-                notes={notes}
-          />
-        </main>
-
-        <Footer />
-
-      </div>
+    </div>
   );
 }
 
@@ -45,7 +36,6 @@ export default withTracker( ( {body} ) => {
   ];
   var notes = Notes.find({}).fetch();
 
-
   return {
     notes: notes,
     features: {
@@ -56,3 +46,17 @@ export default withTracker( ( {body} ) => {
     currentUser: Meteor.user()
   };
 })(App);
+
+
+function Main({notes, features, currentUser}) {
+  return (
+    <main className="container-fluid">
+      <Map features={features}/>
+      <List items={features.points.concat(features.lineStrings,
+                                          features.polygons)}
+            currentUser={currentUser}
+            notes={notes}
+      />
+    </main>
+  );
+}
