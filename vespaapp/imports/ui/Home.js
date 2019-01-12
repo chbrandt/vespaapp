@@ -9,7 +9,6 @@ import { Mars } from '../api/data.js';
 import './App.css';
 
 import Header from './Header.js';
-import Map from './Map.js';
 import List from './List.js';
 import Footer from './Footer.js';
 
@@ -18,7 +17,15 @@ function App({notes, features, currentUser}) {
     <div id="app">
 
       <Header />
-      <Main notes={notes} features={features} currentUser={currentUser}/>
+      <div className="card">
+        <a href="/mars" className="card-body">
+          <div className="row">
+            <div className="col-12">
+              <h3>Mars</h3>
+            </div>
+          </div>
+        </a>
+      </div>
       <Footer />
 
     </div>
@@ -53,7 +60,6 @@ export default withTracker( ( {body} ) => {
 function Main({notes, features, currentUser}) {
   return (
     <main className="container-fluid">
-      <Map features={features}/>
       <List items={features.points.concat(features.lineStrings,
                                           features.polygons)}
             currentUser={currentUser}

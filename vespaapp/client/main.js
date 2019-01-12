@@ -1,6 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
+// import React from 'react';
+import ReactDOM from 'react-dom';
+import { renderRoutes } from '../imports/startup/client/routes.js';
 
 // Load Planetary data interface
 import '../imports/api/data.js';
@@ -12,5 +13,6 @@ import '../imports/startup/accounts-config.js';
 import App from '../imports/ui/App.js';
 
 Meteor.startup(() => {
-  ReactDOM.render(<App body={'mars'} />, document.getElementById("render-target"));
+  // ReactDOM.render(<App body={'mars'} />, document.getElementById("render-target"));
+  ReactDOM.render(renderRoutes(), document.getElementById("render-target"));
 });
