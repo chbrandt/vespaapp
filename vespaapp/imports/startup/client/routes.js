@@ -13,11 +13,11 @@ import App from '../../ui/App.js';
 
 const browserHistory = createBrowserHistory();
 
-export const renderRoutes = () => (
+export const renderRoutes = (bodies) => (
   <Router history={browserHistory}>
     <Switch>
       <Route exact path="/" component={Home}/>
-      <Route exact path="/mars" component={App}/>
+      {renderBodyRoutes(bodies)}
     </Switch>
   </Router>
 );
@@ -25,3 +25,11 @@ export const renderRoutes = () => (
       // <Route exact path="/signin" component={AuthPageSignIn}/>
       // <Route exact path="/join" component={AuthPageJoin}/>
       // <Route component={NotFoundPage}/>
+
+function renderBodyRoutes(bodies) {
+  return bodies.map((body) => {
+    return (
+      <Route exact path={body} component={App} key={body}/>
+    );
+  })
+}

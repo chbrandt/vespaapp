@@ -13,6 +13,7 @@ import '../imports/startup/accounts-config.js';
 import App from '../imports/ui/App.js';
 
 Meteor.startup(() => {
+  var bodies = ['/mars'];
   // ReactDOM.render(<App body={'mars'} />, document.getElementById("render-target"));
-  ReactDOM.render(renderRoutes(), document.getElementById("render-target"));
+  ReactDOM.render(renderRoutes(bodies), document.getElementById("render-target"));
 });
