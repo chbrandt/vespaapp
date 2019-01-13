@@ -13,12 +13,12 @@ import Map from './Map.js';
 import List from './List.js';
 import Footer from './Footer.js';
 
-function App({notes, features, currentUser}) {
+function App({body, notes, features, currentUser}) {
   return (
     <div id="app">
 
       <Header />
-      <Main notes={notes} features={features} currentUser={currentUser}/>
+      <Main body={body} notes={notes} features={features} currentUser={currentUser}/>
       <Footer />
 
     </div>
@@ -57,10 +57,10 @@ export default withTracker( ( {body} ) => {
 })(App);
 
 
-function Main({notes, features, currentUser}) {
+function Main({body, notes, features, currentUser}) {
   return (
     <main className="container-fluid">
-      <Map features={features}/>
+      <Map body={body} features={features}/>
       <List items={features.points.concat(features.lineStrings,
                                           features.polygons)}
             currentUser={currentUser}
