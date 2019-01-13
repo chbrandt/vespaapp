@@ -6,7 +6,9 @@ export default function Header() {
   return (
     <header className="container-fluid">
       <h1>
-        VESPA.<i>app</i>
+        <a href="/">
+          VESPA.<i>app</i>
+        </a>
       </h1>
       <AccountsUIWrapper />
     </header>

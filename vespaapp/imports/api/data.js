@@ -1,11 +1,12 @@
 import { Mongo } from 'meteor/mongo';
 
-export const Mars = new Mongo.Collection('mars');
+export const Data = new Mongo.Collection('mdb');
 // export const Items = new Mongo.Collection('items');
 
 if (Meteor.isServer) {
   // Meteor.publish('items', function dataPublication({ body, mapBounds }) {
-  Meteor.publish('mars', function dataPublication({ mapBounds }) {
+  Meteor.publish('mdb', function dataPublication({ body, mapBounds }) {
+    console.log(body);
     var cursor;
     if (mapBounds) {
       var west = mapBounds[0][0];
@@ -26,7 +27,8 @@ if (Meteor.isServer) {
         ]
       ];
       // console.log(boxPolygon);
-      cursor = Mars.find({
+      cursor = Data.find({
+        target: body,
         // geometry: { $geoWithin: { $box: mapBounds }}
         geometry: {
 
@@ -45,7 +47,7 @@ if (Meteor.isServer) {
         }
       });
     } else {
-      cursor = Mars.find({});
+      cursor = Data.find({target:body});
     }
     return cursor;
   });
