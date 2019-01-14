@@ -11,7 +11,7 @@ Documentation about settings and environment at:
 * https://blog.meteor.com/the-meteor-chef-making-use-of-settings-json-3ed5be2d0bad
 
 */
-const data_collection_name = Meteor.settings.public.db.collections.data;
+export const data_collection_name = Meteor.settings.public.db.collections.data;
 console.log("Data collection name: " + data_collection_name);
 
 export const Data = new Mongo.Collection(data_collection_name);
@@ -19,19 +19,19 @@ export const Data = new Mongo.Collection(data_collection_name);
 if (Meteor.isServer) {
   console.log("Collection being published: " + data_collection_name);
 
-  Meteor.publish(data_collection_name, function dataPublication({ body, mapBounds }) {
+  Meteor.publish(data_collection_name, function dataPublication({ body, bbox }) {
     console.log("Target queried: " + body);
-    console.log("Bounds (raw): " + mapBounds);
+    console.log("Bounds (raw): " + bbox);
 
     var cursor;
-    if (mapBounds) {
-      var west = mapBounds[0][0];
+    if (bbox) {
+      var west = bbox[0][0];
       west = west <= -180 ? -179.999 : west;
-      var south = mapBounds[0][1];
+      var south = bbox[0][1];
       south = south <= -90 ? -89.999 : south;
-      var east = mapBounds[1][0];
+      var east = bbox[1][0];
       east = east >= 180 ? 179.999 : east;
-      var north = mapBounds[1][1];
+      var north = bbox[1][1];
       north = north >= 90 ? 89.999 : north;
 
       var boxPolygon = [

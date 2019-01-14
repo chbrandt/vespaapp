@@ -1,7 +1,7 @@
-import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import React from 'react';
 
-import { Notes } from '../api/notes.js';
+// import { Notes } from '../api/notes.js';
 
 class DataItem extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class DataItem extends React.Component {
         >
           <h6 className="item-name">{this.props.data.name}</h6>
           <span>
-          { this.props.user ?
+          { Meteor.user() ?
             <input className="item-save"
               type="checkbox"
               readOnly
@@ -54,10 +54,12 @@ class DataItem extends React.Component {
   }
 
   itemClicked() {
-    alert(String(this.props.data.name) + ": I was clicked!");
+    // alert(String(this.props.data.name) + ": I was clicked!");
   }
 
   toggleSaved() {
+    const noteId = Meteor.user().username + this.props.data.name;
+    const target = this.props.target;
     if (! this.state.saved) {
       Meteor.call('notes.insert', { noteId, target });
     } else {

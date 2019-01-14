@@ -6,22 +6,23 @@ export const Notes = new Mongo.Collection('notes');
 
 if (Meteor.isServer) {
   Meteor.publish('notes', function() {
-    return Notes.find({ owner: Meteor.userId() });
+    return Notes.find({
+      owner: Meteor.userId()
+     });
   });
 }
 
 Meteor.methods( {
 
-  'notes.insert'({ itemId, target }) {
-    check(itemId, String);
-    throw new Meteor.Error("itemId and etc must be properly defined by the calling function");
+  'notes.insert'({ noteId, target }) {
+    check(noteId, String);
 
     if (! this.userId) {
       throw new Meteor.Error("not-authorized: 'insert'");
     }
 
     Notes.insert({
-      _id: itemId,
+      _id: noteId,
       target: target,
       savedAt: new Date(),
       owner: Meteor.userId(),

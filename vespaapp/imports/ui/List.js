@@ -42,11 +42,10 @@ class List extends React.Component {
                     : this.state.items;
     return dataItems.map((item) => {
       var saved = this.props.notes.find((note) => {
-        // return string(note.id)===string(item.id);
-        return note.id === item.id;
+        return note._id === Meteor.user().username + item.name;
       }) ? true : false;
       return (
-        <DataItem key={item.id} data={item} user={this.props.currentUser} isSaved={saved}/>
+        <DataItem key={item.name} data={item} target={this.props.target} isSaved={saved}/>
       )
     });
   }

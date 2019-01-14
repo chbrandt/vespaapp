@@ -1,10 +1,10 @@
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Session } from 'meteor/session';
-import { Meteor } from 'meteor/meteor';
 
 import { Notes } from '../api/notes.js';
-import { Data } from '../api/data.js';
+import { Data, data_collection_name } from '../api/data.js';
 
 import './App.css';
 
@@ -13,7 +13,8 @@ import Map from './Map.js';
 import List from './List.js';
 import Footer from './Footer.js';
 
-function App({body, notes, features, currentUser}) {
+
+function App({ body, notes, features, currentUser }) {
   return (
     <div id="app">
 
@@ -25,23 +26,20 @@ function App({body, notes, features, currentUser}) {
   );
 }
 
-export default withTracker( ( {body} ) => {
-  // var body = extra;
-  console.log("Body value: '"+body+"'");
+export default withTracker( ({ body }) => {
 
   const handle = [
+    Meteor.subscribe(data_collection_name, { body: body,
+                                             bbox: Session.get('bbox') }),
     Meteor.subscribe('notes', {}, function() {
       console.log("Number of notes: " + Notes.find({}).fetch().length)
     }),
-    Meteor.subscribe('mdb', { body: body, mapBounds: Session.get('mapBounds') }, function() {
-      console.log("Number of items: " + Data.find({}).fetch().length)
-    })
   ];
-  var notes = Notes.find({}).fetch();
 
   return {
-    notes: notes,
     currentUser: Meteor.user(),
+    notes: Notes.find({ "target": body,
+                        owner: Meteor.userId() }).fetch(),
     features: {
       points: Data.find({ "target": body,
                           "geometry.type":"Point" },
@@ -57,13 +55,13 @@ export default withTracker( ( {body} ) => {
 })(App);
 
 
-function Main({body, notes, features, currentUser}) {
+function Main({ body, notes, features, currentUser }) {
   return (
     <main className="container-fluid">
       <Map body={body} features={features}/>
       <List items={features.points.concat(features.lineStrings,
                                           features.polygons)}
-            currentUser={currentUser}
+            target={body}
             notes={notes}
       />
     </main>
