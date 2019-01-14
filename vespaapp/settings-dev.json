@@ -1,0 +1,12 @@
+{
+    "mode": "dev",
+    "public": {
+        "db": {
+            "collections": {
+                "data": "mdb",
+                "notes": "notes"
+            }
+        }
+    }
+}
+

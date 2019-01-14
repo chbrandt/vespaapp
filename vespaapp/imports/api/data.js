@@ -1,12 +1,28 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-export const Data = new Mongo.Collection('mdb');
-// export const Items = new Mongo.Collection('items');
+/*
+
+In a file "settings.json" we define the name for our 'Data' collection.
+We may then easily change between production/development/test datasets.
+Documentation about settings and environment at:
+* https://docs.meteor.com/environment-variables.html#METEOR-SETTINGS
+* https://docs.meteor.com/api/core.html#Meteor-settings
+* https://blog.meteor.com/the-meteor-chef-making-use-of-settings-json-3ed5be2d0bad
+
+*/
+const data_collection_name = Meteor.settings.public.db.collections.data;
+console.log("Data collection name: " + data_collection_name);
+
+export const Data = new Mongo.Collection(data_collection_name);
 
 if (Meteor.isServer) {
-  // Meteor.publish('items', function dataPublication({ body, mapBounds }) {
-  Meteor.publish('mdb', function dataPublication({ body, mapBounds }) {
-    console.log(body);
+  console.log("Collection being published: " + data_collection_name);
+
+  Meteor.publish(data_collection_name, function dataPublication({ body, mapBounds }) {
+    console.log("Target queried: " + body);
+    console.log("Bounds (raw): " + mapBounds);
+
     var cursor;
     if (mapBounds) {
       var west = mapBounds[0][0];
@@ -17,6 +33,7 @@ if (Meteor.isServer) {
       east = east >= 180 ? 179.999 : east;
       var north = mapBounds[1][1];
       north = north >= 90 ? 89.999 : north;
+
       var boxPolygon = [
         [
           [west,south],
@@ -26,17 +43,15 @@ if (Meteor.isServer) {
           [west,south],
         ]
       ];
-      // console.log(boxPolygon);
+      console.log("Bounds (processed): " + boxPolygon);
+
       cursor = Data.find({
         target: body,
-        // geometry: { $geoWithin: { $box: mapBounds }}
         geometry: {
-
           $geoIntersects: {
             $geometry: {
               type: "Polygon",
               coordinates: boxPolygon,
-
               // This MongoDB's "Big-Polygon" query feature
               crs: {
                 type: "name",
@@ -47,7 +62,7 @@ if (Meteor.isServer) {
         }
       });
     } else {
-      cursor = Data.find({target:body});
+      cursor = Data.find({ target:body });
     }
     return cursor;
   });

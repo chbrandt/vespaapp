@@ -56,26 +56,17 @@ class DataItem extends React.Component {
   itemClicked() {
     alert(String(this.props.data.name) + ": I was clicked!");
   }
-  
+
   toggleSaved() {
-    if (!this.state.saved) {
-      Notes.insert({
-        collection: 'mars',
-        id: this.props.data.id,
-        _id: 'mars_' + this.props.data.id,
-        item: this.props.data.name,
-        savedAt: new Date(),
-        owner: Meteor.userId(),
-        username: Meteor.user().username
-      });
+    if (! this.state.saved) {
+      Meteor.call('notes.insert', { noteId, target });
     } else {
-      Notes.remove({
-        _id: 'mars_' + this.props.data.id
-      });
+      Meteor.call('notes.remove', noteId);
     }
+
     this.setState({
-      saved: !this.state.saved
-    })
+      saved: ! this.state.saved
+    });
   }
 }
 export default DataItem;
