@@ -10,7 +10,7 @@ export default function Header() {
           VESPA.<i>app</i>
         </a>
       </h1>
-      <AccountsUIWrapper />
+      {/*<AccountsUIWrapper />*/}
     </header>
   );
 }
