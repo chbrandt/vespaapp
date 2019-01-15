@@ -94,11 +94,13 @@ def run(option_schema, limit_table_size=None,
 
     result_table = vo_result.to_table()
     result_df = result_table.to_pandas()
+    result_df['schema.epn_core'] = option_schema
     return result_df
 
 
 if __name__ == '__main__':
     import sys
+    import os
 
     if len(sys.argv) < 2:
         msg = "\nUsage: \n\t{} <epn-schema> [number-of-output-lines]\n".format(sys.argv[0])
@@ -113,5 +115,13 @@ if __name__ == '__main__':
 
     result_df = run(epn_schema, number_records)
 
-    output_filename = '{}.json'.format(epn_schema)
+    number_records = len(result_df)
+    if not os.path.isdir(epn_schema):
+        os.mkdir(epn_schema)
+    output_filename = '{0}/{0}_{1}.json'.format(epn_schema, number_records)
+
     result_df.to_json(output_filename, orient='records')
+
+    print("-----")
+    print("Results written to: {}".format(output_filename))
+    print("-----")
