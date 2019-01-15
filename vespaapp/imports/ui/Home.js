@@ -5,23 +5,24 @@ import './App.css';
 
 import Header from './Header.js';
 import Footer from './Footer.js';
-// import ListTargets from './ListTargets.js';
+import ListTargets from './ListTargets.js';
 
-function Home({notes, features, currentUser}) {
+function Home() {
+  const targets = [
+    { name: 'Mars'},
+    { name: 'Saturn'},
+    { name: 'Venus'},
+    { name: 'Sun#Earth'},
+    { name: 'C/1991 Y1'},
+    { name: 'Mercury'},
+    { name: 'sun'},
+  ]
+
   return (
     <div id="app">
 
       <Header />
-
-      <div className="card">
-        <a href="/mars" className="card-body">
-          <div className="row">
-            <div className="col-12">
-              <h3>Mars</h3>
-            </div>
-          </div>
-        </a>
-      </div>
+      <ListTargets items={targets}/>
       <Footer />
 
     </div>
