@@ -5,12 +5,14 @@ import './App.css';
 
 import Header from './Header.js';
 import Footer from './Footer.js';
+// import ListTargets from './ListTargets.js';
 
 function Home({notes, features, currentUser}) {
   return (
     <div id="app">
 
       <Header />
+
       <div className="card">
         <a href="/mars" className="card-body">
           <div className="row">

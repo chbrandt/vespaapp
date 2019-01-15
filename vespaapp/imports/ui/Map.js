@@ -3,16 +3,18 @@ import { Session } from 'meteor/session';
 
 import L from 'leaflet';
 
-const basemaps = {
-  attribution: '<a href="https://github.com/openplanetary/opm/wiki" target="_blank"> OpenPlanetary </a>',
-  mars: [
-    {
-      url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-1/0,1,2,3,4/{z}/{x}/{y}.png',
-      tms: false,
-    },
-  ],
-  moon: [],
-}
+import { baseMaps, overlayMaps } from './basemaps.js';
+
+// const basemaps = {
+//   attribution: '<a href="https://github.com/openplanetary/opm/wiki" target="_blank"> OpenPlanetary </a>',
+//   mars: [
+//     {
+//       url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-1/0,1,2,3,4/{z}/{x}/{y}.png',
+//       tms: false,
+//     },
+//   ],
+//   moon: [],
+// }
 
 class Map extends React.Component {
   constructor(props) {
@@ -44,15 +46,35 @@ class Map extends React.Component {
                               minZoom: 1,
                             });
 
-    const defaultMapSettings = basemaps[this.props.body][0];
-    const defaultMap = new L.tileLayer(defaultMapSettings.url,
-                                        {maxNativeZoom: 9,
-                                         zoom: 3,
-                                         tms: defaultMapSettings.tms,
-                                         autoZIndex: true,
-                                         attribution: basemaps.attribution}
-    );
-    defaultMap.addTo(map);
+    // const defaultMapSettings = basemaps[this.props.body][0];
+    // const defaultMap = new L.tileLayer(defaultMapSettings.url,
+    //                                     {maxNativeZoom: 9,
+    //                                      zoom: 3,
+    //                                      tms: defaultMapSettings.tms,
+    //                                      autoZIndex: true,
+    //                                      attribution: basemaps.attribution}
+    // );
+    // defaultMap.addTo(map);
+    var bm;
+    var bmSet = {}
+    baseMaps[this.props.body].forEach((pars) => {
+      bm = new L.tileLayer(pars.url, pars.options);
+      bmSet[pars.label] = bm;
+    });
+
+    var om;
+    var omSet = {}
+    overlayMaps[this.props.body].forEach((pars) => {
+      om = new L.tileLayer(pars.url, pars.options);
+      omSet[pars.label] = om;
+    })
+
+    L.control.layers(bmSet, omSet, {
+      position: 'topright'
+    }).addTo(map);
+
+    bm.addTo(map);
+    om.addTo(map);
 
     // Events
     map.on('moveend', (event) => {
