@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+// import LazyLoad from 'react-lazy-load';
+import { List } from "react-virtualized";
 
 // import { Targets } from '../api/targets.js';
 
@@ -16,17 +18,27 @@ class ListImages extends React.Component {
     this.state = {
       query: '',
       items: []
-    }
+    };
+    this.renderItems = this.renderItems.bind(this);
   }
 
   render() {
+    const listHeight = 600;
+    const rowHeight = 50;
+    const rowWidth = 800;
     return (
       <div id="searchable-list" className="col">
         <div className="search-box">
           {this.renderSearchBox()}
         </div>
-        <div className="list-targets">
-          {this.renderList()}
+        <div className="list-targets" style={{height:600, width:800}}>
+          <List
+            width={rowWidth}
+            height={listHeight}
+            rowHeight={rowHeight}
+            rowRenderer={this.renderItems}
+            rowCount={this.props.items.length} />
+          {/*this.renderList()*/}
         </div>
       </div>
     );
@@ -60,31 +72,21 @@ class ListImages extends React.Component {
     this.setState({items: filteredList});
   }
 
-  renderList() {
-    return (
-      <ul>
-        {this.renderItems()}
-      </ul>
-    );
-  }
+  // renderList() {
+  //   return (
+  //     <ul>
+  //       {this.renderItems()}
+  //     </ul>
+  //   );
+  // }
 
-  renderItems() {
-    // hack to work around empty list at the very beginning
-    var items = !(this.state.query || this.state.items.length)
-                    ? this.props.items
-                    : this.state.items;
-    return items.map((item) => {
-      //TODO: put a mapping here to properly route the user
-      return (
-        <div className="card" key={item.obs_id}>
-            <div className="row">
-              <div className="col-12">
-                <h3>{item.obs_id}</h3>
-              </div>
-            </div>
-        </div>
-      );
-    });
+  renderItems({ index, key, style }) {
+    const item = this.props.items[index];
+    return (
+      <div className="row" key={key} style={style}>
+        <h3>{item.granule_uid+":"+item.granule_gid}</h3>
+      </div>
+    );
   }
 }
 export default ListImages;

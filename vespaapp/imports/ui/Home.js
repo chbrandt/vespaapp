@@ -10,12 +10,12 @@ import ListTargets from './ListTargets.js';
 function Home() {
   const targets = [
     { name: 'Mars'},
-    { name: 'Saturn'},
+    // { name: 'Saturn'},
     { name: 'Venus'},
-    { name: 'Sun#Earth'},
-    { name: 'C/1991 Y1'},
-    { name: 'Mercury'},
-    { name: 'sun'},
+    // { name: 'Sun#Earth'},
+    // { name: 'C/1991 Y1'},
+    // { name: 'Mercury'},
+    // { name: 'sun'},
     { name: 'images'},
   ]
 

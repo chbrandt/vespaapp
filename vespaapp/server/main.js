@@ -3,6 +3,7 @@ import { onPageLoad } from "meteor/server-render";
 
 import '../imports/api/notes.js';
 import '../imports/api/data.js';
+import '../imports/api/datang.js';
 
 Meteor.startup(() => {
   // Code to run on server startup.

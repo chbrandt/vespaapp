@@ -5,12 +5,11 @@ import { renderRoutes } from '../imports/startup/client/routes.js';
 
 // Load Planetary data interface
 import '../imports/api/data.js';
+// import '../imports/api/datang.js';
 // Load User data interface
 import '../imports/api/notes.js';
 
 import '../imports/startup/accounts-config.js';
-
-import App from '../imports/ui/App.js';
 
 Meteor.startup(() => {
   var bodies = ['mars'];

@@ -5,8 +5,8 @@ import createBrowserHistory from 'history/createBrowserHistory';
 // route components
 import Home from '../../ui/Home.js';
 import App from '../../ui/App.js';
-// import NotFoundPage from '../../ui/pages/NotFoundPage.js';
 import AppImages from '../../ui/AppImages.js';
+// import NotFoundPage from '../../ui/pages/NotFoundPage.js';
 
 const browserHistory = createBrowserHistory();
 
