@@ -6,6 +6,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import Home from '../../ui/Home.js';
 import App from '../../ui/App.js';
 // import NotFoundPage from '../../ui/pages/NotFoundPage.js';
+import AppImages from '../../ui/AppImages.js';
 
 const browserHistory = createBrowserHistory();
 
@@ -20,12 +21,15 @@ export const renderRoutes = (bodies) => (
       // <Route component={NotFoundPage}/>
 
 function renderBodyRoutes(bodies) {
-  return bodies.map((body) => {
+  var routes = bodies.map((body) => {
     var bodyPath = "/" + body;
     return (
       <Route exact path={bodyPath} render={props => <App {...props} body={body}/>}
              key={body}
       />
     );
-  })
+  });
+  routes.push(<Route exact path='/images' render={props => <AppImages {...props} body='jupiter'/>}
+         key={'jupiter'}/>);
+  return routes;
 }
