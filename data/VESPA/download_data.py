@@ -94,7 +94,7 @@ def run(option_schema, limit_table_size=None,
 
     result_table = vo_result.to_table()
     result_df = result_table.to_pandas()
-    result_df['schema.epn_core'] = option_schema
+    result_df['schema_epn_core'] = option_schema
     return result_df
 
 
