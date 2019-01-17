@@ -14,16 +14,16 @@ class ListCrism extends React.Component {
 
   render() {
     return (
-      <div id="list" className="col-3">
+      <div id="listcrism">
 
-        <form>
+        {/*<form>
           <input
             placeholder="Type to filter entries"
             style={{"width":"100%"}}
             type="text"
             onChange={this.filterList.bind(this)}
           />
-        </form>
+        </form>*/}
 
         <ul className="list-group">
           {this.renderItems()}

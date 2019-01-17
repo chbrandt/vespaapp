@@ -23,12 +23,12 @@ class MapCrism extends React.Component {
   }
 
   render() {
-    return <div id="map" className="col-9"></div>;
+    return <div id="mapcrism"></div>;
   }
 
   componentDidMount() {
     // create map
-    var map = L.map('map', {
+    var map = L.map('mapcrism', {
                               center: [0, 0],
                               maxBounds:[[-90,-180],[90,180]],
                               zoom: 2,

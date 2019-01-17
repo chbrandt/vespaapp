@@ -58,7 +58,6 @@ if (Meteor.isServer) {
         }
       });
     } else {
-      // cursor = Data.find({ target_name:body });
       cursor = DataCrism.find({});
     }
     return cursor;

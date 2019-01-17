@@ -16,7 +16,7 @@ function Home() {
     // { name: 'C/1991 Y1'},
     // { name: 'Mercury'},
     // { name: 'sun'},
-    { name: 'images'},
+    { name: 'Crism'},
   ]
 
   return (

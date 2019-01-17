@@ -6,7 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 // import { Notes } from '../api/notes.js';
 import { DataCrism } from '../../api/data_crism.js';
 
-import '../App.css';
+import './App.css';
 
 import Header from '../Header.js';
 import MapCrism from './Map.js';
@@ -22,7 +22,7 @@ function AppCrism({ body, notes, features, currentUser }) {
 
       <Header />
       <Main body={body} notes={notes} features={features} currentUser={currentUser}/>
-      <Footer />
+      {/*<Footer />*/}
 
     </div>
   );
@@ -45,12 +45,12 @@ export default withTracker( ({ body }) => {
 
 function Main({ body, notes, features, currentUser }) {
   return (
-    <main className="container-fluid">
+    <main id="maincrism" className="container-fluid">
       <MapCrism body={body} features={features}/>
-      {/*}<ListCrism items={features.polygons}
+      <ListCrism items={features.polygons}
             target={body}
             notes={notes}
-      />*/}
+      />
     </main>
   );
 }
