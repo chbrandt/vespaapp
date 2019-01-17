@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-// import LazyLoad from 'react-lazy-load';
 import { List } from "react-virtualized";
+
+import './ListImages.css';
 
 // import { Targets } from '../api/targets.js';
 
@@ -24,7 +25,7 @@ class ListImages extends React.Component {
 
   render() {
     const listHeight = 600;
-    const rowHeight = 50;
+    const rowHeight = 100;
     const rowWidth = 800;
     return (
       <div id="searchable-list" className="col">
@@ -72,19 +73,16 @@ class ListImages extends React.Component {
     this.setState({items: filteredList});
   }
 
-  // renderList() {
-  //   return (
-  //     <ul>
-  //       {this.renderItems()}
-  //     </ul>
-  //   );
-  // }
-
   renderItems({ index, key, style }) {
     const item = this.props.items[index];
+    // <div className="row" key={key} style={style}>
     return (
-      <div className="row" key={key} style={style}>
-        <h3>{item.granule_uid+":"+item.granule_gid}</h3>
+      <div className="row" style={style} key={key}>
+        <img className="image" src={item.thumbnail_url} alt="Card image cap"/>
+        <div className="content">
+            <h5 className="card-title">{item.granule_uid+":"+item.granule_gid}</h5>
+            <a href={item.access_url} target="_blank" className="card-link">Go somewhere</a>
+        </div>
       </div>
     );
   }
