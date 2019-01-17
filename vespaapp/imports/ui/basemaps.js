@@ -45,7 +45,7 @@ const baseMaps = {
       label: "Texture",
       url: "http://s3-eu-west-1.amazonaws.com/whereonmars.cartodb.net/celestia_mars-shaded-16k_global/{z}/{x}/{y}.png",
       options: {
-        maxNativeZoom: 9,
+        maxNativeZoom: 5,
         zoom: 3,
         tms: true,
         autoZIndex: true,

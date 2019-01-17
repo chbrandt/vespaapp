@@ -6,6 +6,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import Home from '../../ui/Home.js';
 import App from '../../ui/App.js';
 import AppImages from '../../ui/AppImages.js';
+import AppCrism from '../../ui/crism/App.js';
 // import NotFoundPage from '../../ui/pages/NotFoundPage.js';
 
 const browserHistory = createBrowserHistory();
@@ -31,5 +32,7 @@ function renderBodyRoutes(bodies) {
   });
   routes.push(<Route exact path='/images' render={props => <AppImages {...props} body='jupiter'/>}
          key={'jupiter'}/>);
+   routes.push(<Route exact path='/crism' render={props => <AppCrism {...props} body='mars'/>}
+          key={'MarsCrism'}/>);
   return routes;
 }

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { List } from "react-virtualized";
 
-import './ListImages.css';
+// import './ListImages.css';
 
 // import { Targets } from '../api/targets.js';
 

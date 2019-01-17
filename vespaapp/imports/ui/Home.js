@@ -9,9 +9,9 @@ import ListTargets from './ListTargets.js';
 
 function Home() {
   const targets = [
-    { name: 'Mars'},
+    { name: 'Mars', thumbnail: "https://space-facts.com/wp-content/uploads/mars-transparent.png"},
     // { name: 'Saturn'},
-    { name: 'Venus'},
+    { name: 'Venus', thumbnail: "https://space-facts.com/wp-content/uploads/venus-transparent.png"},
     // { name: 'Sun#Earth'},
     // { name: 'C/1991 Y1'},
     // { name: 'Mercury'},

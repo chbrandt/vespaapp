@@ -3,20 +3,9 @@ import { Session } from 'meteor/session';
 
 import L from 'leaflet';
 
-import { baseMaps, overlayMaps } from './basemaps.js';
+import { baseMaps, overlayMaps } from '../basemaps.js';
 
-// const basemaps = {
-//   attribution: '<a href="https://github.com/openplanetary/opm/wiki" target="_blank"> OpenPlanetary </a>',
-//   mars: [
-//     {
-//       url: 'https://cartocdn-gusc.global.ssl.fastly.net/opmbuilder/api/v1/map/named/opm-mars-basemap-v0-1/0,1,2,3,4/{z}/{x}/{y}.png',
-//       tms: false,
-//     },
-//   ],
-//   moon: [],
-// }
-
-class Map extends React.Component {
+class MapCrism extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,25 +35,16 @@ class Map extends React.Component {
                               minZoom: 1,
                             });
 
-    // const defaultMapSettings = basemaps[this.props.body][0];
-    // const defaultMap = new L.tileLayer(defaultMapSettings.url,
-    //                                     {maxNativeZoom: 9,
-    //                                      zoom: 3,
-    //                                      tms: defaultMapSettings.tms,
-    //                                      autoZIndex: true,
-    //                                      attribution: basemaps.attribution}
-    // );
-    // defaultMap.addTo(map);
     var bm;
     var bmSet = {}
-    baseMaps[this.props.body].forEach((pars) => {
+    baseMaps['mars'].forEach((pars) => {
       bm = new L.tileLayer(pars.url, pars.options);
       bmSet[pars.label] = bm;
     });
 
     var om;
     var omSet = {}
-    overlayMaps[this.props.body].forEach((pars) => {
+    overlayMaps['mars'].forEach((pars) => {
       om = new L.tileLayer(pars.url, pars.options);
       omSet[pars.label] = om;
     })
@@ -91,8 +71,6 @@ class Map extends React.Component {
 
   shouldComponentUpdate(newProps, newState) {
     var needUpdate = !(
-      // newProps.features.points.length === this.state.featuresCount.points &&
-      // newProps.features.lineStrings.length === this.state.featuresCount.lineStrings &&
       newProps.features.polygons.length === this.state.featuresCount.polygons
     )
     return needUpdate;
@@ -103,39 +81,14 @@ class Map extends React.Component {
 
     var cntPoints = 0;
     var pointsIn = this.state.featureIDs.points;
-    // this.props.features.points.forEach((point,i) => {
-    //   if (pointsIn.indexOf(point.id) === -1) {
-    //     var lonlat = point.geometry.coordinates;
-    //     var marker = L.marker([lonlat[1],lonlat[0]], {
-    //       title: point.name,
-    //     });
-    //     marker.bindPopup(point.name);
-    //     marker.addTo(map);
-    //     pointsIn.push(point.id);
-    //   }
-    // });
-    // cntPoints = this.props.features.points.length;
 
     var cntLineStrings = 0;
     var linesIn = this.state.featureIDs.lineStrings;
-    // this.props.features.lineStrings.forEach((line,i) => {
-    //   if (linesIn.indexOf(line.id) === -1) {
-    //     var lonlat = line.geometry.coordinates;
-    //     var latlon = lonlat.map((coord) => { return [coord[1],coord[0]]})
-    //     var marker = L.polyline(latlon);
-    //     marker.bindPopup(line.name);
-    //     marker.addTo(map);
-    //     linesIn.push(line.id);
-    //   }
-    // });
-    // cntLineStrings = this.props.features.lineStrings.length;
 
     var cntPolygons = 0;
     var polygonsIn = this.state.featureIDs.polygons;
     this.props.features.polygons.forEach((polygon,i) => {
-      // if (polygonsIn.indexOf(polygon.obs_id) === -1) {
-      //   var lonlat = polygon.s_region.coordinates;
-      if (polygonsIn.indexOf(polygon.id) === -1) {
+      if (polygonsIn.indexOf(polygon.obs_id) === -1) {
         var lonlat = polygon.geometry.coordinates;
         // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
         var latlon = lonlat.map((coordArray) => {
@@ -143,11 +96,9 @@ class Map extends React.Component {
               return [coord[1],coord[0]] });
         });
         var marker = L.polygon(latlon);
-        // marker.bindPopup(polygon.target_name);
-        marker.bindPopup(polygon.target);
+        marker.bindPopup(polygon.target_name);
         marker.addTo(map);
-        // polygonsIn.push(polygon.obs_id);
-        polygonsIn.push(polygon.id);
+        polygonsIn.push(polygon.obs_id);
       }
     });
     cntPolygons = this.props.features.polygons.length;
@@ -171,4 +122,4 @@ class Map extends React.Component {
 
   }
 }
-export default Map;
+export default MapCrism;

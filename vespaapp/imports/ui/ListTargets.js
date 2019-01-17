@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
-// import { Targets } from '../api/targets.js';
+// import './ListTargets.css';
 
 /*
 ListTargets will list all the abailable targets in Data database/collection.
@@ -21,7 +21,7 @@ class ListTargets extends React.Component {
 
   render() {
     return (
-      <div id="searchable-list" className="col">
+      <div id="searchable-list" className="col-6">
         <div className="search-box">
           {this.renderSearchBox()}
         </div>
@@ -35,7 +35,6 @@ class ListTargets extends React.Component {
   renderSearchBox() {
     return (
       <div className="search-box">
-          <div className="row">
               <div className="col">
                   <input id="searchInput" className="form-control"
                     type="text"
@@ -43,7 +42,6 @@ class ListTargets extends React.Component {
                     placeholder="Search targets"
                   />
               </div>
-          </div>
       </div>
     )
   }
@@ -77,10 +75,11 @@ class ListTargets extends React.Component {
       //TODO: put a mapping here to properly route the user
       const itemPage = "/" + item.name.toLowerCase();
       return (
-        <div className="card" key={item.name}>
+        <div className="row" key={item.name}>
           <a href={itemPage} className="card-body">
-            <div className="row">
-              <div className="col-12">
+            <div className="card">
+              <img style={{width:'100px'}} src={item.thumbnail} alt={item.name}/>
+              <div className="contentTargets">
                 <h3>{item.name}</h3>
               </div>
             </div>

@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import DataItem from './DataItem.js';
+import DataItemCrism from './DataItem.js';
 
-import { Notes } from '../api/notes.js';
-import { Mars } from '../api/data.js';
-
-class List extends React.Component {
+class ListCrism extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,12 +39,9 @@ class List extends React.Component {
                     : this.state.items;
     return dataItems.map((item) => {
       var saved = false;
-      // var saved = this.props.notes.find((note) => {
-      //   return note._id === Meteor.user().username + item.name;
-      // }) ? true : false;
       const _key = item.schema_epn_core + item.granule_gid + item.granule_uid;
       return (
-        <DataItem key={_key} data={item} target={this.props.target_name} isSaved={saved}/>
+        <DataItemCrism key={_key} data={item} target={this.props.target} isSaved={saved}/>
       )
     });
   }
@@ -67,4 +61,4 @@ class List extends React.Component {
     this.setState({items: filteredList});
   }
 }
-export default List;
+export default ListCrism;

@@ -11,16 +11,12 @@ Documentation about settings and environment at:
 * https://blog.meteor.com/the-meteor-chef-making-use-of-settings-json-3ed5be2d0bad
 
 */
-export const data_collection_name = Meteor.settings.public.db.collections.data;
-console.log("Data collection name: " + data_collection_name);
-
-export const Data = new Mongo.Collection(data_collection_name);
+export const DataCrism = new Mongo.Collection('crism');
 
 if (Meteor.isServer) {
-  console.log("Collection being published: " + data_collection_name);
 
-  Meteor.publish(data_collection_name, function dataPublication({ body, bbox }) {
-    body = 'mars';
+  Meteor.publish('crism', function dataPublication({ body, bbox }) {
+    body = 'Mars';
     console.log("Target queried: " + body);
     console.log("Bounds (raw): " + bbox);
 
@@ -46,9 +42,7 @@ if (Meteor.isServer) {
       ];
       console.log("Bounds (processed): " + boxPolygon);
 
-      cursor = Data.find({
-        // target_name: body,
-        target: body,
+      cursor = DataCrism.find({
         geometry: {
           $geoIntersects: {
             $geometry: {
@@ -65,7 +59,7 @@ if (Meteor.isServer) {
       });
     } else {
       // cursor = Data.find({ target_name:body });
-      cursor = Data.find({ target:body });
+      cursor = DataCrism.find({});
     }
     return cursor;
   });

@@ -1,0 +1,26 @@
+.listTargets {
+  padding: 10px;
+}
+
+.rowTargets {
+  border-bottom: 1px solid #ebeced;
+  text-align: left;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.imageTargets {
+  margin-right: 10px;
+}
+
+img {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 150px; /* Set a small width */
+}
+
+.contentTargets {
+  padding: 10px;
+}

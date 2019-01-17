@@ -3,7 +3,7 @@ import React from 'react';
 
 // import { Notes } from '../api/notes.js';
 
-class DataItem extends React.Component {
+class DataItemCrism extends React.Component {
   constructor(props) {
     super(props);
     /*
@@ -71,4 +71,4 @@ class DataItem extends React.Component {
     });
   }
 }
-export default DataItem;
+export default DataItemCrism;

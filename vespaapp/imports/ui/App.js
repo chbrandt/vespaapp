@@ -41,15 +41,18 @@ export default withTracker( ({ body }) => {
     notes: Notes.find({ "target": body,
                         owner: Meteor.userId() }).fetch(),
     features: {
-      points: Data.find({ "target": body,
-                          "geometry.type":"Point" },
-                        { sort : { "name" : 1 } }).fetch(),
-      polygons: Data.find({ "target": body,
+      // points: Data.find({ "target": body,
+      //                     "geometry.type":"Point" },
+      //                   { sort : { "name" : 1 } }).fetch(),
+      // polygons: Data.find({ "target_name": 'Mars',
+      //                       "s_region.type":"Polygon" },
+      //                     { sort : { "obs_id" : 1 } }).fetch(),
+      polygons: Data.find({ "target": 'mars',
                             "geometry.type":"Polygon" },
-                          { sort : { "name" : 1 } }).fetch(),
-      lineStrings: Data.find({ "target": body,
-                               "geometry.type":"LineString" },
-                             { sort : { "name" : 1 } }).fetch(),
+                          { sort : { "id" : 1 } }).fetch(),
+      // lineStrings: Data.find({ "target": body,
+      //                          "geometry.type":"LineString" },
+      //                        { sort : { "name" : 1 } }).fetch(),
     },
   };
 })(App);
@@ -59,11 +62,11 @@ function Main({ body, notes, features, currentUser }) {
   return (
     <main className="container-fluid">
       <Map body={body} features={features}/>
-      <List items={features.points.concat(features.lineStrings,
-                                          features.polygons)}
+      {/*
+      <List items={features.polygons}
             target={body}
             notes={notes}
-      />
+      />*/}
     </main>
   );
 }
