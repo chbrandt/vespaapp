@@ -3,7 +3,7 @@ import { onPageLoad } from "meteor/server-render";
 
 import '../imports/api/notes.js';
 import '../imports/api/data.js';
-import '../imports/api/datang.js';
+import '../imports/api/data_bdip.js';
 import '../imports/api/data_crism.js';
 
 Meteor.startup(() => {

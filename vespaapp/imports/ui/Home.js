@@ -17,6 +17,7 @@ function Home() {
     // { name: 'Mercury'},
     // { name: 'sun'},
     { name: 'Crism'},
+    { name: 'Bdip'},
   ]
 
   return (

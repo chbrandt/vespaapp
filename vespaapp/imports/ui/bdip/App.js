@@ -5,22 +5,20 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
 // import { Notes } from '../api/notes.js';
-import { DataNG } from '../api/datang.js';
+import { DataNG } from '../../api/data_bdip.js';
 
 import './App.css';
 
-import Header from './Header.js';
-import ListImages from './ListImages.js';
-import Footer from './Footer.js';
+import Header from '../Header.js';
+import ListBdip from './List.js';
 
 
-function App({ body, items }) {
+function AppBdip({ body, items }) {
   return (
     <div id="app">
 
       <Header />
-      <ListImages items={items} />
-      <Footer />
+      <ListBdip items={items} />
 
     </div>
   );
@@ -29,7 +27,7 @@ function App({ body, items }) {
 export default withTracker( ({ body }) => {
 
   const handle = [
-    Meteor.subscribe('no_geometry', { body: body }),
+    Meteor.subscribe('bdip', { body: body }),
   ];
   console.log("Number of 'non-geometric' "+body+" records: " + DataNG.find().count());
   return {
@@ -37,4 +35,4 @@ export default withTracker( ({ body }) => {
     //                    { sort : { "name" : 1 } }).fetch(),
     items: DataNG.find({}).fetch(),
   };
-})(App);
+})(AppBdip);
