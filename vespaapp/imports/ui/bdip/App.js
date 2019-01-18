@@ -7,7 +7,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 // import { Notes } from '../api/notes.js';
 import { DataNG } from '../../api/data_bdip.js';
 
-import './App.css';
+// import './App.css';
 
 import Header from '../Header.js';
 import ListBdip from './List.js';

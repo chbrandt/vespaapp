@@ -15,24 +15,29 @@ export const renderRoutes = (bodies) => (
   <Router history={browserHistory}>
     <Switch>
       <Route exact path="/" component={Home}/>
-      {renderBodyRoutes(bodies)}
+      {/*renderBodyRoutes(bodies)*/}
+      <Route exact path='/mars' render={props => <AppCrism {...props} body='mars'/>} key={'MarsCrism'}/>
+      <Route exact path='/venus' render={props => <AppBdip {...props} body='venus'/>} key={'bdipVenus'}/>
+      <Route exact path='/jupiter' render={props => <AppBdip {...props} body='jupiter'/>} key={'bdipJupiter'}/>
+      <Route exact path='/mercury' render={props => <AppBdip {...props} body='mercury'/>} key={'bdipMercury'}/>
+      <Route exact path='/saturn' render={props => <AppBdip {...props} body='saturn'/>} key={'bdipSaturn'}/>
     </Switch>
   </Router>
 );
       // <Route component={NotFoundPage}/>
 
-function renderBodyRoutes(bodies) {
-  var routes = bodies.map((body) => {
-    var bodyPath = "/" + body;
-    return (
-      <Route exact path={bodyPath} render={props => <App {...props} body={body}/>}
-             key={body}
-      />
-    );
-  });
-  routes.push(<Route exact path='/bdip' render={props => <AppBdip {...props} body='venus'/>}
-         key={'bdipVenus'}/>);
-   routes.push(<Route exact path='/crism' render={props => <AppCrism {...props} body='mars'/>}
-          key={'MarsCrism'}/>);
-  return routes;
-}
+// function renderBodyRoutes(bodies) {
+//   var routes = bodies.map((body) => {
+//     var bodyPath = "/" + body;
+//     return (
+//       <Route exact path={bodyPath} render={props => <App {...props} body={body}/>}
+//              key={body}
+//       />
+//     );
+//   });
+//   routes.push(<Route exact path='/bdip' render={props => <AppBdip {...props} body='venus'/>}
+//          key={'bdipVenus'}/>);
+//    routes.push(<Route exact path='/crism' render={props => <AppCrism {...props} body='mars'/>}
+//           key={'MarsCrism'}/>);
+//   return routes;
+// }

@@ -29,11 +29,11 @@ class ListBdip extends React.Component {
 
   render() {
     return (
-      <div id="searchable-list" className="col">
-        <div className="search-box">
+      <div id="searchable-list" className="panel">
+        <div className="panel-heading">
           {this.renderSearchBox()}
         </div>
-        <div className="list-targets" style={{height:'100vh'}}>
+        <div className="panel-body list-group" style={{height:'80vh'}}>
         <AutoSizer>
           {
           ({ width, height }) => {
@@ -56,15 +56,11 @@ class ListBdip extends React.Component {
   renderSearchBox() {
     return (
       <div className="search-box">
-          <div className="row">
-              <div className="col">
-                  <input id="searchInput" className="form-control"
-                    type="text"
-                    onChange={this.filterItems.bind(this)}
-                    placeholder="Search targets"
-                  />
-              </div>
-          </div>
+        <input id="searchInput" className="form-control"
+          type="text"
+          onChange={this.filterItems.bind(this)}
+          placeholder="Search targets"
+        />
       </div>
     )
   }
@@ -91,13 +87,19 @@ class ListBdip extends React.Component {
         parent={parent}
         columnIndex={0}
         rowIndex={index}>
-        <div className="rowbdip" style={style}>
-          <a href={item.access_url} target="_blank">
-            <img className="imagebdip" src={item.thumbnail_url} alt="Card image cap"/>
-          </a>
-          <div className="content">
-              <h5 className="card-title">{item.granule_uid}</h5>
-              <a href={link_datum} target="_blank" className="card-link">Go to VESPA</a>
+        <div className="list-group-item" style={style}>
+          <div>
+            <a style={{float:"left"}}
+               href={item.access_url} target="_blank">
+              <img className="imagebdip" src={item.thumbnail_url} alt={item.granule_uid}/>
+            </a>
+            <div className="card-content">
+              <a className="card-link" style={{height:'30px', float:'right'}}
+                 href={link_datum} target="_blank">
+                <div className="glyphicon glyphicon-share"/>
+              </a>
+              <h4 className="card-title">{item.granule_uid}</h4>
+            </div>
           </div>
         </div>
       </CellMeasurer>

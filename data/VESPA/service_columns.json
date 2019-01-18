@@ -33,7 +33,8 @@
     "format": "access_format",
     "frame": "spatial_frame_type",
     "title": "service_title",
-    "datalink": "access_url"
+    "datalink": "access_url",
+    "tools": "external_link"
   },
   "bdip": {
     "id": ["granule_uid", "granule_gid", "obs_id"],

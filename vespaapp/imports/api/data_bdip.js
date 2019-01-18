@@ -8,6 +8,7 @@ if (Meteor.isServer) {
   //     return DataNG.find({ target: "/^"+body+"$/i" });
   // });
   Meteor.publish('bdip', function dataPublication({ body }) {
-      return DataNG.find({"access_format" : "image/jpeg"});
+      return DataNG.find({target_name: { $regex: new RegExp(body,"i") },
+                          access_format : "image/jpeg"});
   });
 }

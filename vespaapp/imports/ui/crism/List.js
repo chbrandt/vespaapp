@@ -14,17 +14,7 @@ class ListCrism extends React.Component {
 
   render() {
     return (
-      <div id="listcrism">
-
-        {/*<form>
-          <input
-            placeholder="Type to filter entries"
-            style={{"width":"100%"}}
-            type="text"
-            onChange={this.filterList.bind(this)}
-          />
-        </form>*/}
-
+      <div id="listcrism" style={{height:'45vh', overflowY:'scroll'}}>
         <ul className="list-group">
           {this.renderItems()}
         </ul>

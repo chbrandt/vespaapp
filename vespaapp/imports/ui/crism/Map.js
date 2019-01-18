@@ -22,17 +22,26 @@ class MapCrism extends React.Component {
     }
   }
 
+  // render() {
+  //   return <div id="mapcrism" style={{
+  //       height: '50vh',
+  //       width: '100vw',
+  //       border: 'solid black 1px'}}/>;
+  // }
   render() {
-    return <div id="mapcrism"></div>;
+    return <div id="map" className="container" style={{height: '45vh'}}/>;
   }
 
   componentDidMount() {
     // create map
-    var map = L.map('mapcrism', {
+    var map = L.map('map', {
                               center: [0, 0],
                               maxBounds:[[-90,-180],[90,180]],
                               zoom: 2,
-                              minZoom: 1,
+                              minZoom: 0.5,
+                              zoomSnap: 0.5,
+                              zoomDelta: 0.5,
+                              // wheelPxPerZoomLevel:120
                             });
 
     var bm;
@@ -63,7 +72,7 @@ class MapCrism extends React.Component {
         [bounds.getWest(), bounds.getSouth()],
         [bounds.getEast(), bounds.getNorth()]
       ];
-      Session.set('mapBounds', bbox);
+      Session.set('bbox', bbox);
     });
 
     this.map = map;

@@ -21,11 +21,11 @@ class ListTargets extends React.Component {
 
   render() {
     return (
-      <div id="searchable-list" className="col-6">
-        <div className="search-box">
+      <div id="searchable-list" className="panel">
+        <div className="panel-heading">
           {this.renderSearchBox()}
         </div>
-        <div className="list-targets">
+        <div className="panel-body list-group">
           {this.renderList()}
         </div>
       </div>
@@ -35,13 +35,13 @@ class ListTargets extends React.Component {
   renderSearchBox() {
     return (
       <div className="search-box">
-              <div className="col">
-                  <input id="searchInput" className="form-control"
-                    type="text"
-                    onChange={this.filterItems.bind(this)}
-                    placeholder="Search targets"
-                  />
-              </div>
+          <div className="col">
+              <input id="searchInput" className="form-control"
+                type="text"
+                onChange={this.filterItems.bind(this)}
+                placeholder="Search targets"
+              />
+          </div>
       </div>
     )
   }
@@ -75,12 +75,12 @@ class ListTargets extends React.Component {
       //TODO: put a mapping here to properly route the user
       const itemPage = "/" + item.name.toLowerCase();
       return (
-        <div className="row" key={item.name}>
+        <div className="list-group-item" key={item.name}>
           <a href={itemPage} className="card-body">
             <div className="card">
-              <img style={{width:'100px'}} src={item.thumbnail} alt=""/>
+              <h3>{item.name}</h3>
               <div className="contentTargets">
-                <h3>{item.name}</h3>
+                <img style={{width:'100px'}} src={item.thumbnail} alt=""/>
               </div>
             </div>
           </a>
