@@ -78,7 +78,7 @@ class ListTargets extends React.Component {
         <div className="row" key={item.name}>
           <a href={itemPage} className="card-body">
             <div className="card">
-              <img style={{width:'100px'}} src={item.thumbnail} alt={item.name}/>
+              <img style={{width:'100px'}} src={item.thumbnail} alt=""/>
               <div className="contentTargets">
                 <h3>{item.name}</h3>
               </div>

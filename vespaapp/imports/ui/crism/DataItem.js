@@ -45,9 +45,9 @@ class DataItemCrism extends React.Component {
     const link_datum = link_vespa_crism + sq + this.props.data.granule_uid + sq;
     return (
       <div className="list-group-item list-group-item-action">
-          {/*<img src={this.props.data.thumbnail_url} style={{width:'50px'}}/>*/}
           <div>
-            <img src={image_icon} style={{width:'50px'}}/>
+            {/*<img src={image_icon} style={{width:'50px'}}/>*/}
+            <img src={this.props.data.thumbnail_url} style={{width:'50px'}}/>
             <a href={link_datum} target="_blank"
                className="card-body"
                style={{height:'30px', float:'right'}}>

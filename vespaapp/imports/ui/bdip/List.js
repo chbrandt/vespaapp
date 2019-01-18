@@ -26,43 +26,8 @@ class ListBdip extends React.Component {
       defaultHeight: 100
     });
   }
-  // renderRow({ index, key, style }) {
-  //   return (
-  //     <div key={key} style={style} className="row">
-  //       <div className="image">
-  //         <img src={this.list[index].image} alt="" />
-  //       </div>
-  //       <div className="content">
-  //         <div>{this.list[index].name}</div>
-  //         <div>{this.list[index].text}</div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  // renderRow({ index, key, style, parent }) {
-  //   return (
-  //     <CellMeasurer
-  //       key={key}
-  //       cache={this.cache}
-  //       parent={parent}
-  //       columnIndex={0}
-  //       rowIndex={index}>
-  //         <div style={style} className="row">
-  //           <div className="image">
-  //             <img src={this.list[index].image} alt="" />
-  //           </div>
-  //           <div className="content">
-  //             <div>{this.list[index].name}</div>
-  //             <div>{this.list[index].text}</div>
-  //           </div>
-  //         </div>
-  //     </CellMeasurer>
-  //   );
-  // }
+
   render() {
-    // const listHeight = 600;
-    // const rowHeight = 200;
-    // const rowWidth = 800;
     return (
       <div id="searchable-list" className="col">
         <div className="search-box">
