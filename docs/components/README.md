@@ -2,13 +2,14 @@
 
 The App is composed by the following components:
 * Data collections
-* Map
-* List
+* UI
+  * App
+  * Map
+  * List
 
 Splitted between server and client to retrieve the data from the database and render it to the user, respectively, as presented in the figure below.
 
 ![App components](vespaapp_components.png)
-
 
 ## Data collections
 
@@ -45,10 +46,42 @@ The field `geometry` is composed by two sub-fields `coordinates` and `type` whic
 Details of the structure of these fields are documented in `data/`.
 
 
-## Routes
+## App
+
+The `vespaapp/imports/ui/App.js` component is the entry point of data and initialization of pages of the App.
+In a React.js software data always go (naturally) down in the components structure.
+It is in `App.js` then that data is queried and loaded from the (Meteor/DB) collections; then passed as `props` to Map/List components.
+
+
+### Routes
 
 When a client starts the App, routes to the multiple pages are initialized.
-Such routes are defined in `vespaapp/imports/startup/client/routes.js` and coupled to the `targets` defined in the homepage at `vespaapp/import/ui/Home.js`. (TODO: move _targets_ definition to a MongoDB collection.)
+Such routes are defined in `vespaapp/imports/startup/client/routes.js` and coupled to the `targets` defined in the homepage at `vespaapp/import/ui/Home.js`.
+```diff
+- TODO: move 'targets' definition to a MongoDB collection.
+```
 
 
 ## Map
+
+The `vespaapp/imports/ui/Map.js` component is responsible for displaying the _map-canvas_ using Leaflet.
+Leaflet manages DOM nodes independently of React, which requires a slightly different design of the Map component when compered to a pure React class/function.
+To make them work in harmony, React Component's lifecycle has to be observed; For instance, one will notice that the instantiation of Leaflet's layers (map, markers, etc) is done inside `componentDidMount()`, while `render()` was left with a `<div/>` placeholder.
+An analogous situation happens with the `Slider.js` component, where `jQuery` is required to control the widget.
+
+The Map component is connected to the (data) collection (`crism`) interface indirectly through the `Meteor.Session` global storage structure to allow for geo/spatial queries.
+As the user moves the map boundaries (either by zooming or shifting the basemap), the database is queried for the features (_e.g._, footprints) _intersecting_ the site area.
+Meteor Session objects are reactive components, which means that updates to any variable(s) stored in it will promptly trigger a reaction on _any_ component listening the respective variable(s).
+
+In the Map component a `Session.set()` call will perform the update of the global variable `bbox` with the updated boundaries of the map after a user interaction.
+Consequently, in the `App.js` component where there is a `Session.get(bbox)` statement, a new query (or _subscription_ to be more precise) to the `crism` collection will request for new data from the server, which will update the list of _granules_ presented to the user.
+
+
+## List
+
+In its simplest, the App will display a list of data items.
+If the user, for example, ask for data from Jupiter all we can display is a list of images, for instance.
+
+The `vespaapp/imports/ui/List.js` component, though, implements a somewhat sofisticated system for rendering items on demand, only the items that fit in the screen/viewport are rendered.
+That behaviour provides an optimization regarding the user/client resources (namely memory and bandwidth), guarantess stability of the software, and ultimately improves the user experience.
+Notice that the number of documents (_i.e._, _granules_) retrieved from the database may go up to the thousands, if not properly handled (as it _has_ been done) the client may simply go out of resources and crash.
