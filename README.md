@@ -27,7 +27,7 @@ Supported by:
   <img width='50px' alt="EuroPlanet" src='docs/assets/logos/europlanet_logo.jpg' />
 </a>
 <img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
-<a href='https://www.ivoa.net'>
+<a href='http://www.ivoa.net'>
   <img width='50px' alt="IVOA" src='docs/assets/logos/ivoa_logo.png' />
 </a>
 </div>
@@ -39,7 +39,7 @@ Mainly built with:
   <img width='50px' src='docs/assets/logos/meteor_logo.png' />
 </a>
 <img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
-<a href='https://www.reactjs.com'>
+<a href='https://reactjs.org'>
   <img width='50px' src='docs/assets/logos/react_logo.png' />
 </a>
 <img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
@@ -47,7 +47,7 @@ Mainly built with:
   <img width='50px' src='docs/assets/logos/mongodb_logo.png' />
 </a>
 <img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
-<a href='https://www.leafletjs.com'>
+<a href='https://leafletjs.com'>
   <img width='50px' src='docs/assets/logos/leaflet_logo.png' />
 </a>
 </div>
