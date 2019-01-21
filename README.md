@@ -12,12 +12,12 @@ Main goals are:
 
 ## Technical info
 
-The technical user is referred to check the [wiki pages] for a detailed
+The technical user is referred to check the [docs pages] for a detailed
 description of the App's structure, development status and data/work flow.
 
 /.\
 
 [vespa]: http://voparis-europlanet-dev.obspm.fr
 [vespa portal]: http://vespa.obspm.fr
-[wiki pages]: https://github.com/chbrandt/vespaapp/wiki
+[docs pages]: https://github.com/chbrandt/vespaapp/blob/master/docs/README.md
 [github issues]: https://github.com/chbrandt/vespaapp/issues
