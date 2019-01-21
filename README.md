@@ -22,11 +22,11 @@ Supported by:
 <a href='https://www.openplanetary.org'>
   <img width='50px' alt="OpenPlanetary" src='docs/assets/logos/openplanetary_logo.png' />
 </a>
-<strong>...</strong>
+<img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
 <a href='http://www.europlanet-2020-ri.eu/'>
   <img width='50px' alt="EuroPlanet" src='docs/assets/logos/europlanet_logo.jpg' />
 </a>
-<strong>...</strong>
+<img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
 <a href='https://www.ivoa.net'>
   <img width='50px' alt="IVOA" src='docs/assets/logos/ivoa_logo.png' />
 </a>
@@ -38,15 +38,15 @@ Mainly built with:
 <a href='https://www.meteor.com'>
   <img width='50px' src='docs/assets/logos/meteor_logo.png' />
 </a>
-<strong>...</strong>
+<img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
 <a href='https://www.reactjs.com'>
   <img width='50px' src='docs/assets/logos/react_logo.png' />
 </a>
-<strong>...</strong>
+<img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
 <a href='https://www.mongodb.com'>
   <img width='50px' src='docs/assets/logos/mongodb_logo.png' />
 </a>
-<strong>...</strong>
+<img width='10px' src='docs/assets/logos/slider-transparent-placeholder.png' />
 <a href='https://www.leafletjs.com'>
   <img width='50px' src='docs/assets/logos/leaflet_logo.png' />
 </a>
