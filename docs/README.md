@@ -2,7 +2,8 @@
 
 The App basic structure is shown in the following figure, it presents the software agents and there relation in data flow.
 
-![App agents](assets/diagram_app_components/diagram_app_components.001.jpeg)
+<img width=500 align='left' src='assets/diagram_app_components/diagram_app_components.001.jpeg' />
+
 
 ## Overview
 
@@ -30,6 +31,8 @@ visualization for the user first-inspection.
 
 ### Software environment
 
+<img width=500 align='left' src='assets/diagram_app_components/diagram_app_components.002.jpeg' />
+
 At the basis of the App structure there is [Meteor](https://www.meteor.com/), a framework that manages the dependencies, server/client communication and the software lifecycle.
 To structure the App components and reactive to data changes we make use of
 [React.js](https://reactjs.org/).
@@ -37,7 +40,4 @@ Data is managed by [MongoDB](https://www.mongodb.com/).
 Interactive maps are provided by [Leaflet](https://leafletjs.com/).
 And [Bootstrap](https://getbootstrap.com/) is user to provide an responsive, elegant interface allowing the user to access the App either a mobile device or a desktop computer.
 
-The figure below depicts such environment: language, frameworks and libraries
-used.
 
-![App environment](assets/diagram_app_components/diagram_app_components.002.jpeg)
