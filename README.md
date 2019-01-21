@@ -53,5 +53,5 @@ Mainly built with:
 </div>
 
 [vespa portal]: http://vespa.obspm.fr
-[docs pages]: https://github.com/chbrandt/vespaapp/blob/master/docs/README.md
+[docs]: https://github.com/chbrandt/vespaapp/blob/master/docs/README.md
 [github issues]: https://github.com/chbrandt/vespaapp/issues
