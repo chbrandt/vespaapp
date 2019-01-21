@@ -40,4 +40,7 @@ Data is managed by [MongoDB](https://www.mongodb.com/).
 Interactive maps are provided by [Leaflet](https://leafletjs.com/).
 And [Bootstrap](https://getbootstrap.com/) is user to provide an responsive, elegant interface allowing the user to access the App either a mobile device or a desktop computer.
 
+The next figure depicts such environment: language, frameworks and libraries
+used.
+
 
