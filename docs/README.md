@@ -31,7 +31,7 @@ visualization for the user first-inspection.
 
 ### Software environment
 
-<img width=500 align='left' src='assets/diagram_app_components/diagram_app_components.002.jpeg' />
+<img width=500 align='right' src='assets/diagram_app_components/diagram_app_components.002.jpeg' />
 
 At the basis of the App structure there is [Meteor](https://www.meteor.com/), a framework that manages the dependencies, server/client communication and the software lifecycle.
 To structure the App components and reactive to data changes we make use of
