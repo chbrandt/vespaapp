@@ -19,6 +19,12 @@ and the files (script, config, schema, etc) to download data.
     * pyvo (current at 0.9.2)
     * pandas (current at 0.23.4)
 
+```diff
+- TODO: command to 'list' the available services (services in `services.json`)
+- TODO: parameter (-c) for "download" script with the set of fields to download
+- TODO: option 'random' for "download" script to retrieve (N) random records
+```
+
 ## Examples
 
 **Obs**: make sure to have `pyvo` and `pandas` installed.

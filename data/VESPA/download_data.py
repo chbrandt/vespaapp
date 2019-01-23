@@ -7,23 +7,30 @@ import json
 from pyvo import tap
 
 
-def run(option_schema, limit_table_size=None,
+def run(option_schema, limit=None, percent=None,
         registry_file='virtualRegistry.json'):
     """
     Download data from EPN-TAP service.
     Mandatory 'option_schema' is one of the schema (i.e, service) defined in '{}'.
-    Use 'limit_table_size' to limit the number of results (TOP) to download.
+    Use 'limit' to limit the number of results (TOP) to download.
 
     Input:
      - option_schema : <str>
         Name of EPN-TAP service (without '.epn_core') to query
-     - limit_table_size: <int> or None
-        Number of records/lines to download (the "top <number>" entries)
+     - limit: <int> (None)
+        Number of records/lines to download to the TOP(limit) records of the table
+     - percent: <float> (None)
+        Percentage (0:100) of the table RANDOMLY selected
      - registry_file: <str>
         Config (json) filename where "schema" is defined
 
     Output:
      - Pandas DataFrame with resulting table
+
+    About sampling the results: 'limit' and 'percent' are mutually excludent.
+    'limit' has preference over 'percent' (simply because it is cheaper).
+    * 'limit': returns the TOP "limit" records of the table;
+    * 'percent': eturns a random sample of size ~percent of table.
     """
 
     # File base containing the list of VESPA services
@@ -78,15 +85,23 @@ def run(option_schema, limit_table_size=None,
     # Get the data
     #
     query_expr = ['SELECT']
-    if limit_table_size is not None:
-        query_expr.append('TOP {:d}'
-                          .format(limit_table_size))
-    query_expr.append('{!s} FROM {!s}.epn_core'.
-                      format(','.join(option_columns), option_schema))
+
+    if limit is not None:
+        assert limit > 0, "'limit' expected to be greater than 0"
+        query_expr.append('TOP {:d}'.format(limit))
+
+    query_expr.append('{cols!s} FROM {schema!s}.epn_core')
+
+    if percent is not None:
+        assert 0 < percent < 100, "'percent' expected to between (0,100)"
+        query_expr.append('WHERE rand() <= {fx:f}'.format(fx=percent/100.0))
 
     query_expr = ' '.join(query_expr)
+    query_expr = query_expr.format(cols=','.join(option_columns),
+                                   schema=option_schema)
 
     log.debug("Query: {}".format(query_expr))
+    print("QUERY:", query_expr)
 
     vo_result = vo_service.search(query_expr)
 
