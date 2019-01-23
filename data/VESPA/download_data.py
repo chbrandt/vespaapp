@@ -4,18 +4,50 @@ import logging as log
 log.basicConfig(level=log.DEBUG)
 
 import json
+import pandas as pd
 from pyvo import tap
 
+_DEFAULT_SERVICES_LIST_ = 'virtualRegistry.json'
+_TIMEOUT_ = 3
+_NULL_INT_ = -999
 
-def run(option_schema, limit=None, percent=None,
-        registry_file='virtualRegistry.json'):
+def _init_query_struct():
+    """
+    Setup a query object to simplify my life
+    """
+    from collections import namedtuple
+    Query = namedtuple('Query', ['SELECT','FROM','COUNT','TOP','WHERE'])
+    Query.SELECT = 'SELECT'
+    Query.FROM_schema = 'FROM {schema!s}.epn_core'
+    Query.COUNT = 'COUNT(*)'
+    Query.TOP_limit = 'TOP {limit:d}'
+    Query.WHERE_fraction = 'WHERE rand() <= {fraction:f}'
+    return Query
+
+def _query_serv(schema, accessurl):
+    import timeout_decorator
+    @timeout_decorator.timeout(_TIMEOUT_)
+    def query_timeout(query):
+        return serv.search(query)
+    q = _init_query_struct()
+    query = ' '.join([q.SELECT,q.COUNT,q.FROM_schema]).format(schema=schema)
+    serv = tap.TAPService(accessurl)
+    try:
+        t = query_timeout(query)
+        count = int(t.to_table()[0][0])
+    except:
+        count = _NULL_INT_
+    return count
+
+def run(schema, limit=None, percent=None,
+        registry_file=_DEFAULT_SERVICES_LIST_):
     """
     Download data from EPN-TAP service.
     Mandatory 'option_schema' is one of the schema (i.e, service) defined in '{}'.
     Use 'limit' to limit the number of results (TOP) to download.
 
     Input:
-     - option_schema : <str>
+     - schema : <str>
         Name of EPN-TAP service (without '.epn_core') to query
      - limit: <int> (None)
         Number of records/lines to download to the TOP(limit) records of the table
@@ -32,6 +64,7 @@ def run(option_schema, limit=None, percent=None,
     * 'limit': returns the TOP "limit" records of the table;
     * 'percent': eturns a random sample of size ~percent of table.
     """
+    option_schema = schema
 
     # File base containing the list of VESPA services
     #
@@ -113,22 +146,56 @@ def run(option_schema, limit=None, percent=None,
     return result_df
 
 
+def list_services(registry_file=_DEFAULT_SERVICES_LIST_):
+    """
+    List available services
+    """
+    # File base containing the list of VESPA services
+    #
+    with open(registry_file, 'r') as fp:
+        registry_list = json.load(fp)
+
+    _keys = ['schema','title','accessurl']
+    df = pd.read_json(json.dumps(registry_list['services']), orient='records')
+    df['count'] = None
+
+    def query_serv(row):
+        return _query_serv(row['schema'], row['accessurl'],)
+    df['count'] = df.apply(query_serv, axis=1)
+    df['count'].astype(int, inplace=True)
+    print(df[['schema','title','count']])
+
+
 if __name__ == '__main__':
     import sys
     import os
+    import argparse
 
-    if len(sys.argv) < 2:
-        msg = "\nUsage: \n\t{} <epn-schema> [number-of-output-lines]\n".format(sys.argv[0])
-        print(msg)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description='Download EPN-TAP data')
 
-    epn_schema = sys.argv[1]
+    parser.add_argument('-l', '--list', action='store_true',
+                        help='List available schema/services')
+    parser.add_argument('--list-size', metavar='count', action='store_true',
+                        help='When listing service, list their table sizes')
+    args = parser.parse_known_args()[0]
+    if args.list:
+        list_services(query_count=count)
+        sys.exit(0)
 
-    number_records = None
-    if len(sys.argv) == 3:
-        number_records = int(sys.argv[2])
+    parser.add_argument('schema', help="Name of EPN-Core schema ('schema.epn_core')")
+    parser.add_argument('-n', '--limit', metavar='limit', type=int,
+                        help='Limit the number of returned records',
+                        default=None)
+    parser.add_argument('-p', '--percent', metavar='percent', type=float,
+                        help='Fraction (in %) of table size records to return',
+                        default=None)
+    args = parser.parse_args()
 
-    result_df = run(epn_schema, number_records)
+    epn_schema = args.schema
+    number_records = args.limit
+    fraction = args.percent
+
+    result_df = run(epn_schema, limit=number_records, percent=fraction)
 
     number_records = len(result_df)
     if not os.path.isdir(epn_schema):
