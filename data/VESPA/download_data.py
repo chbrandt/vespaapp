@@ -39,7 +39,7 @@ def _query_serv(schema, accessurl):
         count = _NULL_INT_
     return count
 
-def run(schema, limit=None, percent=None,
+def run(schema, limit=None, percent=None, columns=None,
         registry_file=_DEFAULT_SERVICES_LIST_):
     """
     Download data from EPN-TAP service.
@@ -87,29 +87,33 @@ def run(schema, limit=None, percent=None,
 
     log.debug("Schema: {}".format(option_schema))
 
-    # (Pre)set the columns we want to download.
-    # So far, we have only "tap" defined since all services publish the same columns
+    # # (Pre)set the columns we want to download.
+    # # So far, we have only "tap" defined since all services publish the same columns
+    # #
+    # services_columns_filename = 'service_columns.json'
+    # with open(services_columns_filename, 'r') as fp:
+    #     services_columns = json.load(fp)
     #
-    services_columns_filename = 'service_columns.json'
-    with open(services_columns_filename, 'r') as fp:
-        services_columns = json.load(fp)
+    # columns_schema = 'tap'  # this is the default columns-schema
+    # if option_schema in services_columns:
+    #     columns_schema = option_schema
+    #
+    # option_columns = []
+    # for k,v in services_columns[columns_schema].items():
+    #     if isinstance(v, list):
+    #         option_columns.extend(v)
+    #     else:
+    #         assert isinstance(v, str), "Was expecting a string, got '{}'".format(type(v))
+    #         option_columns.append(v)
+    #
+    # assert len(option_columns), \
+    #     "No columns selected! Check '{}'".format(services_columns_filename)
+    # option_columns = ','.join(option_columns)
 
-    columns_schema = 'tap'  # this is the default columns-schema
-    if option_schema in services_columns:
-        columns_schema = option_schema
+    if not columns:
+        option_columns = '*'
 
-    option_columns = []
-    for k,v in services_columns[columns_schema].items():
-        if isinstance(v, list):
-            option_columns.extend(v)
-        else:
-            assert isinstance(v, str), "Was expecting a string, got '{}'".format(type(v))
-            option_columns.append(v)
-
-    assert len(option_columns), \
-        "No columns selected! Check '{}'".format(services_columns_filename)
-
-    log.debug("Columns: {}".format(','.join(option_columns)))
+    log.debug("Columns: {}".format(option_columns))
 
     # Set the (TAP) service
     #
@@ -130,7 +134,7 @@ def run(schema, limit=None, percent=None,
         query_expr.append('WHERE rand() <= {fx:f}'.format(fx=percent/100.0))
 
     query_expr = ' '.join(query_expr)
-    query_expr = query_expr.format(cols=','.join(option_columns),
+    query_expr = query_expr.format(cols=option_columns,
                                    schema=option_schema)
 
     log.debug("Query: {}".format(query_expr))
@@ -146,7 +150,8 @@ def run(schema, limit=None, percent=None,
     return result_df
 
 
-def list_services(registry_file=_DEFAULT_SERVICES_LIST_):
+def list_services(query_count=False, schema_only=False,
+                    registry_file=_DEFAULT_SERVICES_LIST_):
     """
     List available services
     """
@@ -155,42 +160,26 @@ def list_services(registry_file=_DEFAULT_SERVICES_LIST_):
     with open(registry_file, 'r') as fp:
         registry_list = json.load(fp)
 
-    _keys = ['schema','title','accessurl']
     df = pd.read_json(json.dumps(registry_list['services']), orient='records')
-    df['count'] = None
 
-    def query_serv(row):
-        return _query_serv(row['schema'], row['accessurl'],)
-    df['count'] = df.apply(query_serv, axis=1)
-    df['count'].astype(int, inplace=True)
-    print(df[['schema','title','count']])
+    output_fields = ['schema']
+    if schema_only:
+        return df[output_fields]
+
+    if query_count:
+        output_fields.append('count')
+        def query_serv(row):
+            return _query_serv(row['schema'], row['accessurl'],)
+        df['count'] = df.apply(query_serv, axis=1)
+        # assert any(df['count'].isnull()), "We should not be seeing this!"
+        df['count'].astype(int, inplace=True)
+
+    output_fields.append('title')
+
+    return df[output_fields]
 
 
-if __name__ == '__main__':
-    import sys
-    import os
-    import argparse
-
-    parser = argparse.ArgumentParser(description='Download EPN-TAP data')
-
-    parser.add_argument('-l', '--list', action='store_true',
-                        help='List available schema/services')
-    parser.add_argument('--list-size', metavar='count', action='store_true',
-                        help='When listing service, list their table sizes')
-    args = parser.parse_known_args()[0]
-    if args.list:
-        list_services(query_count=count)
-        sys.exit(0)
-
-    parser.add_argument('schema', help="Name of EPN-Core schema ('schema.epn_core')")
-    parser.add_argument('-n', '--limit', metavar='limit', type=int,
-                        help='Limit the number of returned records',
-                        default=None)
-    parser.add_argument('-p', '--percent', metavar='percent', type=float,
-                        help='Fraction (in %) of table size records to return',
-                        default=None)
-    args = parser.parse_args()
-
+def _fetch(args):
     epn_schema = args.schema
     number_records = args.limit
     fraction = args.percent
@@ -207,3 +196,40 @@ if __name__ == '__main__':
     print("-----")
     print("Results written to: {}".format(output_filename))
     print("-----")
+
+
+def _list(args):
+    df = list_services(query_count=args.count, schema_only=args.schema_only)
+    if args.schema_only:
+        print('\n'.join(df.to_string(index=False,header=False).split()))
+    else:
+        print(df.to_string(index=False))
+
+
+if __name__ == '__main__':
+    import sys
+    import os
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Download EPN-TAP data')
+    subparsers = parser.add_subparsers(title='Subcommands')
+
+    fetching = subparsers.add_parser('fetch', help='Fetch data')
+    fetching.add_argument('schema', help="Name of EPN-Core schema ('schema.epn_core')")
+    fetching.add_argument('--limit', dest='limit', type=int,
+                        help='Limit the number of returned records',
+                        default=None)
+    fetching.add_argument('--percent', dest='percent', type=float,
+                        help='Fraction (in percentile) of table size records to return',
+                        default=None)
+    fetching.set_defaults(func=_fetch)
+
+    listing = subparsers.add_parser('list', help='List schemas')
+    listing.add_argument('--length', dest='count', action='store_true',
+                        help="List services' number of records")
+    listing.add_argument('--minimal', dest='schema_only', action='store_true',
+                        help="List the names of the schema only")
+    listing.set_defaults(func=_list)
+
+    args = parser.parse_args()
+    args.func(args)
