@@ -1,18 +1,17 @@
 import { Meteor } from 'meteor/meteor';
-// import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { renderRoutes } from '../imports/startup/client/routes.js';
 
-// Load Planetary data interface
-import '../imports/api/data.js';
-// import '../imports/api/datang.js';
-// Load User data interface
-import '../imports/api/notes.js';
+import { DataIndex } from '../imports/api/collections/data_index.js';
 
 import '../imports/startup/accounts-config.js';
 
 Meteor.startup(() => {
-  var bodies = ['mars'];
+  Meteor.subscribe('data_index', () => {
+    const targets = DataIndex.find().fetch();
+    ReactDOM.render(renderRoutes(targets), document.getElementById("render-target"));
+  })
+  // var bodies = ['mars'];
   // ReactDOM.render(<App body={'mars'} />, document.getElementById("render-target"));
-  ReactDOM.render(renderRoutes(bodies), document.getElementById("render-target"));
 });

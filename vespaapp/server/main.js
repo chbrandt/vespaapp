@@ -1,10 +1,13 @@
 import { Meteor } from "meteor/meteor";
 import { onPageLoad } from "meteor/server-render";
 
-import '../imports/api/notes.js';
-import '../imports/api/data.js';
-import '../imports/api/data_bdip.js';
-import '../imports/api/data_crism.js';
+// import '../imports/api/notes.js';
+// import '../imports/api/data.js';
+// import '../imports/api/data_bdip.js';
+// import '../imports/api/data_crism.js';
+import '../imports/api/collections/data_index.js';
+import '../imports/api/collections/data_geo.js';
+import '../imports/api/collections/data_any.js';
 
 Meteor.startup(() => {
   // Code to run on server startup.

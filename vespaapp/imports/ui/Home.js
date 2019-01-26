@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
-// import './App.css';
+import { DataIndex } from '../api/collections/data_index.js';
 
 import Header from './Header.js';
 import Footer from './Footer.js';
@@ -34,7 +34,7 @@ const targets = [
   the data loaded in the Mars page should be filtered for "Arabia Terra". Which
   is to say that the search term ("Arabia Terra") should go to the new page ("Mars").
 
-  The data set to feed this component is being called 'data-index'.
+  The data set to feed this component is being called 'data_index'.
   The Data-Index must provide searchable information for the "targets", such
   information must be related to the data sets that will be available in the
   following data exploration pages.
@@ -54,11 +54,11 @@ function Home({ data_index }) {
   );
 }
 
-export default withTracker() => {
-    const handle = Meteor.subscribe('data-index');
+export default withTracker(() => {
+    const handle = Meteor.subscribe('data_index');
     return (
       {
-        data_index: DataIndex.find().fetch();
+        data_index: DataIndex.find().fetch()
       }
     );
-}(Home)
+})(Home);
