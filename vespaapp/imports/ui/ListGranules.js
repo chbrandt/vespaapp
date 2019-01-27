@@ -2,10 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 
-import DataItem from './DataItem.js';
+import FilterPanel from './FilterPanel.js';
+import Granule from './Granule.js';
 
 
-class Lst extends React.Component {
+export default class ListGranules extends React.Component {
+  /*
+  Present a list of EPN-TAP granules, not necessary from only one service.
+  This component expects to receive `props` with the following fields:
+  - items
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,39 +28,29 @@ class Lst extends React.Component {
   render() {
     return (
       <div id="searchable-list" className="panel">
+
         <div className="panel-heading">
-          {this.renderSearchBox()}
+          <FilterPanel  onTextChange={()=>{}}
+                        onSelectionChange={()=>{}}
+                        onRangeChange={()=>{}} />
         </div>
+
         <div className="panel-body list-group" style={{height:'45vh'}}>
-        <AutoSizer>
-          {
-          ({ width, height }) => {
-            return <List
-              width={width}
-              height={height}
-              deferredMeasurementCache={this.cache}
-              rowHeight={this.cache.rowHeight}
-              rowRenderer={this.renderItems}
-              rowCount={this.props.items.length}
-              overscanRowCount={3} />
-            }
-          }
-        </AutoSizer>
+          <AutoSizer>
+            {({ width, height }) => {
+              return <List
+                width={width}
+                height={height}
+                deferredMeasurementCache={this.cache}
+                rowHeight={this.cache.rowHeight}
+                rowRenderer={this.renderItems}
+                rowCount={this.props.items.length}
+                overscanRowCount={3} />
+              }}
+          </AutoSizer>
         </div>
       </div>
     );
-  }
-
-  renderSearchBox() {
-    return (
-      <div className="search-box">
-        <input id="searchInput" className="form-control"
-          type="text"
-          onChange={this.filterItems.bind(this)}
-          placeholder="Search targets"
-        />
-      </div>
-    )
   }
 
   renderItems({ index, key, style, parent }) {
@@ -85,7 +81,7 @@ class Lst extends React.Component {
             </div>
           </div>
         </div>*/}
-        <DataItem data={item} />
+        <Granule data={item} />
       </CellMeasurer>
     );
   }
@@ -102,7 +98,7 @@ class Lst extends React.Component {
   //   });
   // }
 
-  filterItems(event) {
+  filterItemsText(event) {
     const text = event.target.value.toLowerCase();
     this.setState({ query: text });
     var filteredList = this.props.items;
@@ -129,7 +125,6 @@ class Lst extends React.Component {
   //   this.setState({items: filteredList});
   // }
 }
-export default Lst;
 
 const link_vespa_crism = 'http://vespa.obspm.fr/planetary/data/display/?f-url_op=&f-schema_op=&f-target_name=&f-instrument_host_name=&f-instrument_name_op=%3D&f-instrument_name=&f-processing_level=&f-time_search_type_op=is_included_in&f-time_interval_type_op=between&f-time_min=&f-time_max=&f-time_center=&f-time_delta_value_op=&f-time_exp_min_op=%3E%3D&f-time_exp_min=&f-time_exp_max_op=%3C%3D&f-time_exp_max=&f-time_sampling_step_min_op=%3E%3D&f-time_sampling_step_min=&f-time_sampling_step_max_op=%3C%3D&f-time_sampling_step_max=&f-spatial_frame_type=&f-location_interval_op=intersection&f-location_values_op=between&f-c1min=&f-c1max=&f-c1center=&f-c1delta=&f-c2min=&f-c2max=&f-c2center=&f-c2delta=&f-c3min=&f-c3max=&f-c3center=&f-c3delta=&f-c1_resol_min=&f-c1_resol_max=&f-c1_resol_center=&f-c1_resol_delta=&f-c2_resol_min=&f-c2_resol_max=&f-c2_resol_center=&f-c2_resol_delta=&f-c3_resol_min=&f-c3_resol_max=&f-c3_resol_center=&f-c3_resol_delta=&f-spectral_interval_op=intersection&f-spectral_unit_op=hertz&f-spectral_range_min=&f-spectral_range_max=&f-spectral_resolution_min=&f-spectral_resolution_max=&f-spectral_sampling_step_min=&f-spectral_sampling_step_max=&f-phase_min_op=%3E%3D&f-phase_min=&f-phase_max_op=%3C%3D&f-phase_max=&f-incidence_min_op=%3E%3D&f-incidence_min=&f-incidence_max_op=%3C%3D&f-incidence_max=&f-emergence_min_op=%3E%3D&f-emergence_min=&f-emergence_max_op=%3C%3D&f-emergence_max=&f-granule_uid=&f-granule_gid=&f-obs_id=&f-measurement_type=&f-species=&f-feature_name=&resource_id=ivo%3A%2F%2Fvopdc.obspm%2Flesia%2Fbdip%2Fepn&services=form_registered_services&query_source=text&f-text_query=granule_uid%3D';
 const sq = '%27';

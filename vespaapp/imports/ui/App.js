@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 import Header from './Header.js';
 import Map from './Map.js';
-import Lst from './List.js';
+import ListGranules from './ListGranules.js';
 
 import { DataGeo } from '../api/collections/data_geo.js';
 import { DataAny } from '../api/collections/data_any.js';
@@ -22,7 +22,7 @@ function App({ target, isBody, features, granules }) {
           <Map body={target} features={features} />
           : ''
         }
-        <Lst target={target} items={items} />
+        <ListGranules target={target} items={items} />
       </main>
 
     </div>
