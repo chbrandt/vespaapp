@@ -3,6 +3,7 @@
 import logging as log
 log.basicConfig(level=log.DEBUG)
 
+import timeout_decorator
 import json
 import pandas as pd
 from pyvo import tap
@@ -24,16 +25,16 @@ def _init_query_struct():
     Query.WHERE_fraction = 'WHERE rand() <= {fraction:f}'
     return Query
 
+@timeout_decorator.timeout(_TIMEOUT_)
+def _query_timeout(serv, query):
+    return serv.search(query)
+
 def _query_serv(schema, accessurl):
-    import timeout_decorator
-    @timeout_decorator.timeout(_TIMEOUT_)
-    def query_timeout(query):
-        return serv.search(query)
     q = _init_query_struct()
     query = ' '.join([q.SELECT,q.COUNT,q.FROM_schema]).format(schema=schema)
     serv = tap.TAPService(accessurl)
     try:
-        t = query_timeout(query)
+        t = _query_timeout(serv, query)
         count = int(t.to_table()[0][0])
     except:
         count = _NULL_INT_
@@ -140,7 +141,10 @@ def run(schema, limit=None, percent=None, columns=None,
     log.debug("Query: {}".format(query_expr))
     print("QUERY:", query_expr)
 
-    vo_result = vo_service.search(query_expr)
+    try:
+        vo_result = _query_timeout(vo_service, query_expr)
+    except:
+        return None
 
     log.debug("Results: {:d}".format(len(vo_result)))
 
@@ -185,6 +189,8 @@ def _fetch(args):
     fraction = args.percent
 
     result_df = run(epn_schema, limit=number_records, percent=fraction)
+    if result_df is None:
+        return
 
     number_records = len(result_df)
     if not os.path.isdir(epn_schema):
