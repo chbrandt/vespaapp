@@ -12,6 +12,4 @@ Meteor.startup(() => {
     const targets = DataIndex.find().fetch();
     ReactDOM.render(renderRoutes(targets), document.getElementById("render-target"));
   })
-  // var bodies = ['mars'];
-  // ReactDOM.render(<App body={'mars'} />, document.getElementById("render-target"));
 });

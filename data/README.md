@@ -4,6 +4,42 @@
 
 To manage the data sets used by the app we are using MongoDB.
 
+### Collections
+
+Our database is composed by three collections.
+As further explained below, two collections host the datasets with and without
+geolocated data.
+And one collection store the index of top-level targets; This is a small set of
+keywords used at the App's home page.
+
+#### `data_index` schema
+```
+data_index
+  - name
+  - thumbnail
+  - keywords
+```
+
+#### `data_any` schema
+```
+data_any
+  - target_name
+  - target_class
+  - granule_uid
+  - granule_gid
+```
+
+#### `data_geo` schema
+```
+data_geo
+  - target_name
+  - target_class
+  - granule_uid
+  - granule_gid
+  - geometry
+    - coordinates
+    - type
+```
 
 ## Data sets
 

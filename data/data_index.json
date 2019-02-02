@@ -1,0 +1,15 @@
+[
+  {
+    "name": "All",
+    "filter": {},
+    "thumbnail": "http://chittagongit.com/images/planet-icon-png/planet-icon-png-20.jpg",
+    "keywords": ""
+  },
+  {
+    "name": "Mars",
+    "hasMap": true,
+    "filter": { "target_name": "mars" },
+    "thumbnail": "https://space-facts.com/wp-content/uploads/mars-transparent.png",
+    "keywords": ""
+  }
+]

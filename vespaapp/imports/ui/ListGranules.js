@@ -26,16 +26,20 @@ export default class ListGranules extends React.Component {
   }
 
   render() {
+    console.log(this.props.items.length);
+    const listHeight = this.props.style.height;
     return (
       <div id="searchable-list" className="panel">
 
+      {/*
         <div className="panel-heading">
           <FilterPanel  onTextChange={()=>{}}
                         onSelectionChange={()=>{}}
                         onRangeChange={()=>{}} />
         </div>
+      */}
 
-        <div className="panel-body list-group" style={{height:'45vh'}}>
+        <div className="panel-body list-group" style={this.props.style}>
           <AutoSizer>
             {({ width, height }) => {
               return <List
@@ -45,7 +49,7 @@ export default class ListGranules extends React.Component {
                 rowHeight={this.cache.rowHeight}
                 rowRenderer={this.renderItems}
                 rowCount={this.props.items.length}
-                overscanRowCount={3} />
+                overscanRowCount={10} />
               }}
           </AutoSizer>
         </div>
@@ -53,12 +57,27 @@ export default class ListGranules extends React.Component {
     );
   }
 
-  renderItems({ index, key, style, parent }) {
+  renderItems({
+    index,       // Index of row
+    isScrolling, // The List is currently being scrolled
+    isVisible,   // This row is visible within the List (eg it is not an overscanned row)
+    key,         // Unique key within array of rendered rows
+    parent,      // Reference to the parent List (instance)
+    style        // Style object to be applied to row (to position it);
+                 // This must be passed through to the rendered row element.
+    }) {
     const item = this.props.items[index];
     const granule_uid = item.granule_uid;
     const link_datum = link_vespa_crism + sq+granule_uid+sq + '+OR+granule_uid+LIKE+' + sq+pc+granule_uid.toUpperCase()+pc+sq;
     const access_url = item.access_url;
     const thumbnail_url = item.thumbnail_url;
+    console.log(    index,       // Index of row
+        isScrolling, // The List is currently being scrolled
+        isVisible,   // This row is visible within the List (eg it is not an overscanned row)
+        key,         // Unique key within array of rendered rows
+        parent,      // Reference to the parent List (instance)
+        style        // Style object to be applied to row (to position it);
+      );
     return (
       <CellMeasurer
         key={key}
@@ -66,22 +85,7 @@ export default class ListGranules extends React.Component {
         parent={parent}
         columnIndex={0}
         rowIndex={index}>
-        {/*<div className="list-group-item" style={style}>
-          <div>
-            <a style={{float:"left"}}
-               href={access_url} target="_blank">
-              <img className="imagebdip" src={thumbnail_url} alt={granule_uid}/>
-            </a>
-            <div className="card-content">
-              <a className="card-link" style={{height:'30px', float:'right'}}
-                 href={link_datum} target="_blank">
-                <div className="glyphicon glyphicon-share"/>
-              </a>
-              <h4 className="card-title">{granule_uid}</h4>
-            </div>
-          </div>
-        </div>*/}
-        <Granule data={item} />
+        <Granule key={key} data={item} style={style}/>
       </CellMeasurer>
     );
   }

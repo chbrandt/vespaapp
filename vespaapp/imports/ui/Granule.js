@@ -11,8 +11,8 @@ export default class Granule extends React.Component {
   This component expects to receive `props` with the following fields:
   - data:
     - granule_uid
+    - identifier
     - thumbnail_url
-    - identifier: IVO service identifier (ivo://...)
     - external_url
   - onItemClicked: callback to run when item is clicked.
   */
@@ -20,7 +20,7 @@ export default class Granule extends React.Component {
   constructor(props) {
     super(props);
   // callbacks
-  this.onItemClicked = this.props.onItemClicked;
+  this.onItemClicked = this.props.onItemClicked || function() {console.log("not defined")};
   // internal bindings
   this.itemClicked = this.itemClicked.bind(this);
   }
@@ -34,7 +34,7 @@ export default class Granule extends React.Component {
     const link_vespa = ivo_id ? create_vespa_link(granule_uid, ivo_id) : undefined;
 
     return (
-      <button type="button" className="list-group-item list-group-item-action" onClick={this.itemClicked}>
+      <button type="button" style={this.props.style} className="list-group-item list-group-item-action" onClick={this.itemClicked}>
         <div className="media">
           <div className="media-left media-middle">
             <Thumbnail url={thumbnail_url} />
