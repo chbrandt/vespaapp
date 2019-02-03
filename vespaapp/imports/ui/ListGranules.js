@@ -71,13 +71,7 @@ export default class ListGranules extends React.Component {
     const link_datum = link_vespa_crism + sq+granule_uid+sq + '+OR+granule_uid+LIKE+' + sq+pc+granule_uid.toUpperCase()+pc+sq;
     const access_url = item.access_url;
     const thumbnail_url = item.thumbnail_url;
-    console.log(    index,       // Index of row
-        isScrolling, // The List is currently being scrolled
-        isVisible,   // This row is visible within the List (eg it is not an overscanned row)
-        key,         // Unique key within array of rendered rows
-        parent,      // Reference to the parent List (instance)
-        style        // Style object to be applied to row (to position it);
-      );
+
     return (
       <CellMeasurer
         key={key}

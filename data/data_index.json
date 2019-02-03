@@ -1,8 +1,9 @@
 [
   {
     "name": "All",
+    "hasMap": false,
     "filter": {},
-    "thumbnail": "http://chittagongit.com/images/planet-icon-png/planet-icon-png-20.jpg",
+    "thumbnail": "assets/images/icon_targets_all.png",
     "keywords": ""
   },
   {

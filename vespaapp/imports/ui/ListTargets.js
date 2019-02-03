@@ -74,13 +74,14 @@ class ListTargets extends React.Component {
     return items.map((item) => {
       //TODO: put a mapping here to properly route the user
       const itemPage = "/" + item.name.toLowerCase();
+      const thumbnail = item.thumbnail;
       return (
         <div className="list-group-item" key={item.name}>
           <a href={itemPage} className="card-body">
             <div className="card">
               <h3>{item.name}</h3>
               <div className="contentTargets">
-                <img style={{width:'100px'}} src={item.thumbnail} alt=""/>
+                <img style={{width:'100px'}} src={thumbnail} alt=""/>
               </div>
             </div>
           </a>

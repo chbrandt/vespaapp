@@ -31,7 +31,7 @@ export default class Map extends React.Component {
     var map = L.map('map', {
                               center: [0, 0],
                               maxBounds:[[-90,-180],[90,180]],
-                              zoom: 2,
+                              zoom: 3,
                               // minZoom: 0.5,
                               // zoomSnap: 0.5,
                               // zoomDelta: 0.5,
@@ -92,8 +92,9 @@ export default class Map extends React.Component {
     var cntPolygons = 0;
     var polygonsIn = this.state.featureIDs.polygons;
     this.props.features.polygons.forEach((polygon,i) => {
-      if (polygonsIn.indexOf(polygon.obs_id) === -1) {
-        var lonlat = polygon.geometry.coordinates;
+      const objid = polygon._id.toString();
+      if (polygonsIn.indexOf(objid) === -1) {
+        var lonlat = polygon.s_region.coordinates;
         // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
         var latlon = lonlat.map((coordArray) => {
           return coordArray.slice(0,-1).map((coord) => {
@@ -102,7 +103,7 @@ export default class Map extends React.Component {
         var marker = L.polygon(latlon);
         marker.bindPopup(renderPopup(polygon));
         marker.addTo(map);
-        polygonsIn.push(polygon.obs_id);
+        polygonsIn.push(objid);
       }
     });
     cntPolygons = this.props.features.polygons.length;

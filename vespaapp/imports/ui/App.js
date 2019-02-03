@@ -3,12 +3,14 @@ import { Session } from 'meteor/session';
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
+import './App.css';
 import Header from './Header.js';
 import Map from './Map.js';
 import ListGranules from './ListGranules.js';
 
 import { DataGeo } from '../api/collections/data_geo.js';
 import { DataAny } from '../api/collections/data_any.js';
+// import { Registry } from '../api/collections/registry.js';
 
 
 function App({ target, isBody, features, granules }) {
@@ -17,7 +19,7 @@ function App({ target, isBody, features, granules }) {
     items = items.concat(features.polygons, features.points);
   }
 
-  var compHeight = 70;
+  var compHeight = 85;
   if (isBody) {
     compHeight = compHeight/2;
   }
@@ -26,7 +28,7 @@ function App({ target, isBody, features, granules }) {
   return (
     <div id="app">
 
-      <Header />
+      <Header style={{height:'10vh'}}/>
       <main className="container-fluid">
         {isBody ?
           <Map body={target} features={features} style={style}/>
@@ -43,16 +45,18 @@ export default withTracker( ({ data_selector, isBody }) => {
   data_selector = data_selector || {};
   console.log(data_selector);
 
-  // target = target.toLowerCase();
-  //
-  // // Get data from the collection with geolocated data, use Undefined when not apply
+  // Get data from the collection with geolocated data, use Undefined when not apply
   var data_geo;
   if (isBody) {
     const query = Object.assign({}, data_selector, { bbox: Session.get('bbox') });
-    const h1 = Meteor.subscribe('data_geo', query);
+    const h1 = Meteor.subscribe('data_geo', query,
+                                onReady = function() {
+                                  console.log("data_geo items: "+DataGeo.find().count())
+                                }
+                              );
     data_geo = {
-        points: DataGeo.find({ "geometry.type":"Point" }).fetch(),
-        polygons: DataGeo.find({ "geometry.type":"Polygon" }).fetch(),
+        points: DataGeo.find({ "s_region.type":"Point" }).fetch(),
+        polygons: DataGeo.find({ "s_region.type":"Polygon" }).fetch(),
     };
   }
   const features = data_geo;
@@ -61,5 +65,8 @@ export default withTracker( ({ data_selector, isBody }) => {
   const h2 = Meteor.subscribe('data_any', data_selector);
   const granules = DataAny.find({}).fetch();
 
-  return { features: features, granules: granules};
+  // const h3 = Meteor.subscribe('registry');
+  // const services = Registry.find({ _id: "services" }).fetch();
+
+  return { features: features, granules: granules};//, services: services};
 })(App);
