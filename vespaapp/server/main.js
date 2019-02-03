@@ -9,7 +9,7 @@ import '../imports/api/collections/data_index.js';
 import '../imports/api/collections/data_geo.js';
 import '../imports/api/collections/data_any.js';
 
-import '../imports/startup/server/methods.js';
+// import '../imports/startup/server/methods.js';
 
 Meteor.startup(() => {
   // Code to run on server startup.

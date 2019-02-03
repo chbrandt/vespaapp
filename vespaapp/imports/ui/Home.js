@@ -5,7 +5,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { DataIndex } from '../api/collections/data_index.js';
 
 import Header from './Header.js';
-import Footer from './Footer.js';
 import ListTargets from './ListTargets.js';
 
 

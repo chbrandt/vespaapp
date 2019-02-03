@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 
-import { create_vespa_link, thumbnail_empty } from './external_resources.js';
+import { create_vespa_link, thumbnail_empty } from './links_ext.js';
 
 
 export default class Granule extends React.Component {
