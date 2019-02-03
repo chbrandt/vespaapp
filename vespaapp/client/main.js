@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom';
 import { renderRoutes } from '../imports/startup/client/routes.js';
 
 import { DataIndex } from '../imports/api/collections/data_index.js';
-// import { Registry } from '../imports/api/collections/registry.js';
 
-import '../imports/startup/accounts-config.js';
+// import '../imports/startup/accounts-config.js';
 
 Meteor.startup(() => {
   Meteor.subscribe('data_index', () => {
