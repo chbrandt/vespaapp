@@ -71,5 +71,5 @@ export default withTracker( ({ data_selector, isBody }) => {
   // const h3 = Meteor.subscribe('registry');
   // const services = Registry.find({ _id: "services" }).fetch();
 
-  return { features: features, granules: granules};//, services: services};
+  return { features: features, granules: granules };
 })(App);

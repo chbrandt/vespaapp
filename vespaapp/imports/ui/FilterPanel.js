@@ -26,10 +26,13 @@ export default class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
 
+    //FIXME: keep the states of the check-buttons in a state object,
+    // when the parent component re-render our filters must keep the state.
+    
     // callbacks
     this.onTextChange = this.props.onTextChange;
-    this.onRangeChange = this.props.onRangeChange;
-    this.onSelectionChange = this.props.onSelectionChange;
+    // this.onRangeChange = this.props.onRangeChange;
+    // this.onSelectionChange = this.props.onSelectionChange;
   }
 
   render() {
@@ -53,7 +56,7 @@ export default class FilterPanel extends React.Component {
             </li>
           : ''}
 
-          {this.onSelectionChange ?
+          {this.props.onSelectionChange ?
             <li role="presentation">
               <a href="#product" aria-controls="datatype-selector" role="tab" data-toggle="tab">
                 Product
@@ -78,7 +81,7 @@ export default class FilterPanel extends React.Component {
             </div>
           : ''}
 
-          {this.onSelectionChange ?
+          {this.props.onSelectionChange ?
             <div role="tabpanel" className="tab-pane" id="product">
               {this.renderTypeSelectors()}
             </div>
@@ -106,13 +109,24 @@ export default class FilterPanel extends React.Component {
   }
 
   renderTypeSelectors() {
+    console.log(this.props.onSelectionChange);
     return (
-    <div>
-      <span className="label label-default"><input type="checkbox"/>Images</span>
-      <span className="label label-default"><input type="checkbox"/>Spectra</span>
-      <span className="label label-default"><input type="checkbox"/>Datacubes</span>
-    </div>
-  );
+      <div>
+        {_renderSelector(this.props.onSelectionChange)}
+        {/*}<span className="label label-default">
+          <input type="checkbox" defaultChecked value="im" onChange={this.onSelectionChange}/>
+          Images
+        </span>
+        <span className="label label-default">
+          <input type="checkbox" defaultChecked/>
+          Spectra
+        </span>
+        <span className="label label-default">
+          <input type="checkbox" defaultChecked/>
+          Datacubes
+        </span>*/}
+      </div>
+    );
     // return (
     //   <div className="btn-group btn-group-justified" role="group">
     //     <button className="btn disable"><input className="checkbox-inline" type="checkbox"/>Images</button>
@@ -142,4 +156,18 @@ export default class FilterPanel extends React.Component {
     });
 
   }
+}
+
+function _renderSelector(onSelectionChangeObj) {
+  return Object.keys(onSelectionChangeObj).map((type_) => {
+    return (
+      <span className="label label-default" key={type_}>
+        <input
+          type="checkbox" defaultChecked
+          value={type_}
+          onChange={onSelectionChangeObj[type_]} />
+        {type_}
+      </span>
+    );
+  });
 }

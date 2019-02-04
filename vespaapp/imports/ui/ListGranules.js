@@ -16,25 +16,42 @@ export default class ListGranules extends React.Component {
     super(props);
     this.state = {
       query: '',
-      items: []
+      items: [],
+      product_types: []
     }
-    this.renderItems = this.renderItems.bind(this);
+
     this.cache = new CellMeasurerCache({
       fixedWidth: true,
       defaultHeight: 100
     });
+
+    this.renderItems = this.renderItems.bind(this);
     this.filterItemsText = this.filterItemsText.bind(this);
+    this.filterItemsCheck = this.filterItemsCheck.bind(this);
   }
 
   render() {
+    var product_types = [];
+    this.props.items.forEach((item) => {
+      if (!product_types.includes(item.dataproduct_type)) {
+        product_types.push(item.dataproduct_type);
+      }
+    });
+    console.log(product_types);
+
+    var selectors = {};
+    product_types.forEach((type_) => {
+      selectors[type_] = this.filterItemsCheck;
+    });
+
     const listHeight = this.props.style.height;
     return (
       <div id="searchable-list" className="panel">
 
         <div className="panel-heading">
-          <FilterPanel  onTextChange={this.filterItemsText} />
-                        {/*onSelectionChange={()=>{}}
-                        onRangeChange={()=>{}}*/}
+          <FilterPanel  onTextChange={this.filterItemsText}
+                        onSelectionChange={selectors} />
+                        {/*onRangeChange={()=>{}}*/}
         </div>
 
         <div className="panel-body list-group" style={this.props.style}>
@@ -55,11 +72,6 @@ export default class ListGranules extends React.Component {
     );
   }
 
-  fake_text_filter(event) {
-    console.log("Parent/caller list of items: " + this.props.items.length);
-    console.log("Child/widget input event: " + event.target.value);
-  }
-
   renderItems({
     index,       // Index of row
     isScrolling, // The List is currently being scrolled
@@ -76,6 +88,9 @@ export default class ListGranules extends React.Component {
     // const item = this.props.items[index];
     const item = dataItems[index];
     console.log(dataItems.length);
+    if (!item) {
+      return '';
+    }
 
     const granule_uid = item.granule_uid;
     const link_datum = link_vespa_crism + sq+granule_uid+sq + '+OR+granule_uid+LIKE+' + sq+pc+granule_uid.toUpperCase()+pc+sq;
@@ -129,6 +144,18 @@ export default class ListGranules extends React.Component {
     console.log("Size of filterList: " + filteredList.length);
     this.setState({items: filteredList});
   }
+
+  filterItemsCheck(event) {
+    // const label = event.target.value;
+    // const checked = event.target.checked;
+    // var filteredList = this.props.items;
+    // if (! checked) {
+    //   filteredList = this.state.items.length ? this.state.items : this.props.items;
+    // }
+    console.log("Parent/caller list of items: " + this.props.items.length);
+    console.log("Child/widget input event: " + event.target.value + " " + event.target.checked);
+  }
+
 
   // filterList(event) {
   //   this.setState({ query: event.target.value });
