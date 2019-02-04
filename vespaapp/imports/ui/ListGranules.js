@@ -31,27 +31,25 @@ export default class ListGranules extends React.Component {
   }
 
   render() {
-    var product_types = [];
-    this.props.items.forEach((item) => {
-      if (!product_types.includes(item.dataproduct_type)) {
-        product_types.push(item.dataproduct_type);
-      }
-    });
-    console.log(product_types);
-
-    var selectors = {};
-    product_types.forEach((type_) => {
-      selectors[type_] = this.filterItemsCheck;
-    });
+    // var product_types = [];
+    // this.props.items.forEach((item) => {
+    //   if (!product_types.includes(item.dataproduct_type)) {
+    //     product_types.push(item.dataproduct_type);
+    //   }
+    // });
+    // var selectors = {};
+    // product_types.forEach((type_) => {
+    //   selectors[type_] = this.filterItemsCheck;
+    // });
 
     const listHeight = this.props.style.height;
     return (
       <div id="searchable-list" className="panel">
 
         <div className="panel-heading">
-          <FilterPanel  onTextChange={this.filterItemsText}
-                        onSelectionChange={selectors} />
-                        {/*onRangeChange={()=>{}}*/}
+          <FilterPanel  onTextChange={this.filterItemsText} />
+                        {/*onRangeChange={()=>{}}
+                        onSelectionChange={selectors}*/}
         </div>
 
         <div className="panel-body list-group" style={this.props.style}>
@@ -146,12 +144,12 @@ export default class ListGranules extends React.Component {
   }
 
   filterItemsCheck(event) {
-    // const label = event.target.value;
-    // const checked = event.target.checked;
-    // var filteredList = this.props.items;
-    // if (! checked) {
-    //   filteredList = this.state.items.length ? this.state.items : this.props.items;
-    // }
+    const label = event.target.value;
+    const checked = event.target.checked;
+    var filteredList = this.props.items;
+    if (! checked) {
+      filteredList = this.state.items.length ? this.state.items : this.props.items;
+    }
     console.log("Parent/caller list of items: " + this.props.items.length);
     console.log("Child/widget input event: " + event.target.value + " " + event.target.checked);
   }

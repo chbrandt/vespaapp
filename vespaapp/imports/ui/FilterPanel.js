@@ -28,7 +28,7 @@ export default class FilterPanel extends React.Component {
 
     //FIXME: keep the states of the check-buttons in a state object,
     // when the parent component re-render our filters must keep the state.
-    
+
     // callbacks
     this.onTextChange = this.props.onTextChange;
     // this.onRangeChange = this.props.onRangeChange;
@@ -48,7 +48,7 @@ export default class FilterPanel extends React.Component {
             </li>
           : ''}
 
-          {this.onRangeChange ?
+          {this.props.onRangeChange ?
             <li role="presentation">
               <a href="#time" aria-controls="time-slider" role="tab" data-toggle="tab">
                 Time
@@ -75,7 +75,7 @@ export default class FilterPanel extends React.Component {
             </div>
           : ''}
 
-          {this.onRangeChange ?
+          {this.props.onRangeChange ?
             <div role="tabpanel" className="tab-pane" id="time">
               {this.renderTimeSlider()}
             </div>
@@ -113,27 +113,8 @@ export default class FilterPanel extends React.Component {
     return (
       <div>
         {_renderSelector(this.props.onSelectionChange)}
-        {/*}<span className="label label-default">
-          <input type="checkbox" defaultChecked value="im" onChange={this.onSelectionChange}/>
-          Images
-        </span>
-        <span className="label label-default">
-          <input type="checkbox" defaultChecked/>
-          Spectra
-        </span>
-        <span className="label label-default">
-          <input type="checkbox" defaultChecked/>
-          Datacubes
-        </span>*/}
       </div>
     );
-    // return (
-    //   <div className="btn-group btn-group-justified" role="group">
-    //     <button className="btn disable"><input className="checkbox-inline" type="checkbox"/>Images</button>
-    //     <button className="btn disable"><input className="checkbox-inline" type="checkbox" />Spectra</button>
-    //     <button className="btn disable"><input className="checkbox-inline" type="checkbox" />Datacubes</button>
-    //   </div>
-    // );
   }
 
   componentDidMount() {
