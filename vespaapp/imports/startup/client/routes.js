@@ -25,7 +25,7 @@ function renderBodyRoutes(targets) {
     const targetPath = "/" + targetName;
     return (
       <Route exact path={targetPath}
-        render={props => <App {...props} data_selector={target.filter} isBody={target.hasMap}/>}
+        render={props => <App {...props} target={targetName} data_selector={target.filter} isBody={target.hasMap}/>}
         key={targetName}
       />
     );

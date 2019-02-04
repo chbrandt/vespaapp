@@ -27,6 +27,8 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
+    const body = this.props.body;
+
     // create map
     var map = L.map('map', {
                               center: [0, 0],
@@ -40,24 +42,25 @@ export default class Map extends React.Component {
 
     var bm;
     var bmSet = {}
-    baseMaps['mars'].forEach((pars) => {
+    baseMaps[body].forEach((pars) => {
       bm = new L.tileLayer(pars.url, pars.options);
       bmSet[pars.label] = bm;
     });
+    bm.addTo(map);
 
     var om;
     var omSet = {}
-    overlayMaps['mars'].forEach((pars) => {
-      om = new L.tileLayer(pars.url, pars.options);
-      omSet[pars.label] = om;
-    })
+    if (overlayMaps[body]) {
+      overlayMaps[body].forEach((pars) => {
+        om = new L.tileLayer(pars.url, pars.options);
+        omSet[pars.label] = om;
+      })
+      om.addTo(map);
+    }
 
     L.control.layers(bmSet, omSet, {
       position: 'topright'
     }).addTo(map);
-
-    bm.addTo(map);
-    om.addTo(map);
 
     // Events
     map.on('moveend', (event) => {

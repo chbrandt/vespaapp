@@ -15,9 +15,13 @@ export const DataGeo = new Mongo.Collection('data_geo');
 
 if (Meteor.isServer) {
 
-  Meteor.publish('data_geo', function ({ body, bbox }) {
-    console.log("Target queried: " + body);
-    console.log("Bounds (raw): " + bbox);
+  // Meteor.publish('data_geo', function ({ body, bbox }) {
+  //   console.log("Target queried: " + body);
+  //   console.log("Bounds (raw): " + bbox);
+  Meteor.publish('data_geo', function ( query ) {
+    console.log(query);
+
+    const bbox = query['bbox'];
 
     var cursor;
     if (bbox) {
@@ -41,8 +45,11 @@ if (Meteor.isServer) {
       ];
       console.log("Bounds (processed): " + boxPolygon);
 
+      delete query.bbox;
+
       cursor = DataGeo.find({
-        target_name: { $regex: new RegExp(body,"i") },
+        // target_name: { $regex: new RegExp(body,"i") },
+        query,
         s_region: {
           $geoIntersects: {
             $geometry: {
@@ -58,7 +65,8 @@ if (Meteor.isServer) {
         }
       });
     } else {
-      cursor = DataGeo.find({ target_name: { $regex: new RegExp(body,"i") } });
+      // cursor = DataGeo.find({ target_name: { $regex: new RegExp(body,"i") } });
+      cursor = DataGeo.find(query);
     }
     return cursor;
   });

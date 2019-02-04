@@ -1,16 +1,23 @@
 [
   {
-    "name": "All",
-    "hasMap": false,
-    "filter": {},
-    "thumbnail": "assets/images/icon_targets_all.png",
-    "keywords": ""
-  },
-  {
     "name": "Mars",
     "hasMap": true,
     "filter": { "target_name": "mars" },
     "thumbnail": "https://space-facts.com/wp-content/uploads/mars-transparent.png",
+    "keywords": ""
+  },
+  {
+    "name": "Moon",
+    "hasMap": true,
+    "filter": { "target_name": "moon" },
+    "thumbnail": "assets/images/moon-transparent.png",
+    "keywords": ""
+  },
+  {
+    "name": "All",
+    "hasMap": false,
+    "filter": {},
+    "thumbnail": "assets/images/icon_targets_all.png",
     "keywords": ""
   }
 ]

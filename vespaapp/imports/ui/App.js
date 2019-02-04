@@ -14,6 +14,7 @@ import { DataAny } from '../api/collections/data_any.js';
 
 
 function App({ target, isBody, features, granules }) {
+  console.log("Target: "+target)
   var items = granules;
   if (features) {
     items = items.concat(features.polygons, features.points);
@@ -49,9 +50,11 @@ export default withTracker( ({ data_selector, isBody }) => {
   var data_geo;
   if (isBody) {
     const query = Object.assign({}, data_selector, { bbox: Session.get('bbox') });
+    console.log(query)
     const h1 = Meteor.subscribe('data_geo', query,
                                 onReady = function() {
-                                  console.log("data_geo items: "+DataGeo.find().count())
+                                  console.log("data_geo items: "+DataGeo.find().count());
+                                  console.log(DataGeo.findOne());
                                 }
                               );
     data_geo = {
