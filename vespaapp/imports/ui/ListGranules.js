@@ -23,21 +23,19 @@ export default class ListGranules extends React.Component {
       fixedWidth: true,
       defaultHeight: 100
     });
+    this.filterItemsText = this.filterItemsText.bind(this);
   }
 
   render() {
-    console.log(this.props.items.length);
     const listHeight = this.props.style.height;
     return (
       <div id="searchable-list" className="panel">
 
-      {/*
         <div className="panel-heading">
-          <FilterPanel  onTextChange={()=>{}}
-                        onSelectionChange={()=>{}}
-                        onRangeChange={()=>{}} />
+          <FilterPanel  onTextChange={this.filterItemsText} />
+                        {/*onSelectionChange={()=>{}}
+                        onRangeChange={()=>{}}*/}
         </div>
-      */}
 
         <div className="panel-body list-group" style={this.props.style}>
           <AutoSizer>
@@ -48,13 +46,18 @@ export default class ListGranules extends React.Component {
                 deferredMeasurementCache={this.cache}
                 rowHeight={this.cache.rowHeight}
                 rowRenderer={this.renderItems}
-                rowCount={this.props.items.length}
+                rowCount={this.state.items.length || this.props.items.length}
                 overscanRowCount={10} />
               }}
           </AutoSizer>
         </div>
       </div>
     );
+  }
+
+  fake_text_filter(event) {
+    console.log("Parent/caller list of items: " + this.props.items.length);
+    console.log("Child/widget input event: " + event.target.value);
   }
 
   renderItems({
@@ -66,7 +69,14 @@ export default class ListGranules extends React.Component {
     style        // Style object to be applied to row (to position it);
                  // This must be passed through to the rendered row element.
     }) {
-    const item = this.props.items[index];
+    // hack to work around empty list at the very beginning
+    const dataItems = !(this.state.query || this.state.items.length)
+                    ? this.props.items
+                    : this.state.items;
+    // const item = this.props.items[index];
+    const item = dataItems[index];
+    console.log(dataItems.length);
+
     const granule_uid = item.granule_uid;
     const link_datum = link_vespa_crism + sq+granule_uid+sq + '+OR+granule_uid+LIKE+' + sq+pc+granule_uid.toUpperCase()+pc+sq;
     const access_url = item.access_url;
@@ -98,13 +108,25 @@ export default class ListGranules extends React.Component {
 
   filterItemsText(event) {
     const text = event.target.value.toLowerCase();
+    console.log("Text in the box: " + text);
     this.setState({ query: text });
     var filteredList = this.props.items;
     if (text) {
+      console.log("Text in the box?: " + text);
       filteredList = filteredList.filter((item) => {
-        return item.obs_id.toLowerCase().search(text) !== -1;
+        const s_text = [item.granule_uid,
+                        item.schema_epn_core,
+                        item.access_format,
+                        item.instrument_name,
+                        item.instrument_host_name,
+                        item.publisher,
+                        item.service_title,
+                        item.target_name,
+                        item.target_class];
+        return (s_text.join(" ").toLowerCase().search(text) !== -1);
       });
     }
+    console.log("Size of filterList: " + filteredList.length);
     this.setState({items: filteredList});
   }
 

@@ -1,5 +1,27 @@
 import React from 'react';
 
+/*
+  This component setup a container with three different types of
+  filters (or controls, if you want), disposed in a 'tab' widget:
+  * a search box;
+  * a range slider;
+  * a group of check-buttons.
+
+  It takes three properties as input, each of them being the
+  respective callbacks:
+  * `onTextChange` (for Search-Box);
+  * `onRangeChange` (for Range-Slider);
+  * `onSelectionChange` (for Check-Buttons).
+
+  The rendering of the widgets is done after a valid function is given;
+  in other words, if you don't want some of the above widgets, just don't
+  give the respective callback.
+  The following example will render a tab-container with the Search-Box and
+  the Range-Slider but _not_ the Check-Buttons:
+  ```
+  <FilterPanel onTextChange={()=>{}} onRangeChange={()=>{}} />
+  ```
+*/
 export default class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -11,19 +33,10 @@ export default class FilterPanel extends React.Component {
   }
 
   render() {
-    // return (
-    //   <div ref={el => {this.elem = el}} />
-    // );
-    // return (
-    //   <ul id="filter-tabs" className="nav nav-tabs">
-    //     <li role="presentation" className="active"><a href="#text">Search</a></li>
-    //     <li role="presentation"><a href="#range">Time</a></li>
-    //     <li role="presentation"><a href="#check">Products</a></li>
-    //   </ul>
-    // );
     return (
       <div>
         <ul id="filter-tabs" className="nav nav-tabs" role="tablist">
+
           {this.onTextChange ?
             <li role="presentation" className="active">
               <a href="#search" aria-controls="search-box" role="tab" data-toggle="tab">
@@ -31,6 +44,7 @@ export default class FilterPanel extends React.Component {
               </a>
             </li>
           : ''}
+
           {this.onRangeChange ?
             <li role="presentation">
               <a href="#time" aria-controls="time-slider" role="tab" data-toggle="tab">
@@ -38,6 +52,7 @@ export default class FilterPanel extends React.Component {
               </a>
             </li>
           : ''}
+
           {this.onSelectionChange ?
             <li role="presentation">
               <a href="#product" aria-controls="datatype-selector" role="tab" data-toggle="tab">
@@ -45,24 +60,30 @@ export default class FilterPanel extends React.Component {
               </a>
             </li>
           : ''}
+
         </ul>
 
+
         <div className="tab-content" style={{width:'100%'}}>
+
           {this.onTextChange ?
             <div role="tabpanel" className="tab-pane active" id="search">
               {this.renderSearchBox()}
             </div>
           : ''}
+
           {this.onRangeChange ?
             <div role="tabpanel" className="tab-pane" id="time">
               {this.renderTimeSlider()}
             </div>
           : ''}
+
           {this.onSelectionChange ?
             <div role="tabpanel" className="tab-pane" id="product">
               {this.renderTypeSelectors()}
             </div>
           : ''}
+
         </div>
       </div>
     );
