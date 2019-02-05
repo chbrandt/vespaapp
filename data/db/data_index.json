@@ -1,9 +1,37 @@
 [
   {
+    "name": "Jupiter",
+    "filter": { "target_name": "jupiter" },
+    "thumbnail": "assets/images/jupiter-transparent.png",
+    "keywords": [ "USGS_WMS",
+                  "pvol",
+                  "BDIP",
+                  "image/png",
+                  "image/tiff",
+                  "application/x-wms",
+                  "image/jpeg",
+                  "ma", "im",
+                  "Cassini" ]
+  },
+  {
+    "name": "Mercury",
+    "filter": { "target_name": "mercury" },
+    "thumbnail": "assets/images/mercury-transparent.png",
+    "keywords": [ "image/jpeg",
+                  "image/gif",
+                  "application/x-wms",
+                  "im", "ma",
+                  "Messenger",
+                  "Messenger#Mariner-10",
+                  "Mariner-10",
+                  "pvol",
+                  "USGS_WMS" ]
+  },
+  {
     "name": "Mars",
     "hasMap": true,
     "filter": { "target_name": "mars" },
-    "thumbnail": "https://space-facts.com/wp-content/uploads/mars-transparent.png",
+    "thumbnail": "assets/images/mars-transparent.png",
     "keywords": ""
   },
   {

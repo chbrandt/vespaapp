@@ -52,7 +52,12 @@ class ListTargets extends React.Component {
     var filteredList = this.props.items;
     if (text) {
       filteredList = filteredList.filter((item) => {
-        return item.name.toLowerCase().search(text) !== -1;
+        var keywords = [];
+        if (item.keywords) {
+          keywords = item.keywords;
+        }
+        keywords.push(item.name);
+        return keywords.join(" ").toLowerCase().search(text) !== -1;
       });
     }
     this.setState({items: filteredList});
