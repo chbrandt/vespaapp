@@ -1,16 +1,26 @@
 #!/usr/bin/env python
 
 import logging as log
-log.basicConfig(level=log.DEBUG)
-
 import timeout_decorator
 import json
 import pandas as pd
 from pyvo import tap
 
+# ===============================================================
+# This script is meant to download data from VO/EPN-TAP archives.
+# We will need a list of services, a default list is provided by:
 _DEFAULT_SERVICES_LIST_ = 'virtualRegistry.json'
+# ===============================================================
+
+# Sometimes queries may stale, so let's define a timeout limit (seconds):
 _TIMEOUT_ = 3
+
+# For when we expect an integer but nothing is returned (e.g., service down):
 _NULL_INT_ = -999
+
+# Set the logging system:
+log.basicConfig(level=log.DEBUG)
+
 
 def _init_query_struct():
     """
@@ -25,9 +35,11 @@ def _init_query_struct():
     Query.WHERE_fraction = 'WHERE rand() <= {fraction:f}'
     return Query
 
+
 @timeout_decorator.timeout(_TIMEOUT_)
 def _query_timeout(serv, query):
     return serv.search(query)
+
 
 def _query_serv(schema, accessurl):
     q = _init_query_struct()
@@ -39,6 +51,7 @@ def _query_serv(schema, accessurl):
     except:
         count = _NULL_INT_
     return count
+
 
 def run(schema, limit=None, percent=None, columns=None,
         registry_file=_DEFAULT_SERVICES_LIST_):
@@ -87,29 +100,6 @@ def run(schema, limit=None, percent=None, columns=None,
         "Schema '{}' not found in '{}'".format(option_schema, services_list_filename)
 
     log.debug("Schema: {}".format(option_schema))
-
-    # # (Pre)set the columns we want to download.
-    # # So far, we have only "tap" defined since all services publish the same columns
-    # #
-    # services_columns_filename = 'service_columns.json'
-    # with open(services_columns_filename, 'r') as fp:
-    #     services_columns = json.load(fp)
-    #
-    # columns_schema = 'tap'  # this is the default columns-schema
-    # if option_schema in services_columns:
-    #     columns_schema = option_schema
-    #
-    # option_columns = []
-    # for k,v in services_columns[columns_schema].items():
-    #     if isinstance(v, list):
-    #         option_columns.extend(v)
-    #     else:
-    #         assert isinstance(v, str), "Was expecting a string, got '{}'".format(type(v))
-    #         option_columns.append(v)
-    #
-    # assert len(option_columns), \
-    #     "No columns selected! Check '{}'".format(services_columns_filename)
-    # option_columns = ','.join(option_columns)
 
     if not columns:
         option_columns = '*'

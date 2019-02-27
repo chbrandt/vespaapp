@@ -9,7 +9,7 @@ import Map from './Map.js';
 import ListGranules from './ListGranules.js';
 
 import { DataGeo } from '../api/collections/data_geo.js';
-import { DataAny } from '../api/collections/data_any.js';
+import { DataAll } from '../api/collections/data_all.js';
 // import { Registry } from '../api/collections/registry.js';
 
 
@@ -65,8 +65,11 @@ export default withTracker( ({ data_selector, isBody }) => {
   const features = data_geo;
 
   // Get Data from the other collection, without particular geolocated information
-  const h2 = Meteor.subscribe('data_any', data_selector);
-  const granules = DataAny.find({}).fetch();
+  const h2 = Meteor.subscribe('data_all', data_selector,
+                              onReady = function() {
+                                console.log("data_all items:"+DataAll.find().count());
+                              });
+  const granules = DataAll.find({}).fetch();
 
   // const h3 = Meteor.subscribe('registry');
   // const services = Registry.find({ _id: "services" }).fetch();

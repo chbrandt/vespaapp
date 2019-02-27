@@ -3,7 +3,7 @@ import { onPageLoad } from "meteor/server-render";
 
 import '../imports/api/collections/data_index.js';
 import '../imports/api/collections/data_geo.js';
-import '../imports/api/collections/data_any.js';
+import '../imports/api/collections/data_all.js';
 
 
 Meteor.startup(() => {

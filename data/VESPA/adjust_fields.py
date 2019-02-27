@@ -106,20 +106,20 @@ def _parse_document(granule, remove_outborders=True):
 def run(filename, output_filename):
 
     with open(filename, 'r') as fp:
-        craters = json.load(fp)
+        docs = json.load(fp)
 
-    outCraters = []
-    for crater in craters:
+    outDocs = []
+    for doc in docs:
         try:
-            outCrater = _parse_document(crater)
-            if not outCrater:
+            outDoc = _parse_document(doc)
+            if not outDoc:
                 continue
         except:
             continue
-        outCraters.append(outCrater)
+        outDocs.append(outDoc)
 
     with open(output_filename, 'w') as fp:
-        json.dump(outCraters, fp)
+        json.dump(outDocs, fp)
 
 
 if __name__ == '__main__':
