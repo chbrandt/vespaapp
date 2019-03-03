@@ -2,7 +2,7 @@
 
 #### Download data from all available services (max 100 records)
 ```
-[host]$ ./download_data.py list --minimal | xargs -I{} -L1 ./download_data fetch --limit 100 {}
+[host]$ ./download_data.py list --minimal | xargs -I{} -L1 ./download_data.py fetch --limit 100 {}
 ```
 
 #### Adjust all json files
