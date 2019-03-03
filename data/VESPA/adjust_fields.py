@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 
 FIELDS = ['s_region',
           'c1min',
@@ -27,10 +28,19 @@ FIELDS = ['s_region',
           'target_class']
 
 
+def _fix_coords(lon, lat, frame=None):
+    # For the time being, only shift Longitude to stay [-180:180]
+    lon = float(lon)
+    lon = lon if lon < 180 else lon - 180
+    lat = float(lat)
+    return (lon, lat)
+
+
 def _compute_centroid(c1min, c1max, c2min, c2max):
-    c1 = (float(c1max) - float(c1min))/2 + float(c1min)
-    c2 = (float(c2max) - float(c2min))/2 + float(c2min)
-    return [c1,c2]
+    lon = (float(c1max) - float(c1min))/2 + float(c1min)
+    lat = (float(c2max) - float(c2min))/2 + float(c2min)
+    lon, lat = _fix_coords(lon, lat)
+    return (lon, lat)
 
 
 def point_geometry(granule):
@@ -41,29 +51,19 @@ def point_geometry(granule):
     c1max = granule['c1max']
     c2min = granule['c2min']
     c2max = granule['c2max']
-    coords = _compute_centroid(c1min, c1max, c2min, c2max)
-    geometry['coordinates'] = coords
-    return geometry
+    try:
+        coords = _compute_centroid(c1min, c1max, c2min, c2max)
+        geometry['coordinates'] = coords
+        return geometry
+    except:
+        return None
 
 
 def _parse_doc(granule, filters=None, remove_outborders=True):
-    # geometry = None
-    # if granule['spatial_frame_type'] == 'body':
-    #     geometry = point_geometry(granule)
-
-    # geometry = _adjust_geometry(granule['s_region'])
-    # if geometry and remove_outborders:
-    #     cref = granule['c1min']
-    #     if cref and (float(cref) < 5 or float(cref) > 355):
-    #         return None
-
     out = {k: granule.get(k, None) for k in FIELDS}
-
-    for k in filters.keys():
-        out[k] = filters[k](granule)
-
-    # _lower_names(out, ['target_name', 'target_class'])
-    # out['geometry'] = geometry
+    if filters:
+        for k in filters.keys():
+            out[k] = filters[k](granule)
     return out
 
 
@@ -71,9 +71,7 @@ def set_filters(ext_filters):
     filters = {}
     filters['target_name'] = lambda d: d['target_name'].lower()
     filters['target_class'] = lambda d: d['target_name'].lower()
-
     filters['geometry'] = point_geometry
-
     if ext_filters:
         filters.update(ext_filters)
     return filters
@@ -92,7 +90,8 @@ def parse_documents(json_array, filters=None):
             outDoc = _parse_doc(doc, filters)
             if not outDoc:
                 continue
-        except:
+        except Exception as e:
+            print(e, sys.stderr)
             continue
         outDocs.append(outDoc)
     return outDocs
