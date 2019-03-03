@@ -2,7 +2,7 @@
 def _fix_coords(lon, lat, frame):
     # For the time being, only shift Longitude to stay [-180:180]
     lon = float(lon)
-    lon = lon if lon < 180 else lon - 180
+    lon = lon if lon < 180 else lon - 360
     lat = float(lat)
     return (lon, lat)
 
@@ -49,9 +49,13 @@ def _adjust_geometry(granule):
     if sr_type != "Polygon":
         return None
 
-    lon = sreg[2::2]
-    lat = sreg[3::2]
-    assert len(lon) == len(lat)
+    lon = list(map(float, sreg[2::2]))
+    lat = list(map(float, sreg[3::2]))
+    if len(lon) != len(lat):
+        return None
+
+    if any(filter(lambda x: not -90 < x < 90, lat)):
+        return None
 
     coords = [_fix_coords(lon[i], lat[i], sr_frame) for i in range(len(lon))]
 

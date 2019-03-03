@@ -9,10 +9,21 @@
 ```
 [host]$ for sd in *; do [ ! -d $sd ] && continue; f="${sd}/${sd}_*.json"; [ ! -f "$f" ] && continue; ./adjust_fields.py $f ${f%_*}_adjusted.json; done
 ```
+or
+```
+for sd in *; do
+  [ -d "$sd" ] || continue
+  f="${sd}/${sd}_latest.json"
+  [ -f "$f" ] || continue
+  [ -f "../filters/$sd" ] && ext="--filters ../filters/s_region_2_geometry.py" || ext=""
+  ../adjust_fields.py $ext $f ${f%_latest.json}_adjusted.json
+done
+```
 
 #### Ingest all to a temporary collection (`data_all`) in database `test`
 ```
-[mongodb]$ for sd in *; do [ ! -d "$sd" ] && continue; f="${sd}/${sd}_adjusted.json"; [ ! -f "$f" ] && continue; mongoimport -d test -c data_all --jsonArray $f; done
+[mongodb]$ cd "path/to/data"
+[mongodb]$ for sd in data/*; do [ ! -d "$sd" ] && continue; f="${sd}/${sd##*/}_adjusted.json"; [ ! -f "$f" ] && continue; mongoimport -d test -c data_all --jsonArray $f; done
 ```
 
 ### Ingest the index data
@@ -188,4 +199,23 @@ The non-empty *string* to simply non-empty value examples:
 [mongodb]$ mongo
 > use test
 > db.tmp_all.aggregate([{$match: {"s_region": /(.|\s)*\S(.|\s)*/}}, {$out: "tmp_geo"}])
+```
+
+#### Discover non-null s_region services:
+```
+[mongodb]$ mongo
+> use test
+> db.tmp_all.aggregate([{$match: {"s_region": /(.|\s)*\S(.|\s)*/}}, {$group: {_id: null, uniqueVals: {$addToSet: "$schema_epn_core"}}}, {$project: {_id:0}}])
+```
+
+#### Query all documentswith non-null geometry
+```
+[mongodb]$ mongo
+> use test
+> db.data_all.aggregate([{$match: {"geometry": {$ne:null} }}, {$sample: {size:10}}]).pretty()
+```
+
+##### And create a `data_geo` collection out of this
+```
+> db.data_all.aggregate([{$match: {"geometry": {$ne:null} }}, {$out: "data_geo"}])
 ```

@@ -31,7 +31,7 @@ FIELDS = ['s_region',
 def _fix_coords(lon, lat, frame=None):
     # For the time being, only shift Longitude to stay [-180:180]
     lon = float(lon)
-    lon = lon if lon < 180 else lon - 180
+    lon = lon if lon < 180 else lon - 360
     lat = float(lat)
     return (lon, lat)
 
@@ -46,17 +46,22 @@ def _compute_centroid(c1min, c1max, c2min, c2max):
 def point_geometry(granule):
     if granule['spatial_frame_type'] != 'body':
         return None
-    geometry = {'type': 'Point'}
+
     c1min = granule['c1min']
     c1max = granule['c1max']
     c2min = granule['c2min']
     c2max = granule['c2max']
     try:
-        coords = _compute_centroid(c1min, c1max, c2min, c2max)
-        geometry['coordinates'] = coords
-        return geometry
+        lon, lat = _compute_centroid(c1min, c1max, c2min, c2max)
     except:
         return None
+
+    if not -90 < lat < 90:
+        return None
+
+    geometry = {'type': 'Point'}
+    geometry['coordinates'] = [lon, lat]
+    return geometry
 
 
 def _parse_doc(granule, filters=None, remove_outborders=True):
