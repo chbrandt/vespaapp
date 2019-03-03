@@ -183,6 +183,9 @@ def _fetch(args):
 
     result_df = run(epn_schema, limit=number_records, percent=fraction)
     if result_df is None:
+        print("-----")
+        print("Error retrieving from '{}' service".format(epn_schema))
+        print("-----")
         return
 
     if not os.path.isdir(_OUTPUT_DIR_):
@@ -193,6 +196,11 @@ def _fetch(args):
 
     number_records = len(result_df)
     output_filename = os.path.join(output_dir, '{0}_{1}.json'.format(epn_schema, number_records))
+
+    output_link = os.path.join(output_dir, '{0}_latest.json'.format(epn_schema))
+    if os.path.islink(output_link):
+        os.remove(output_link)
+    os.symlink(os.path.basename(output_filename), output_link)
 
     result_df.to_json(output_filename, orient='records')
 
