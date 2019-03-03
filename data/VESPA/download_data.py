@@ -12,6 +12,9 @@ from pyvo import tap
 _DEFAULT_SERVICES_LIST_ = 'virtualRegistry.json'
 # ===============================================================
 
+# Directory to put results:
+_OUTPUT_DIR_ = 'data'
+
 # Sometimes queries may stale, so let's define a timeout limit (seconds):
 _TIMEOUT_ = 3
 
@@ -182,10 +185,14 @@ def _fetch(args):
     if result_df is None:
         return
 
+    if not os.path.isdir(_OUTPUT_DIR_):
+        os.mkdir(_OUTPUT_DIR_)
+    output_dir = os.path.join(_OUTPUT_DIR_, epn_schema)
+    if not os.path.isdir(output_dir):
+        os.mkdir(output_dir)
+
     number_records = len(result_df)
-    if not os.path.isdir(epn_schema):
-        os.mkdir(epn_schema)
-    output_filename = '{0}/{0}_{1}.json'.format(epn_schema, number_records)
+    output_filename = os.path.join(output_dir, '{0}_{1}.json'.format(epn_schema, number_records))
 
     result_df.to_json(output_filename, orient='records')
 
@@ -203,7 +210,6 @@ def _list(args):
 
 
 if __name__ == '__main__':
-    import sys
     import os
     import argparse
 
@@ -213,18 +219,18 @@ if __name__ == '__main__':
     fetching = subparsers.add_parser('fetch', help='Fetch data')
     fetching.add_argument('schema', help="Name of EPN-Core schema ('schema.epn_core')")
     fetching.add_argument('--limit', dest='limit', type=int,
-                        help='Limit the number of returned records',
-                        default=None)
+                          help='Limit the number of returned records',
+                          default=None)
     fetching.add_argument('--percent', dest='percent', type=float,
-                        help='Fraction (in percentile) of table size records to return',
-                        default=None)
+                          help='Fraction (in percentile) of table size records to return',
+                          default=None)
     fetching.set_defaults(func=_fetch)
 
     listing = subparsers.add_parser('list', help='List schemas')
     listing.add_argument('--length', dest='count', action='store_true',
-                        help="List services' number of records")
+                         help="List services' number of records")
     listing.add_argument('--minimal', dest='schema_only', action='store_true',
-                        help="List the names of the schema only")
+                         help="List the names of the schema only")
     listing.set_defaults(func=_list)
 
     args = parser.parse_args()
