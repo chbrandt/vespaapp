@@ -50,7 +50,7 @@ if (Meteor.isServer) {
       cursor = DataGeo.find({
         // target_name: { $regex: new RegExp(body,"i") },
         query,
-        s_region: {
+        geometry: {
           $geoIntersects: {
             $geometry: {
               type: "Polygon",

@@ -59,7 +59,7 @@ export default withTracker( ({ data_selector, isBody }) => {
                               );
     data_geo = {
         points: DataGeo.find({ "s_region.type":"Point" }).fetch(),
-        polygons: DataGeo.find({ "s_region.type":"Polygon" }).fetch(),
+        polygons: DataGeo.find({ "geometry.type":"Polygon" }).fetch(),
     };
   }
   const features = data_geo;

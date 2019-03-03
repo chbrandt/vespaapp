@@ -136,7 +136,7 @@ export default class Map extends React.Component {
     this.props.features.polygons.forEach((polygon,i) => {
       const objid = polygon._id.toString();
       if (polygonsIn.indexOf(objid) === -1) {
-        var lonlat = polygon.s_region.coordinates;
+        var lonlat = polygon.geometry.coordinates;
         // Leaflet-Polygon doesn't like the first-and-last-points-repeated standard!
         var latlon = lonlat.map((coordArray) => {
           return coordArray.slice(0,-1).map((coord) => {
