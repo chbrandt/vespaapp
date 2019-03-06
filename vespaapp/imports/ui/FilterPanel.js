@@ -94,7 +94,7 @@ export default class FilterPanel extends React.Component {
 
   renderSearchBox() {
     return (
-      <div className="search-box">
+      <div className="search-box form-group">
         <input id="searchText" className="form-control"
           type="text"
           onChange={this.onTextChange}

@@ -13,6 +13,17 @@ main {
   padding-right: 1%; */
 }
 
+.longWord {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: nowrap;
+  float: left;
+  overflow: hidden;
+  flex-basis: 50px;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
 /* .container {
   box-sizing: border-box;
 } */

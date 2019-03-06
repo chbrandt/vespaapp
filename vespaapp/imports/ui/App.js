@@ -30,7 +30,7 @@ function App({ target, isBody, features, granules }) {
     <div id="app">
 
       <Header style={{height:'10vh'}}/>
-      <main className="container-fluid">
+      <main className="container">
         {isBody ?
           <Map body={target} features={features} style={style}/>
           : ''

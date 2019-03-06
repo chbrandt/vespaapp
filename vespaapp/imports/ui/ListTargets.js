@@ -81,7 +81,7 @@ class ListTargets extends React.Component {
       const itemPage = "/" + item.name.toLowerCase();
       const thumbnail = item.thumbnail;
       return (
-        <div className="list-group-item" key={item.name}>
+        <div className="list-group-item col-xs-12 col-sm-4 col-md-3" key={item.name}>
           <a href={itemPage} className="card-body">
             <div className="card">
               <h3>{item.name}</h3>
