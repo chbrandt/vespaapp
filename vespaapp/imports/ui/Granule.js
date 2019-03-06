@@ -23,7 +23,7 @@ export default class Granule extends React.Component {
     // callbacks
     this.onItemClicked = this.props.onItemClicked || function() {console.log("not defined")};
     // internal bindings
-    this.itemClicked = this.itemClicked.bind(this);
+    // this.itemClicked = this.itemClicked.bind(this);
   }
 
   render() {
@@ -32,44 +32,41 @@ export default class Granule extends React.Component {
     const granule_uid = this.props.data.granule_uid;
     const ivo_id = this.props.data.service_ivo_id;
     const external_url = this.props.data.external_url;
+    const title = this.props.data.service_title;
 
     const link_vespa = ivo_id ? create_vespa_link(granule_uid, ivo_id) : undefined;
 
     const target_name = this.props.data.target_name.replace(/^\w/, c => c.toUpperCase());
 
     return (
-      <button type="button" style={this.props.style} className="list-group-item list-group-item-action" onClick={this.itemClicked}>
-        <div className="media">
+      <div style={this.props.style} className="list-group-item">
+
+        <div className="media" style={{whiteSpace:'nowrap', overflow:'hidden', minWidth:'200px'}}>
+
           <div className="media-heading">
-            <h4 style={{wordWrap:'break-word', wordBreak:'break-all', whiteSpace:'normal !important', float:"left"}}>
-              <i>{"id: "}</i>{granule_uid}
+            <h4 style={{whiteSpace:'nowrap', overflow:'hidden', minWidth:'50px', textOverflow:'ellipsis'}}>
+              <abbr title={title}>{schema}</abbr><small>{" : "+granule_uid}</small>
             </h4>
-            <h5 style={{float:"right"}}>
-              {schema}
-            </h5>
-            <div style={{clear:"both"}} />
           </div>
+
           <div className="media-left media-middle">
             <Thumbnail url={thumbnail_url} />
           </div>
-          <div className="media-body" style={{overflow:"hidden"}}>
-            <div style={{float:"left"}}>
-              <ul>
-                <li>{"object: "+target_name}</li>
-                <li>{"service: "+this.props.data.service_title}</li>
-                <li>{"datatype: "+this.props.data.dataproduct_type}</li>
-              </ul>
-            </div>
-            <Links style={{float:"right"}}
-                  link_vespa={link_vespa} link_tool={external_url} />
-          </div>
-        </div>
-      </button>
-    );
-  }
 
-  itemClicked() {
-    this.onItemClicked();
+          <span className="media-body media-middle">
+            <ul>
+              <li>{"object: "+target_name}</li>
+              <li>{"service: "+this.props.data.service_title}</li>
+              <li>{"datatype: "+this.props.data.dataproduct_type}</li>
+            </ul>
+          </span>
+
+          <span className="media-right media-middle">
+            <Links link_vespa={link_vespa} link_tool={external_url} />
+          </span>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -81,8 +78,8 @@ function Thumbnail({ url }) {
   const thumbnail = url || thumbnail_empty;
   //FIXME: this <a/> element is ugly, we should use a 'modal' widget here!
   return (
-      <a href={thumbnail} target="_blank">
-        <img className="media-object" style={{height:'60px'}}
+      <a className="media-object" href={thumbnail} target="_blank">
+        <img style={{height:'60px'}}
               src={thumbnail} alt="" />
       </a>
   );
