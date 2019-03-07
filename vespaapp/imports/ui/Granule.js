@@ -90,8 +90,9 @@ function Links({ link_vespa, link_tool , style}) {
   /*
     Return a vertical arrangement of links to external URLs
   */
+  console.log("link-vespa"+link_vespa);
   return (
-    <div className="well well-sm" style={style}>
+    <div className="well well-sm">
 
       <a href={link_vespa} target="_blank" style={{display:"block"}}>
         <div className="glyphicon glyphicon-new-window"/>
