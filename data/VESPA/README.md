@@ -31,17 +31,17 @@ and the files (script, config, schema, etc) to download data.
 
 If we want to download all craters from Mars (from the `mars_craters` service):
 ```bash
-$ ./download_data.py mars_craters
+$ ./download_data.py fetch mars_craters
 ```
 
 If we want to download the first `1000` entries of `crism.epn_core` service:
 ```bash
-$ ./download_data.py crism 1000
+$ ./download_data.py fetch crism --limit 1000
 ```
 
 To know the options and arguments of the `download_data` script, just type:
 ```bash
-$ ./download_data.py
+$ ./download_data.py --help
 ```
 
 # Comments on services
