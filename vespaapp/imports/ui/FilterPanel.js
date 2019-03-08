@@ -30,9 +30,17 @@ export default class FilterPanel extends React.Component {
     // when the parent component re-render our filters must keep the state.
 
     // callbacks
-    this.onTextChange = this.props.onTextChange;
-    // this.onRangeChange = this.props.onRangeChange;
-    // this.onSelectionChange = this.props.onSelectionChange;
+    console.log(this.props.onTextChange);
+    this.onTextChange = this.props.onTextChange.callback;
+    this.textTopics = this.props.onTextChange.topics;
+
+    console.log(this.props.onRangeChange);
+    this.onRangeChange = this.props.onRangeChange.callback;
+    this.rangeLimits = this.props.onRangeChange.limits;
+
+    console.log(this.props.onSelectionChange);
+    this.onSelectionChange = this.props.onSelectionChange.callback;
+    this.selectionControls = this.props.onSelectionChange.controls;
   }
 
   render() {
@@ -75,13 +83,13 @@ export default class FilterPanel extends React.Component {
             </div>
           : ''}
 
-          {this.props.onRangeChange ?
+          {this.onRangeChange ?
             <div role="tabpanel" className="tab-pane" id="time">
               {this.renderTimeSlider()}
             </div>
           : ''}
 
-          {this.props.onSelectionChange ?
+          {this.onSelectionChange ?
             <div role="tabpanel" className="tab-pane" id="product">
               {this.renderTypeSelectors()}
             </div>
@@ -109,11 +117,10 @@ export default class FilterPanel extends React.Component {
   }
 
   renderTypeSelectors() {
-    console.log(this.props.onSelectionChange);
     return (
-      <div>
-        {_renderSelector(this.props.onSelectionChange)}
-      </div>
+      <form className="form-inline">
+        {_renderSelector(this)}
+      </form>
     );
   }
 
@@ -139,16 +146,17 @@ export default class FilterPanel extends React.Component {
   }
 }
 
-function _renderSelector(onSelectionChangeObj) {
-  return Object.keys(onSelectionChangeObj).map((type_) => {
+function _renderSelector(o) {
+  return o.selectionControls.map((ctrl) => {
     return (
-      <span className="label label-default" key={type_}>
-        <input
-          type="checkbox" defaultChecked
-          value={type_}
-          onChange={onSelectionChangeObj[type_]} />
-        {type_}
-      </span>
+      <div className="checkbox-inline">
+        <label>
+          <input type="checkbox" defaultChecked
+            value={ctrl}
+            onChange={o.onSelectionChange}
+          /> {ctrl}
+        </label>
+      </div>
     );
   });
 }

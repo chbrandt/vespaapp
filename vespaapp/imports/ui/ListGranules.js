@@ -47,9 +47,13 @@ export default class ListGranules extends React.Component {
       <div id="searchable-list" className="panel">
 
         <div className="panel-heading">
-          <FilterPanel  onTextChange={this.filterItemsText} />
-                        {/*onRangeChange={()=>{}}
-                        onSelectionChange={selectors}*/}
+          <FilterPanel  onTextChange={{callback: this.filterItemsText,
+                                       topics: null}}
+                        onSelectionChange={{callback: this.filterItemsCheck,
+                                            controls: ['Images','DataCubes']}}
+                        onRangeChange={{callback: ()=>{},
+                                        limits: undefined}}
+          />
         </div>
 
         <div className="panel-body list-group" style={this.props.style}>
@@ -106,18 +110,6 @@ export default class ListGranules extends React.Component {
       </CellMeasurer>
     );
   }
-  // renderItems() {
-  //   // hack to work around empty list at the very beginning
-  //   var dataItems = !(this.state.query || this.state.items.length)
-  //                   ? this.props.items
-  //                   : this.state.items;
-  //   return dataItems.map((item) => {
-  //     const _key = item.schema_epn_core + item.granule_gid + item.granule_uid;
-  //     return (
-  //       <DataItem key={_key} data={item} target={this.props.target} />
-  //     )
-  //   });
-  // }
 
   filterItemsText(event) {
     const text = event.target.value.toLowerCase();
