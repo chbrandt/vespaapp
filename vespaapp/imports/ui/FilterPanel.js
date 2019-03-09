@@ -45,11 +45,12 @@ export default class FilterPanel extends React.Component {
 
   render() {
     return (
-      <div>
-        <ul id="filter-tabs" className="nav nav-tabs" role="tablist">
+      <div style={{height:'120px'}}>
+
+        <ul id="filter-tabs" className="nav nav-pills" role="tablist" style={{border:0}}>
 
           {this.onTextChange ?
-            <li role="presentation" className="active">
+            <li role="presentation" className="active" style={{border:0}}>
               <a href="#search" aria-controls="search-box" role="tab" data-toggle="tab">
                 Search
               </a>
@@ -75,22 +76,22 @@ export default class FilterPanel extends React.Component {
         </ul>
 
 
-        <div className="tab-content" style={{width:'100%', height:'50px'}}>
+        <div className="tab-content" style={{height:'80px'}}>
 
           {this.onTextChange ?
-            <div role="tabpanel" className="tab-pane active" id="search">
+            <div role="tabpanel" className="tab-pane active well well-sm" id="search" style={{backgroundColor:'white', height:'100%'}}>
               {this.renderSearchBox()}
             </div>
           : ''}
 
           {this.onRangeChange && this.rangeLimits.length == 2 ?
-            <div role="tabpanel" className="tab-pane" id="time">
+            <div role="tabpanel" className="tab-pane well well-sm" id="time" style={{backgroundColor:'white', height:'100%'}}>
               {this.renderTimeSlider()}
             </div>
           : ''}
 
           {this.onSelectionChange ?
-            <div role="tabpanel" className="tab-pane" id="product">
+            <div role="tabpanel" className="tab-pane well well-sm" id="product" style={{backgroundColor:'white', height:'100%'}}>
               {this.renderTypeSelectors()}
             </div>
           : ''}
@@ -118,28 +119,21 @@ export default class FilterPanel extends React.Component {
         <div className="container" style={{width:'100%'}}>
 
           <div className="row">
-            <strong className="col-xs-3" style={{textAlign:'left'}}>
-              Left-limit
-            </strong>
-            <strong className="col-xs-3 col-xs-offset-6" style={{textAlign:'right'}}>
-              Right-limit
-            </strong>
+            <span className="col-xs-2 text-secondary" style={{textAlign:'left'}}>
+              {this.rangeLimits[0]}
+            </span>
+            <div className="col-xs-8">
+              <input type='text' id='rangevals' readOnly className="well well-sm text-primary" style={{border:0, padding:0, margin:'0 0 0 0', textAlign:'center', width:'100%'}}/>
+            </div>
+            <span className="col-xs-2 text-secondary" style={{textAlign:'right'}}>
+              {this.rangeLimits[1]}
+            </span>
           </div>
 
           <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
 
           <div ref={el => this.el = el}/>
 
-          <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
-
-          <div className="form-inline">
-            <div className="form-group">
-            <label>
-              Selected range:
-              <input type='text' id='rangevals' readOnly className="well well-sm text-primary" style={{border:0, padding:0, margin:'0 0 0 5px', textAlign:'center'}}/>
-            </label>
-            </div>
-          </div>
         </div>
       </div>
     )
@@ -172,10 +166,10 @@ export default class FilterPanel extends React.Component {
       values: [ rangeMin, rangeMax ],
       slide: function( event, ui ) {
         console.log(ui.values);
-        $( "#rangevals" ).val( ' ' + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        $( "#rangevals" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       }
     });
-    $('#rangevals').val( ' ' + rangeMin + ' - ' + rangeMax);
+    $('#rangevals').val(rangeMin + ' - ' + rangeMax);
   }
 }
 
