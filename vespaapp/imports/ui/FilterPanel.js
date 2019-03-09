@@ -56,7 +56,7 @@ export default class FilterPanel extends React.Component {
             </li>
           : ''}
 
-          {this.props.onRangeChange ?
+          {this.onRangeChange && this.rangeLimits.length == 2 ?
             <li role="presentation">
               <a href="#time" aria-controls="time-slider" role="tab" data-toggle="tab">
                 Time
@@ -64,7 +64,7 @@ export default class FilterPanel extends React.Component {
             </li>
           : ''}
 
-          {this.props.onSelectionChange ?
+          {this.onSelectionChange ?
             <li role="presentation">
               <a href="#product" aria-controls="datatype-selector" role="tab" data-toggle="tab">
                 Product
@@ -75,7 +75,7 @@ export default class FilterPanel extends React.Component {
         </ul>
 
 
-        <div className="tab-content" style={{width:'100%'}}>
+        <div className="tab-content" style={{width:'100%', height:'50px'}}>
 
           {this.onTextChange ?
             <div role="tabpanel" className="tab-pane active" id="search">
@@ -83,7 +83,7 @@ export default class FilterPanel extends React.Component {
             </div>
           : ''}
 
-          {this.onRangeChange ?
+          {this.onRangeChange && this.rangeLimits.length == 2 ?
             <div role="tabpanel" className="tab-pane" id="time">
               {this.renderTimeSlider()}
             </div>
@@ -102,7 +102,7 @@ export default class FilterPanel extends React.Component {
 
   renderSearchBox() {
     return (
-      <div className="search-box form-group">
+      <div className="search-box panel-heading">
         <input id="searchText" className="form-control"
           type="text"
           onChange={this.onTextChange}
@@ -113,43 +113,76 @@ export default class FilterPanel extends React.Component {
   }
 
   renderTimeSlider() {
-    return <div ref={el => this.el = el} />;
+    return (
+      <div className="panel-heading">
+        <div className="container" style={{width:'100%'}}>
+
+          <div className="row">
+            <strong className="col-xs-3" style={{textAlign:'left'}}>
+              Left-limit
+            </strong>
+            <strong className="col-xs-3 col-xs-offset-6" style={{textAlign:'right'}}>
+              Right-limit
+            </strong>
+          </div>
+
+          <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
+
+          <div ref={el => this.el = el}/>
+
+          <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
+
+          <div className="form-inline">
+            <div className="form-group">
+            <label>
+              Selected range:
+              <input type='text' id='rangevals' readOnly className="well well-sm text-primary" style={{border:0, padding:0, margin:'0 0 0 5px', textAlign:'center'}}/>
+            </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   renderTypeSelectors() {
     return (
-      <form className="form-inline">
-        {_renderSelector(this)}
-      </form>
+      <div className="panel-heading">
+        <form className="form-inline">
+          {_renderSelector(this)}
+        </form>
+      </div>
     );
   }
 
   componentDidMount() {
-    // this.$elem = $(this.elem);
+    // Reference: http://jqueryui.com/slider/#range
     $('#filter-tabs a').click( function(e) {
       e.preventDefault();
       $(this).tab('show');
     })
 
+    var rangeMin = this.rangeLimits[0];
+    var rangeMax = this.rangeLimits[1];
     this.$el = $(this.el);
     this.$el.slider({
       range: true,
-      min: 0,
-      max: 500,
-      values: [ 75, 300 ],
+      min: rangeMin,
+      max: rangeMax,
+      values: [ rangeMin, rangeMax ],
       slide: function( event, ui ) {
         console.log(ui.values);
-        // $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        $( "#rangevals" ).val( ' ' + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       }
     });
-
+    $('#rangevals').val( ' ' + rangeMin + ' - ' + rangeMax);
   }
 }
 
 function _renderSelector(o) {
   return o.selectionControls.map((ctrl) => {
     return (
-      <div className="checkbox-inline">
+      <div className="checkbox-inline" key={ctrl}>
         <label>
           <input type="checkbox" defaultChecked
             value={ctrl}

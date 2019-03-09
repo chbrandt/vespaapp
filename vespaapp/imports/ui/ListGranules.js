@@ -52,7 +52,7 @@ export default class ListGranules extends React.Component {
                         onSelectionChange={{callback: this.filterItemsCheck,
                                             controls: ['Images','DataCubes']}}
                         onRangeChange={{callback: ()=>{},
-                                        limits: undefined}}
+                                        limits: [1,100]}}
           />
         </div>
 
