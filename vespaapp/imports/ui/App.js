@@ -68,8 +68,22 @@ export default withTracker( ({ data_selector, isBody }) => {
   const h2 = Meteor.subscribe('data_all', data_selector,
                               onReady = function() {
                                 console.log("data_all items:"+DataAll.find().count());
+                                // const time_min = DataAll.findOne({}, {sort: {"time_min":1}});
+                                // const time_max = DataAll.findOne({}, {sort: {"time_max":-1}});
+                                // console.log("time_min: " + time_min['time_min']);
+                                // console.log("time_max: " + time_max['time_max']);
+                                const time_mm = DataAll.find({}).fetch();
+                                const timed = time_mm.filter(doc => doc.time_min > 0 && doc.time_max > 0);
+                                const time_mins = timed.map(doc => doc.time_min);
+                                const time_maxs = timed.map(doc => doc.time_max);
+                                const time_min = Math.min(...time_mins);
+                                const time_max = Math.max(...time_maxs);
+                                console.log("time_min: " + time_min);
+                                console.log("time_max: " + time_max);
+                                Session.set('time_minmax', [time_min, time_max]);
                               });
   const granules = DataAll.find({}).fetch();
+
 
   // const h3 = Meteor.subscribe('registry');
   // const services = Registry.find({ _id: "services" }).fetch();

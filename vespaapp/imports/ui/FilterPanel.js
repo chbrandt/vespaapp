@@ -41,6 +41,8 @@ export default class FilterPanel extends React.Component {
     console.log(this.props.onSelectionChange);
     this.onSelectionChange = this.props.onSelectionChange.callback;
     this.selectionControls = this.props.onSelectionChange.controls;
+
+    this._renderSlider = this._renderSlider.bind(this);
   }
 
   render() {
@@ -65,7 +67,7 @@ export default class FilterPanel extends React.Component {
             </li>
           : ''}
 
-          {this.onSelectionChange ?
+          {this.onSelectionChange && this.selectionControls.length > 0 ?
             <li role="presentation">
               <a href="#product" aria-controls="datatype-selector" role="tab" data-toggle="tab">
                 Product
@@ -85,7 +87,7 @@ export default class FilterPanel extends React.Component {
           : ''}
 
           {this.onRangeChange && this.rangeLimits.length == 2 ?
-            <div role="tabpanel" className="tab-pane well well-sm" id="time" style={{backgroundColor:'white', height:'100%'}}>
+            <div role="tabpanel" className="tab-pane well well-sm" id="time" style={{backgroundColor:'white', height:'100%', margin:0, padding:0}}>
               {this.renderTimeSlider()}
             </div>
           : ''}
@@ -119,21 +121,21 @@ export default class FilterPanel extends React.Component {
         <div className="container" style={{width:'100%'}}>
 
           <div className="row">
-            <span className="col-xs-2 text-secondary" style={{textAlign:'left'}}>
-              {this.rangeLimits[0]}
-            </span>
-            <div className="col-xs-8">
-              <input type='text' id='rangevals' readOnly className="well well-sm text-primary" style={{border:0, padding:0, margin:'0 0 0 0', textAlign:'center', width:'100%'}}/>
+            <div className='col-xs-6'>
+              <input type='text' id='valsmin' readOnly className="text-secondary" style={{border:0, padding:0, margin:'0 0 0 0', textAlign:'left', width:'100%'}}/>
             </div>
-            <span className="col-xs-2 text-secondary" style={{textAlign:'right'}}>
-              {this.rangeLimits[1]}
-            </span>
+            <div className='col-xs-6'>
+              <input type='text' id='valsmax' readOnly className="text-secondary" style={{border:0, padding:0, margin:'0 0 0 0', textAlign:'right', width:'100%'}}/>
+            </div>
           </div>
 
           <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
-
           <div ref={el => this.el = el}/>
+          <hr style={{height:'5px', border:0, display:'block', padding:0, margin:0}}/>
 
+          <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+            <input type='text' id='rangevals' readOnly className="well well-sm text-primary" style={{border:0, padding:0, margin:'0 0 0 0', textAlign:'center', width:'100%'}}/>
+          </div>
         </div>
       </div>
     )
@@ -156,8 +158,20 @@ export default class FilterPanel extends React.Component {
       $(this).tab('show');
     })
 
-    var rangeMin = this.rangeLimits[0];
-    var rangeMax = this.rangeLimits[1];
+    this._renderSlider();
+  }
+
+  componentDidUpdate() {
+    this._renderSlider();
+  }
+
+  _renderSlider() {
+    var rangeMin = this.props.onRangeChange.limits[0];
+    rangeMin = Math.floor(rangeMin);
+    var rangeMax = this.props.onRangeChange.limits[1];
+    rangeMax = Math.ceil(rangeMax) + 1;
+    $('#valsmin').val(rangeMin);
+    $('#valsmax').val(rangeMax);
     this.$el = $(this.el);
     this.$el.slider({
       range: true,

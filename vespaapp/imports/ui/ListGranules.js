@@ -5,6 +5,7 @@ import { List, AutoSizer, CellMeasurer, CellMeasurerCache } from "react-virtuali
 import FilterPanel from './FilterPanel.js';
 import Granule from './Granule.js';
 
+import { Session } from 'meteor/session';
 
 export default class ListGranules extends React.Component {
   /*
@@ -27,7 +28,8 @@ export default class ListGranules extends React.Component {
 
     this.renderItems = this.renderItems.bind(this);
     this.filterItemsText = this.filterItemsText.bind(this);
-    this.filterItemsCheck = this.filterItemsCheck.bind(this);
+    this.filterItemsTime = this.filterItemsTime.bind(this);
+    this.filterItemsType = this.filterItemsType.bind(this);
   }
 
   render() {
@@ -41,6 +43,13 @@ export default class ListGranules extends React.Component {
     // product_types.forEach((type_) => {
     //   selectors[type_] = this.filterItemsCheck;
     // });
+    const timed = this.props.items.filter(doc => doc.time_min > 0 && doc.time_max > 0);
+    const time_mins = timed.map(doc => doc.time_min);
+    const time_maxs = timed.map(doc => doc.time_max);
+    const time_min = Math.min(...time_mins);
+    const time_max = Math.max(...time_maxs);
+    console.log("time_min: " + time_min);
+    console.log("time_max: " + time_max);
 
     const listHeight = this.props.style.height;
     return (
@@ -51,8 +60,8 @@ export default class ListGranules extends React.Component {
                                        topics: null}}
                         onSelectionChange={{callback: this.filterItemsCheck,
                                             controls: ['Images','DataCubes']}}
-                        onRangeChange={{callback: ()=>{},
-                                        limits: [1,100]}}
+                        onRangeChange={{callback: this.filterItemsTime,
+                                        limits: [time_min,time_max]}}
           />
         </div>
 
@@ -135,7 +144,7 @@ export default class ListGranules extends React.Component {
     this.setState({items: filteredList});
   }
 
-  filterItemsCheck(event) {
+  filterItemsType(event) {
     const label = event.target.value;
     const checked = event.target.checked;
     var filteredList = this.props.items;
@@ -146,6 +155,9 @@ export default class ListGranules extends React.Component {
     console.log("Child/widget input event: " + event.target.value + " " + event.target.checked);
   }
 
+  filterItemsTime(rangeMin, rangeMax) {
+    console.log("Time range: " + rangeMin + rangeMax);
+  }
 
   // filterList(event) {
   //   this.setState({ query: event.target.value });
