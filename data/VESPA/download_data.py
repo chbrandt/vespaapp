@@ -221,13 +221,21 @@ def _list(args):
 
 
 if __name__ == '__main__':
+    import sys
     import os
     import argparse
 
-    parser = argparse.ArgumentParser(description='Download EPN-TAP data')
+    description = """
+    Download data from EPN-TAP services.
+    Use 'list' for the list of services.
+    """
+    parser = argparse.ArgumentParser(description=description, add_help=False)
+    parser.add_argument('-h', '--help', action='help',
+                        help="Use '--help' on subcommands to know more about them")
+
     subparsers = parser.add_subparsers(title='Subcommands')
 
-    fetching = subparsers.add_parser('fetch', help='Fetch data')
+    fetching = subparsers.add_parser('fetch', help='Fetch data from a service')
     fetching.add_argument('schema', help="Name of EPN-Core schema ('schema.epn_core')")
     fetching.add_argument('--limit', dest='limit', type=int,
                           help='Limit the number of returned records',
@@ -243,6 +251,10 @@ if __name__ == '__main__':
     listing.add_argument('--minimal', dest='schema_only', action='store_true',
                          help="List the names of the schema only")
     listing.set_defaults(func=_list)
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(0)
 
     args = parser.parse_args()
     args.func(args)
