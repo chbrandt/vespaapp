@@ -16,7 +16,7 @@ _DEFAULT_SERVICES_LIST_ = 'virtualRegistry.json'
 _OUTPUT_DIR_ = 'data'
 
 # Sometimes queries may stale, so let's define a timeout limit (seconds):
-_TIMEOUT_ = 3
+_TIMEOUT_ = 9
 
 # For when we expect an integer but nothing is returned (e.g., service down):
 _NULL_INT_ = -999
@@ -93,10 +93,12 @@ def run(schema, limit=None, percent=None, columns=None,
     #
     sanity_check_schema = False
     option_accessurl = None
+    option_identifier = None
     for service in services_list['services']:
         if service['schema'] == option_schema:
             sanity_check_schema = True
             option_accessurl = service['accessurl']
+            option_identifier = service['identifier']
             break
 
     assert sanity_check_schema is True, \
@@ -143,7 +145,8 @@ def run(schema, limit=None, percent=None, columns=None,
 
     result_table = vo_result.to_table()
     result_df = result_table.to_pandas()
-    result_df['schema_epn_core'] = option_schema
+    result_df['service_schema'] = option_schema
+    result_df['service_identifier'] = option_identifier
     return result_df
 
 

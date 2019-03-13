@@ -12,7 +12,8 @@ FIELDS = ['s_region',
           'time_scale',
           'granule_uid',
           'granule_gid',
-          'schema_epn_core',
+          'service_schema',
+          'service_identifier',
           'thumbnail_url',
           'access_url',
           'access_format',
@@ -64,7 +65,7 @@ def point_geometry(granule):
     return geometry
 
 
-def _parse_doc(granule, filters=None, remove_outborders=True):
+def _parse_doc(granule, filters=None):
     out = {k: granule.get(k, None) for k in FIELDS}
     if filters:
         for k in filters.keys():
@@ -75,7 +76,7 @@ def _parse_doc(granule, filters=None, remove_outborders=True):
 def set_filters(ext_filters):
     filters = {}
     filters['target_name'] = lambda d: d['target_name'].lower()
-    filters['target_class'] = lambda d: d['target_name'].lower()
+    filters['target_class'] = lambda d: d['target_class'].lower()
     filters['geometry'] = point_geometry
     if ext_filters:
         filters.update(ext_filters)
@@ -108,7 +109,7 @@ def main(filename, output_filename, filters_filename=None):
     filters = None
     if filters_filename:
         """
-        Let's agree that 'filters' is dictionary-like structure
+        Let's agree that 'filters' is a dictionary-like structure
         where I can access the functions by the name of the field:
         ```
         a_function = filters['s_region']
