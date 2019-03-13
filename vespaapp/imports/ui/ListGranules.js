@@ -129,7 +129,7 @@ export default class ListGranules extends React.Component {
       console.log("Text in the box?: " + text);
       filteredList = filteredList.filter((item) => {
         const s_text = [item.granule_uid,
-                        item.schema_epn_core,
+                        item.service_schema,
                         item.access_format,
                         item.instrument_name,
                         item.instrument_host_name,

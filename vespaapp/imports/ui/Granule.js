@@ -27,10 +27,10 @@ export default class Granule extends React.Component {
   }
 
   render() {
-    const schema = this.props.data.schema_epn_core;
+    const schema = this.props.data.service_schema;
     const thumbnail_url = this.props.data.thumbnail_url;
     const granule_uid = this.props.data.granule_uid;
-    const ivo_id = this.props.data.service_ivo_id;
+    const ivo_id = this.props.data.service_identifier;
     const external_url = this.props.data.external_url;
     const title = this.props.data.service_title;
 

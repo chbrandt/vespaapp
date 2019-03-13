@@ -11,7 +11,7 @@ and the files (script, config, schema, etc) to download data.
   * `service_columns.json`
 * The (python) script responsible for downloading data is:
   * `download_data.py`
-    * Besides the columns in `service_columns.json`, an extra field `schema_epn_core` is added by the script to the output (JSON) file
+    * Besides the columns in `service_columns.json`, an extra field `service_schema` is added by the script to the output (JSON) file
 * If using Anaconda Python distro, an environment ("vo") is in:
   * `conda_environment.yml`
   * In any case, all we need to use the download script is:
