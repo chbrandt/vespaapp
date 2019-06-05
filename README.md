@@ -2,7 +2,7 @@
 
 <img width=100 src='docs/assets/VESPA_icon.png' />
 
-The VESPA-App is a web-mobile responsive interface to improve the users experience on exploring planetary data. It is meant to be an extension, simplified version of the main VESPA query portal at 'http://vespa.obspm.fr'.
+The [VESPA-App] is a web-mobile responsive interface to improve the users experience on exploring planetary data. It is meant to be an extension, simplified version of the main [VESPA portal].
 
 While the [VESPA portal] provides specific options to query VO planetary services (aka EPN-TAP),
 the VESPA-App provides a higher level, less technical interface to explore the data in those services by offering the data products (images, footprints, spectra) at first hand, and _then_ linking the user to the services through the VESPA portal.
@@ -52,6 +52,7 @@ Mainly built with:
 </a>
 </div>
 
+[vespa-app]: http://app.epn-vespa.jacobs-university.de/
 [vespa portal]: http://vespa.obspm.fr
 [docs]: https://github.com/chbrandt/vespaapp/blob/master/docs/README.md
 [github issues]: https://github.com/chbrandt/vespaapp/issues
