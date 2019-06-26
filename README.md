@@ -1,5 +1,7 @@
 # VESPA-App
 
+<a href='http://app.epn-vespa.jacobs-university.de/'>Link to Vespa-App page</a>
+
 <img width=100 src='docs/assets/VESPA_icon.png' />
 
 The [VESPA-App] is a web-mobile responsive interface to improve the users experience on exploring planetary data. It is meant to be an extension, simplified version of the main [VESPA portal].

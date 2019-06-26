@@ -3,70 +3,90 @@ import { Session } from 'meteor/session';
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Notes } from '../api/notes.js';
-import { Data, data_collection_name } from '../api/data.js';
-
-// import './App.css';
-
+import './App.css';
 import Header from './Header.js';
 import Map from './Map.js';
-import List from './List.js';
-import Footer from './Footer.js';
+import ListGranules from './ListGranules.js';
+
+import { DataGeo } from '../api/collections/data_geo.js';
+import { DataAll } from '../api/collections/data_all.js';
+// import { Registry } from '../api/collections/registry.js';
 
 
-function App({ body, notes, features, currentUser }) {
+function App({ target, isBody, features, granules }) {
+  console.log("Target: "+target)
+  var items = granules;
+  if (features) {
+    items = items.concat(features.polygons, features.points);
+  }
+
+  var compHeight = 85;
+  if (isBody) {
+    compHeight = compHeight/2;
+  }
+  const style = {height: String(compHeight)+"vh"};
+
   return (
     <div id="app">
 
-      <Header />
-      <Main body={body} notes={notes} features={features} currentUser={currentUser}/>
-      <Footer />
+      <Header style={{height:'10vh'}}/>
+      <main className="container">
+        {isBody ?
+          <Map body={target} features={features} style={style}/>
+          : ''
+        }
+        <ListGranules target={target} items={items} style={style}/>
+      </main>
 
     </div>
   );
 }
 
-export default withTracker( ({ body }) => {
+export default withTracker( ({ data_selector, isBody }) => {
+  data_selector = data_selector || {};
+  console.log(data_selector);
 
-  const handle = [
-    Meteor.subscribe(data_collection_name, { body: body,
-                                             bbox: Session.get('bbox') }),
-    Meteor.subscribe('notes', {}, function() {
-      console.log("Number of notes: " + Notes.find({}).fetch().length)
-    }),
-  ];
+  // Get data from the collection with geolocated data, use Undefined when not apply
+  var data_geo;
+  if (isBody) {
+    const query = Object.assign({}, data_selector, { bbox: Session.get('bbox') });
+    console.log(query)
+    const h1 = Meteor.subscribe('data_geo', query,
+                                onReady = function() {
+                                  console.log("data_geo items: "+DataGeo.find().count());
+                                  console.log(DataGeo.findOne());
+                                }
+                              );
+    data_geo = {
+        points: DataGeo.find({ "s_region.type":"Point" }).fetch(),
+        polygons: DataGeo.find({ "geometry.type":"Polygon" }).fetch(),
+    };
+  }
+  const features = data_geo;
 
-  return {
-    currentUser: Meteor.user(),
-    notes: Notes.find({ "target": body,
-                        owner: Meteor.userId() }).fetch(),
-    features: {
-      // points: Data.find({ "target": body,
-      //                     "geometry.type":"Point" },
-      //                   { sort : { "name" : 1 } }).fetch(),
-      // polygons: Data.find({ "target_name": 'Mars',
-      //                       "s_region.type":"Polygon" },
-      //                     { sort : { "obs_id" : 1 } }).fetch(),
-      polygons: Data.find({ "target": 'mars',
-                            "geometry.type":"Polygon" },
-                          { sort : { "id" : 1 } }).fetch(),
-      // lineStrings: Data.find({ "target": body,
-      //                          "geometry.type":"LineString" },
-      //                        { sort : { "name" : 1 } }).fetch(),
-    },
-  };
+  // Get Data from the other collection, without particular geolocated information
+  const h2 = Meteor.subscribe('data_all', data_selector,
+                              onReady = function() {
+                                console.log("data_all items:"+DataAll.find().count());
+                                // const time_min = DataAll.findOne({}, {sort: {"time_min":1}});
+                                // const time_max = DataAll.findOne({}, {sort: {"time_max":-1}});
+                                // console.log("time_min: " + time_min['time_min']);
+                                // console.log("time_max: " + time_max['time_max']);
+                                const time_mm = DataAll.find({}).fetch();
+                                const timed = time_mm.filter(doc => doc.time_min > 0 && doc.time_max > 0);
+                                const time_mins = timed.map(doc => doc.time_min);
+                                const time_maxs = timed.map(doc => doc.time_max);
+                                const time_min = Math.min(...time_mins);
+                                const time_max = Math.max(...time_maxs);
+                                console.log("time_min: " + time_min);
+                                console.log("time_max: " + time_max);
+                                Session.set('time_minmax', [time_min, time_max]);
+                              });
+  const granules = DataAll.find({}).fetch();
+
+
+  // const h3 = Meteor.subscribe('registry');
+  // const services = Registry.find({ _id: "services" }).fetch();
+
+  return { features: features, granules: granules };
 })(App);
-
-
-function Main({ body, notes, features, currentUser }) {
-  return (
-    <main className="container-fluid">
-      <Map body={body} features={features}/>
-      {/*
-      <List items={features.polygons}
-            target={body}
-            notes={notes}
-      />*/}
-    </main>
-  );
-}

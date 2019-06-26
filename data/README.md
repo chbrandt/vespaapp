@@ -1,13 +1,65 @@
 # The data base
 
+In this directory you should find everything about App's database: management
+system, structure and sources of data.
+This document gives an overview of the structure, more information on each
+component will be addressed in the respective README in each sub-directory.
+
 ## Database management system
 
-To manage the data sets used by the app we are using MongoDB.
+[MongoDB] is the DBMS we use. MongoDB can have many databases; each database, many
+collections; each collection many documents.
+Documents are like rows in a table, a set of `key:value` pairs.
+In MongoDB, documents do not have to follow a schema, which means each document
+is free to provide any set of `key:value` pairs, independent of the other
+documents in the collection.
 
+[mongodb]: https://www.mongodb.com/
+
+### Collections
+
+Our database is composed by three collections:
+* `data_index`
+* `data_geo`
+* `data_all`
+
+Collections `data_geo` and `data_all` host the data sets with and without
+geolocated data, respectively.
+The `data_index` is the top-level list of _targets_: the front-page list of
+items which the user will choose and then further explore in following pages.
+
+#### `data_index` schema
+```
+data_index
+  - name
+  - thumbnail
+  - keywords
+```
+
+#### `data_any` schema
+```
+data_any
+  - target_name
+  - target_class
+  - granule_uid
+  - granule_gid
+```
+
+#### `data_geo` schema
+```
+data_geo
+  - target_name
+  - target_class
+  - granule_uid
+  - granule_gid
+  - geometry
+    - coordinates
+    - type
+```
 
 ## Data sets
 
-From the point-of-view of user interaction -- and so the way data is presented --
+From the point-of-view of user interaction -- the way data is presented --
 there are two major groups of our data sets:
 
 * those with geolocated information (EPN-Core's `s_region`)

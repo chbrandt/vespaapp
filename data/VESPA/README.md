@@ -11,7 +11,7 @@ and the files (script, config, schema, etc) to download data.
   * `service_columns.json`
 * The (python) script responsible for downloading data is:
   * `download_data.py`
-    * Besides the columns in `service_columns.json`, an extra field `schema_epn_core` is added by the script to the output (JSON) file
+    * Besides the columns in `service_columns.json`, an extra field `service_schema` is added by the script to the output (JSON) file
 * If using Anaconda Python distro, an environment ("vo") is in:
   * `conda_environment.yml`
   * In any case, all we need to use the download script is:
@@ -19,23 +19,29 @@ and the files (script, config, schema, etc) to download data.
     * pyvo (current at 0.9.2)
     * pandas (current at 0.23.4)
 
+```diff
+- TODO: command to 'list' the available services (services in `services.json`)
+- TODO: parameter (-c) for "download" script with the set of fields to download
+- TODO: option 'random' for "download" script to retrieve (N) random records
+```
+
 ## Examples
 
 **Obs**: make sure to have `pyvo` and `pandas` installed.
 
 If we want to download all craters from Mars (from the `mars_craters` service):
 ```bash
-$ ./download_data.py mars_craters
+$ ./download_data.py fetch mars_craters
 ```
 
 If we want to download the first `1000` entries of `crism.epn_core` service:
 ```bash
-$ ./download_data.py crism 1000
+$ ./download_data.py fetch crism --limit 1000
 ```
 
 To know the options and arguments of the `download_data` script, just type:
 ```bash
-$ ./download_data.py
+$ ./download_data.py --help
 ```
 
 # Comments on services

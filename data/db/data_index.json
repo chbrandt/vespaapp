@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Jupiter",
+    "group": "planet",
+    "filter": { "target_name": "jupiter" },
+    "thumbnail": "assets/images/jupiter-transparent.png",
+    "keywords": [ "USGS_WMS",
+                  "pvol",
+                  "BDIP",
+                  "image/png",
+                  "image/tiff",
+                  "application/x-wms",
+                  "image/jpeg",
+                  "ma", "im",
+                  "Cassini" ]
+  },
+  {
+    "name": "Mercury",
+    "group": "planet",
+    "filter": { "target_name": "mercury" },
+    "thumbnail": "assets/images/mercury-transparent.png",
+    "keywords": [ "image/jpeg",
+                  "image/gif",
+                  "application/x-wms",
+                  "im", "ma",
+                  "Messenger",
+                  "Messenger#Mariner-10",
+                  "Mariner-10",
+                  "pvol",
+                  "USGS_WMS" ]
+  },
+  {
+    "name": "Mars",
+    "group": "planet",
+    "hasMap": true,
+    "filter": { "target_name": "mars" },
+    "thumbnail": "assets/images/mars-transparent.png",
+    "keywords": ""
+  },
+  {
+    "name": "Moon",
+    "group": "sattelite",
+    "hasMap": true,
+    "filter": { "target_name": "moon" },
+    "thumbnail": "assets/images/moon-transparent.png",
+    "keywords": ""
+  },
+  {
+    "name": "All",
+    "order": 0
+    "hasMap": false,
+    "filter": {},
+    "thumbnail": "assets/images/icon_targets_all.png",
+    "keywords": ""
+  }
+]

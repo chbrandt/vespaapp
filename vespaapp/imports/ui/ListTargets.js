@@ -52,7 +52,12 @@ class ListTargets extends React.Component {
     var filteredList = this.props.items;
     if (text) {
       filteredList = filteredList.filter((item) => {
-        return item.name.toLowerCase().search(text) !== -1;
+        var keywords = [];
+        if (item.keywords) {
+          keywords = item.keywords;
+        }
+        keywords.push(item.name);
+        return keywords.join(" ").toLowerCase().search(text) !== -1;
       });
     }
     this.setState({items: filteredList});
@@ -74,17 +79,18 @@ class ListTargets extends React.Component {
     return items.map((item) => {
       //TODO: put a mapping here to properly route the user
       const itemPage = "/" + item.name.toLowerCase();
+      const thumbnail = item.thumbnail;
       return (
-        <div className="list-group-item" key={item.name}>
+        <li className="list-group-item col-xs-12 col-sm-4 col-md-3" key={item.name}>
           <a href={itemPage} className="card-body">
             <div className="card">
               <h3>{item.name}</h3>
               <div className="contentTargets">
-                <img style={{width:'100px'}} src={item.thumbnail} alt=""/>
+                <img style={{width:'100px'}} src={thumbnail} alt=""/>
               </div>
             </div>
           </a>
-        </div>
+        </li>
       );
     });
   }

@@ -3,20 +3,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous"></script>
+
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
 
+  <!-- Plugins -->
+  <!-- MapCenterCoord -->
+  <!-- <link rel="stylesheet" href="plugins/Leaflet.MapCenterCoord-0.7/src/L.Control.MapCenterCoord.css" />
+  <script src="plugins/Leaflet.MapCenterCoord-0.7/src/L.Control.MapCenterCoord.js"></script> -->
+  <!-- MousePosition -->
+  <!-- <link rel="stylesheet" href="plugins/Leaflet.MousePosition/src/L.Control.MousePosition.css" />
+  <script src="plugins/Leaflet.MousePosition/src/L.Control.MousePosition.js"></script> -->
+
   <title>VESPA.app</title>
 
   <style>
-    body {height:"100vh"; width:"100vw"}
+    html, body {
+      height:"100vh";
+      width:"100vw";
+    }
   </style>
-  
+
 </head>
 
 <body>
-  <div id="render-target"></div>
+  <div id="render-target" class="container-fluid"></div>
 </body>
