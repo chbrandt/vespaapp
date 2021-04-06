@@ -90,7 +90,7 @@ function Links({ link_vespa, link_tool , style}) {
   /*
     Return a vertical arrangement of links to external URLs
   */
-  console.log("link-vespa"+link_vespa);
+  console.log("link-vespa "+link_vespa);
   return (
     <div className="well well-sm">
 

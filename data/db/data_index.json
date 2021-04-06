@@ -52,5 +52,9 @@
     "filter": {},
     "thumbnail": "assets/images/icon_targets_all.png",
     "keywords": ""
+  },
+  {
+    "name": "Asteroids",
+    "filter": { "target_class": ""}
   }
 ]

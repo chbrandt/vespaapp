@@ -72,15 +72,15 @@ export default withTracker( ({ data_selector, isBody }) => {
                                 // const time_max = DataAll.findOne({}, {sort: {"time_max":-1}});
                                 // console.log("time_min: " + time_min['time_min']);
                                 // console.log("time_max: " + time_max['time_max']);
-                                const time_mm = DataAll.find({}).fetch();
-                                const timed = time_mm.filter(doc => doc.time_min > 0 && doc.time_max > 0);
-                                const time_mins = timed.map(doc => doc.time_min);
-                                const time_maxs = timed.map(doc => doc.time_max);
-                                const time_min = Math.min(...time_mins);
-                                const time_max = Math.max(...time_maxs);
-                                console.log("time_min: " + time_min);
-                                console.log("time_max: " + time_max);
-                                Session.set('time_minmax', [time_min, time_max]);
+                                // const time_mm = DataAll.find({}).fetch();
+                                // const timed = time_mm.filter(doc => doc.time_min > 0 && doc.time_max > 0);
+                                // const time_mins = timed.map(doc => doc.time_min);
+                                // const time_maxs = timed.map(doc => doc.time_max);
+                                // const time_min = Math.min(...time_mins);
+                                // const time_max = Math.max(...time_maxs);
+                                // console.log("time_min: " + time_min);
+                                // console.log("time_max: " + time_max);
+                                // Session.set('time_minmax', [time_min, time_max]);
                               });
   const granules = DataAll.find({}).fetch();
 

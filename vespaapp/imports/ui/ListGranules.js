@@ -43,11 +43,13 @@ export default class ListGranules extends React.Component {
     // product_types.forEach((type_) => {
     //   selectors[type_] = this.filterItemsCheck;
     // });
-    const timed = this.props.items.filter(doc => doc.time_min > 0 && doc.time_max > 0);
-    const time_mins = timed.map(doc => doc.time_min);
-    const time_maxs = timed.map(doc => doc.time_max);
-    const time_min = Math.min(...time_mins);
-    const time_max = Math.max(...time_maxs);
+    // const timed = this.props.items.filter(doc => doc.time_min > 0 && doc.time_max > 0);
+    // const time_mins = timed.map(doc => doc.time_min);
+    // const time_maxs = timed.map(doc => doc.time_max);
+    // const time_min = Math.min(...time_mins);
+    // const time_max = Math.max(...time_maxs);
+    const time_min = 0;
+    const time_max = 10;
     console.log("time_min: " + time_min);
     console.log("time_max: " + time_max);
 
